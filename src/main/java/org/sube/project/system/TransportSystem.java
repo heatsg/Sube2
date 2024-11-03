@@ -43,7 +43,7 @@ public class TransportSystem {
             System.out.println("Recarga exitosa (" + amount + ")");
             return 1;
         } else {
-            System.out.println("Tarjeta Sube no encontrada.");
+            System.out.println("Tarjeta Sube no encontrada...");
             return 0;
         }
     }
