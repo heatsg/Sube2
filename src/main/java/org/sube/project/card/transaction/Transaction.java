@@ -1,20 +1,34 @@
 package org.sube.project.card.transaction;
 
+import org.sube.project.util.ID_TYPE;
+import org.sube.project.util.JSONSube;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Transaction {
+    private static int idCounter = JSONSube.assignID(ID_TYPE.TRANSACTION);
     private final int id;
+    private LocalDateTime dateTime;
     private TransactionType transactionType;
     private double amount;
-    private LocalDateTime dateTime;
 
-    public Transaction(int id, TransactionType transactionType, double amount, String dateTime) {
-        this.id = id;
+    public Transaction() {
+        this.id = idCounter++;
+        this.dateTime = java.time.LocalDateTime.now();
+    }
+    public Transaction(TransactionType transactionType, double amount) {
+        this.id = idCounter++;
+        this.dateTime = java.time.LocalDateTime.now();
         this.transactionType = transactionType;
         this.amount = amount;
+    }
+    public Transaction(TransactionType transactionType, double amount, String dateTime) {
+        this.id = idCounter++;
         this.dateTime = LocalDateTime.parse(dateTime);
+        this.transactionType = transactionType;
+        this.amount = amount;
     }
 
     public int getId() {
@@ -45,21 +59,29 @@ public class Transaction {
         this.dateTime = dateTime;
     }
 
+
     public void viewTransaction() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss");
-        System.out.println("Transaccion (ID: " + this.getId() + " | Fecha & Hora: " + dateTime.format(formatter) + " | Tipo: " + this.getTransactionType() + " | Monto: " + this.getAmount());
+        System.out.println(this);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
+        if (!(o instanceof Transaction that)) return false;
         return Double.compare(that.amount, amount) == 0 && transactionType == that.transactionType;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(transactionType, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "Transacción (ID: " + id +
+                " | Fecha y Hora: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")) +
+                " | Tipo: " + transactionType +
+                " | Monto: " + amount +
+                ')';
     }
 }

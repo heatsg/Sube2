@@ -2,25 +2,34 @@ package org.sube.project.card;
 
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
+import org.sube.project.exceptions.malformedIdException;
+import org.sube.project.util.JSONSube;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 public class Card {
-    private int id;
+    private final String id;
     private double balance;
-    private Set<Transaction> transactionHistory;
+    private final Set<Transaction> transactionHistory;
 
-    public Card(int id, double balance) {
-        this.id = id;
+    public Card() {
+        this.id = JSONSube.generateCardID();
+        this.balance = 0;
+        this.transactionHistory = new HashSet<>();
+    }
+
+    public Card(String id, double balance) {
+        this.id = JSONSube.generateCardID();
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
     }
 
     public double addBalance(double amount) {
         this.balance += amount;
-         // CONTINUAR ACA, NO SE COMO REGISTRAR LA TRANSACCION POR LA ID.
+        transactionHistory.add(new Transaction(TransactionType.RECHARGE, amount));
+        // CONTINUAR ACA, NO SE COMO REGISTRAR LA TRANSACCION POR LA ID.
         return amount;
     }
 
@@ -28,7 +37,7 @@ public class Card {
         return java.time.LocalDateTime.now().toString();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

@@ -1,18 +1,20 @@
 package org.sube.project.user;
 
 import org.sube.project.card.Card;
+import org.sube.project.util.ID_TYPE;
+import org.sube.project.util.JSONSube;
 
 public class User {
-    private int id;
-    private String name;
-    private String surname;
-    private int age;
-    private String documentNumber;
-    private char gender;
-    private Card card;
+    private final int id;
 
-    public User(int id, String name, String surname, int age, String documentNumber, char gender, Card card) {
-        this.id = id;
+    private String name, surname;
+    private String documentNumber;
+    private int age;
+    private char gender;
+    private final Card card;
+
+    public User(String name, String surname, int age, String documentNumber, char gender, Card card) {
+        this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
         this.age = age;

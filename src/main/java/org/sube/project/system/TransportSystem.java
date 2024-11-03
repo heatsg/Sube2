@@ -9,42 +9,64 @@ import java.util.Map;
 
 public class TransportSystem {
 
-    private Map<Integer, User> users;
-    private Map<Integer, Card> cards;
+    private final Map<Integer, User> users;
+    private final Map<String, Card> cards;
+    private final Map<String, Double> uncreditedAmount;
 
     public TransportSystem() {
         this.users = new HashMap<>();
         this.cards = new HashMap<>();
+        this.uncreditedAmount = new HashMap<>();
     }
 
     public Map<Integer, User> getUsers() {
         return users;
     }
 
-    public Map<Integer, Card> getCards() {
+    public Map<String, Card> getCards() {
         return cards;
     }
 
-    public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender, int cardId) {
-        Card card = new Card(cardId, 0);
-        User user = new User(identifier, name, surname, age, documentNumber, gender, card);
+    public Map<String, Double> getUncreditedAmount() {
+        return uncreditedAmount;
+    }
 
-        users.put(identifier, user);
-        cards.put(cardId, card);
+    public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender) {
+        Card card = new Card();
+        User user = new User(name, surname, age, documentNumber, gender, card);
+
+        users.put(user.getId(), user);
+        cards.put(card.getId(), card);
 
         return user;
     }
 
-    public int rechargeCard(String cardId, double amount) {
-        Card card = cards.get(cardId);
-
-        if (card != null) {
-            card.addBalance(amount);
-            System.out.println("Recarga exitosa (" + amount + ")");
-            return 1;
+    public boolean rechargeCard(String cardId, double amount) {
+        if (cards.get(cardId) != null) {
+            addUncreditedAmount(cardId, amount);
+            System.out.println("Recarga exitosa (" + amount + ')');
+            return true;
         } else {
-            System.out.println("Tarjeta Sube no encontrada.");
-            return 0;
+            System.out.println("Tarjeta SUBE no encontrada.");
+            return false;
         }
+    }
+    public void addUncreditedAmount(String cardId, double amount) {
+        // Almacena acumulativamente en el map
+        uncreditedAmount.put(cardId, uncreditedAmount.get(cardId) + amount);
+    }
+
+    public boolean creditIntoCard(String cardId) {
+        Card card = cards.get(cardId);
+        if (card == null) {
+            System.out.println("Tarjeta SUBE no encontrada.");
+            return false;
+        }
+
+        card.addBalance(uncreditedAmount.get(cardId));
+        uncreditedAmount.remove(cardId);
+
+        System.out.println("Cargas acreditadas, saldo final: " + card.getBalance());
+        return true;
     }
 }
