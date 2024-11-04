@@ -3,6 +3,7 @@ package org.sube.project.system;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.sube.project.accounts.UserCredentials;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
@@ -36,14 +37,14 @@ public class TransportSystem {
         return uncreditedAmount;
     }
 
-    public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender) {
+    public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender, UserCredentials credentials) {
         Card card = new Card();
-        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER, true);
+        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER, true, credentials);
 
         users.put(user.getId(), user);
         cards.put(card.getId(), card);
 
-        TransportSystem.UserToFile(user);
+        UserToFile(user);
 
         return user;
     }
@@ -51,7 +52,7 @@ public class TransportSystem {
     public static void UserToFile(User user){
         try {
             JSONArray jarr = JSONManager.leerJSONArray(PATH.USER);
-            jarr.put(user.ToJSON());
+            jarr.put(user.toJson());
             JSONManager.escribir(PATH.USER, jarr);
         }catch (JSONException jx){
             System.out.println(jx.getMessage());

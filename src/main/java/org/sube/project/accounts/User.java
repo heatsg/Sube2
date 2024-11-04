@@ -13,10 +13,11 @@ public class User {
     private int age;
     private char gender;
     private final Card card;
-    private final UserType userType;
-    private final boolean status;
+    private UserType userType;
+    private boolean status;
+    private UserCredentials userCredentials;
 
-    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType, boolean status) {
+    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType, boolean status, UserCredentials userCredentials) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
@@ -26,24 +27,24 @@ public class User {
         this.card = card;
         this.userType = userType;
         this.status = status;
+        this.userCredentials = userCredentials;
     }
 
-    public JSONObject ToJSON(){
-        JSONObject j=new JSONObject();
+    public JSONObject toJson(){
+        JSONObject j = new JSONObject();
         try {
-            j.put("id",id);
-            j.put("name",name);
-            j.put("surname",surname);
-            j.put("age",age);
-            j.put("documentNumber",documentNumber);
-            j.put("gender",gender);
-            j.put("Card",card.ToJSON());
-            j.put("UserType",userType);
-            j.put("status",status);
-        }catch (JSONException jx){
+            j.put("id", id);
+            j.put("name", name);
+            j.put("surname", surname);
+            j.put("age", age);
+            j.put("documentNumber", documentNumber);
+            j.put("gender", gender);
+            j.put("Card", card.toJson());
+            j.put("UserType", userType);
+            j.put("status", status);
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
-
         return j;
     }
 
@@ -101,5 +102,9 @@ public class User {
 
     public boolean getStatus() {
         return status;
+    }
+
+    public UserCredentials getCredentials() {
+        return userCredentials;
     }
 }
