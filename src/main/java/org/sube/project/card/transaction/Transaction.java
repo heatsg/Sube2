@@ -11,46 +11,49 @@ import java.util.Objects;
 
 public class Transaction {
     private static int idCounter = JSONSube.assignID(ID_TYPE.TRANSACTION);
-    private final int id;
+    private int id;
     private LocalDateTime dateTime;
     private TransactionType transactionType;
     private double amount;
 
     public Transaction() {
         this.id = idCounter++;
-        this.dateTime = java.time.LocalDateTime.now();
+        this.dateTime = LocalDateTime.now();
     }
+
     public Transaction(TransactionType transactionType, double amount) {
         this.id = idCounter++;
-        this.dateTime = java.time.LocalDateTime.now();
+        this.dateTime = LocalDateTime.now();
         this.transactionType = transactionType;
         this.amount = amount;
     }
+
     public Transaction(TransactionType transactionType, double amount, String dateTime) {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.parse(dateTime);
         this.transactionType = transactionType;
         this.amount = amount;
     }
-    public Transaction(JSONObject j){
+
+    public Transaction(JSONObject j) {
         try {
             this.id = j.getInt("id");
             this.dateTime = LocalDateTime.parse(j.getString("dateTime"));
-            this.transactionType = transactionType.valueOf(j.getString("transactiontype"));
+            this.transactionType = TransactionType.valueOf(j.getString("transactionType"));
             this.amount = j.getDouble("amount");
-        }catch (JSONException jx){
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJSON() {
         JSONObject j = new JSONObject();
         try {
-            j.put("id",id);
-            j.put("dateTime",dateTime);
-            j.put("transactionType",transactionType);
-            j.put("amount",amount);
-        }catch (JSONException jx){
+            j.put("id", id);
+            j.put("dateTime", dateTime);
+            j.put("transactionType", transactionType);
+            j.put("amount", amount);
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
         return j;

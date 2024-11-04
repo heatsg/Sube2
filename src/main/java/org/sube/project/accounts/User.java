@@ -6,6 +6,8 @@ import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONSube;
 
+import javax.swing.border.SoftBevelBorder;
+
 public class User {
     private final int id;
     private String name, surname;
@@ -25,10 +27,11 @@ public class User {
         this.documentNumber = documentNumber;
         this.gender = gender;
         this.card = card;
-        this.userType = UserType.valueOf(userType.toString());
+        this.userType = userType;
         this.status = status;
         this.userCredentials = userCredentials;
     }
+
     public User(JSONObject j){
         this.id = j.getInt("id");
         this.name = j.getString("name");
@@ -57,8 +60,19 @@ public class User {
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
+
         return j;
     }
+
+    /*public static User convertToUser(JSONObject object) {
+        int id = object.getInt("id");
+        String name = object.getString("name");
+        String surname = object.getString("surname");
+        int age = object.getInt("age");
+        String documentNumber = object.getString("documentNumber");
+        String gender = object.getString("gender");
+        JSONObject card1 = object.getJSONObject("card");
+    }*/
 
     public int getId() {
         return id;

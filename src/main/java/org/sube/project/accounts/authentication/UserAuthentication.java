@@ -6,13 +6,13 @@ import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserCredentials;
 import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
-import org.sube.project.system.TransportSystem;
 import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
 import java.util.Scanner;
 
 public class UserAuthentication {
+
     /**
      * Verifica si el DNI y la contraseña son correctos.
      *
@@ -67,11 +67,10 @@ public class UserAuthentication {
     /**
      * Metodo para registrar un nuevo usuario con sus respectivas caracteristicas
      */
-    public static void register() {
+    public static User getUserData() {
         User newUser = enteredData();
-        TransportSystem transportSystem = new TransportSystem();
-        transportSystem.registerUser(newUser);
-
-        System.out.println("Usuario registrado exitosamente.");
+        return newUser;
     }
+
+
 }

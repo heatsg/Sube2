@@ -13,37 +13,40 @@ import java.util.Set;
 public class Card {
     private final String id;
     private double balance;
-    private final Set<Transaction> transactionHistory;
+    private Set<Transaction> transactionHistory;
     private boolean status;
+    private CardType cardType;
 
     public Card() {
         this.id = JSONSube.generateCardID();
         this.balance = 0;
         this.transactionHistory = new HashSet<>();
         this.status = true;
+        this.cardType = CardType.NORMAL_CARD;
     }
 
-    public Card(String id, double balance, boolean status) {
+    public Card(double balance, boolean status, CardType cardType) {
         this.id = JSONSube.generateCardID();
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
         this.status = status;
+        this.cardType = cardType;
     }
-    public Card(JSONObject j){
-        this.id=j.getString("id");
-        this.balance=j.getDouble("balance");
-        this.transactionHistory=new HashSet<>();
-        JSONArray jarr=j.getJSONArray("transactionHistory");
+
+    public Card(JSONObject j) {
+        this.id = j.getString("id");
+        this.balance = j.getDouble("balance");
+        this.transactionHistory = new HashSet<>();
+        JSONArray jarr = j.getJSONArray("transactionHistory");
         for (int i = 0; i < j.length(); i++) {
             transactionHistory.add(new Transaction(jarr.getJSONObject(i)));
         }
-        this.status=j.getBoolean("status");
+        this.status = j.getBoolean("status");
     }
 
     public double addBalance(double amount) {
         this.balance += amount;
         transactionHistory.add(new Transaction(TransactionType.RECHARGE, amount));
-        // CONTINUAR ACA, NO SE COMO REGISTRAR LA TRANSACCION POR LA ID.
         return amount;
     }
 
@@ -80,5 +83,9 @@ public class Card {
 
     public Set<Transaction> getTransactionHistory() {
         return transactionHistory;
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 }

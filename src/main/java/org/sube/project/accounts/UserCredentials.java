@@ -17,9 +17,10 @@ public class UserCredentials {
         this.documentNumber = documentNumber;
         this.password = password;
     }
-    public UserCredentials(JSONObject j){
-        this.documentNumber=j.getString("documentNumber");
-        this.password=j.getString("password");
+
+    public UserCredentials(JSONObject j) {
+        this.documentNumber = j.getString("documentNumber");
+        this.password = j.getString("password");
     }
 
     public String getDocumentNumber() {
@@ -36,15 +37,5 @@ public class UserCredentials {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * Método para verificar si la contraseña ingresada es correcta.
-     *
-     * @param inputPassword La contraseña proporcionada para verificar.
-     * @return true si la contraseña coincide, false en caso contrario.
-     */
-    public boolean verifyPassword(String inputPassword) {
-        return this.password.equals(inputPassword);
     }
 }

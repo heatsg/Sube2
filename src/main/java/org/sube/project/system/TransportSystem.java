@@ -1,12 +1,8 @@
 package org.sube.project.system;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
-import org.sube.project.util.json.JSONManager;
-import org.sube.project.util.PATH;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,22 +31,21 @@ public class TransportSystem {
         return uncreditedAmount;
     }
 
-    public void registerUser(User user) {
-        users.put(user.getId(), user);
-        cards.put(user.getCard().getId(), user.getCard());
+    // FALTA: DESERIALIZAR JSON A MAP Y TERMINAR FUNCION DE REGISTRO
 
-        UserToFile(user);
-    }
+    public boolean registerUser() {
+        User user = UserAuthentication.getUserData();
 
-    public static void UserToFile(User user) {
-        try {
-            JSONArray jarr = JSONManager.leerJSONArray(PATH.USER);
-            jarr.put(user.toJson());
-            JSONManager.escribir(PATH.USER, jarr);
-        } catch (JSONException jx) {
-            System.out.println(jx.getMessage());
+        if (!(users.containsKey(user.getId()))) {
+            users.put(user.getId(), user);
+            cards.put(user.getCard().getId(), user.getCard());
+            System.out.println("Usuario registrado correctamente.");
+            return true;
+        } else {
+            return false;
         }
     }
+
     public boolean rechargeCard(String cardId, double amount) {
         if (cards.get(cardId) != null) {
             addUncreditedAmount(cardId, amount);
@@ -69,6 +64,7 @@ public class TransportSystem {
 
     public boolean creditIntoCard(String cardId) {
         Card card = cards.get(cardId);
+
         if (card == null) {
             System.out.println("Tarjeta SUBE no encontrada.");
             return false;
