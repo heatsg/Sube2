@@ -1,8 +1,9 @@
-package org.sube.project.util;
+package org.sube.project.util.json;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONTokener;
+import org.sube.project.util.PATH;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

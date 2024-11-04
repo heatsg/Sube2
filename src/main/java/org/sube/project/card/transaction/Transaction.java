@@ -1,7 +1,7 @@
 package org.sube.project.card.transaction;
 
 import org.sube.project.util.ID_TYPE;
-import org.sube.project.util.JSONSube;
+import org.sube.project.util.json.JSONSube;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

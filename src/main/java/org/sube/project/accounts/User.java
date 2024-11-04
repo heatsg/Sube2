@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
-import org.sube.project.util.JSONSube;
+import org.sube.project.util.json.JSONSube;
 
 public class User {
     private final int id;

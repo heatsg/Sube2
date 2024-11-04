@@ -2,7 +2,7 @@ package org.sube.project.accounts.authentication;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.sube.project.util.JSONManager;
+import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
 public class UserLogin {

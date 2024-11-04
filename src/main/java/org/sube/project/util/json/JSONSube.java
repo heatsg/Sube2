@@ -1,8 +1,10 @@
-package org.sube.project.util;
+package org.sube.project.util.json;
 
 import org.json.JSONArray;
 import org.sube.project.exceptions.MalformedIdException;
 import org.sube.project.exceptions.OverflowedIdException;
+import org.sube.project.util.ID_TYPE;
+import org.sube.project.util.PATH;
 
 import java.io.File;
 import java.util.Arrays;

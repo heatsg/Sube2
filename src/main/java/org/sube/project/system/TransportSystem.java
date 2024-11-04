@@ -7,7 +7,7 @@ import org.sube.project.accounts.UserCredentials;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
-import org.sube.project.util.JSONManager;
+import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
 import java.util.HashMap;

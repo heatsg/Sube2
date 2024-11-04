@@ -1,4 +1,4 @@
-package org.sube.project.util;
+package org.sube.project.util.json;
 
 public class JSONFiles {
     public static final String ACCOUNTS_FILE = "accounts.json";
