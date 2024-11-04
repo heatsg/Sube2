@@ -1,5 +1,7 @@
 package org.sube.project.accounts;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.JSONSube;
@@ -24,6 +26,25 @@ public class User {
         this.card = card;
         this.userType = userType;
         this.status = status;
+    }
+
+    public JSONObject userToJSON(){
+        JSONObject j=new JSONObject();
+        try {
+            j.put("id",id);
+            j.put("name",name);
+            j.put("surname",surname);
+            j.put("age",age);
+            j.put("documentNumber",documentNumber);
+            j.put("gender",gender);
+            j.put("Card",card.cardToJSON());
+            j.put("UserType",userType);
+            j.put("status",status);
+        }catch (JSONException jx){
+            System.out.println(jx.getMessage());
+        }
+
+        return j;
     }
 
     public int getId() {
