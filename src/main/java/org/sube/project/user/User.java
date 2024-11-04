@@ -6,14 +6,14 @@ import org.sube.project.util.JSONSube;
 
 public class User {
     private final int id;
-
     private String name, surname;
     private String documentNumber;
     private int age;
     private char gender;
     private final Card card;
+    private final UserType userType;
 
-    public User(String name, String surname, int age, String documentNumber, char gender, Card card) {
+    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
@@ -21,6 +21,7 @@ public class User {
         this.documentNumber = documentNumber;
         this.gender = gender;
         this.card = card;
+        this.userType = userType;
     }
 
     public int getId() {
@@ -69,5 +70,9 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public UserType getUserType() {
+        return userType;
     }
 }

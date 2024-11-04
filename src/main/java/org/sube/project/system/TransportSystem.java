@@ -3,6 +3,7 @@ package org.sube.project.system;
 
 import org.sube.project.card.Card;
 import org.sube.project.user.User;
+import org.sube.project.user.UserType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class TransportSystem {
 
     public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender) {
         Card card = new Card();
-        User user = new User(name, surname, age, documentNumber, gender, card);
+        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER);
 
         users.put(user.getId(), user);
         cards.put(card.getId(), card);
@@ -51,6 +52,7 @@ public class TransportSystem {
             return false;
         }
     }
+
     public void addUncreditedAmount(String cardId, double amount) {
         // Almacena acumulativamente en el map
         uncreditedAmount.put(cardId, uncreditedAmount.get(cardId) + amount);
