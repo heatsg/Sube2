@@ -35,7 +35,7 @@ public class Card {
         return amount;
     }
 
-    public JSONObject cardToJSON(){
+    public JSONObject ToJSON(){
         JSONObject j=new JSONObject();
         try {
             j.put("id",this.id);

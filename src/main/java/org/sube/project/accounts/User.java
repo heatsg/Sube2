@@ -28,7 +28,7 @@ public class User {
         this.status = status;
     }
 
-    public JSONObject userToJSON(){
+    public JSONObject ToJSON(){
         JSONObject j=new JSONObject();
         try {
             j.put("id",id);
@@ -37,7 +37,7 @@ public class User {
             j.put("age",age);
             j.put("documentNumber",documentNumber);
             j.put("gender",gender);
-            j.put("Card",card.cardToJSON());
+            j.put("Card",card.ToJSON());
             j.put("UserType",userType);
             j.put("status",status);
         }catch (JSONException jx){
