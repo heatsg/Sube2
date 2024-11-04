@@ -1,9 +1,13 @@
 package org.sube.project.system;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
+import org.sube.project.util.JSONManager;
+import org.sube.project.util.PATH;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,9 +43,20 @@ public class TransportSystem {
         users.put(user.getId(), user);
         cards.put(card.getId(), card);
 
+        TransportSystem.UserToFile(user);
+
         return user;
     }
 
+    public static void UserToFile(User user){
+        try {
+            JSONArray jarr = JSONManager.leerJSONArray(PATH.USER);
+            jarr.put(user.ToJSON());
+            JSONManager.escribir(PATH.USER, jarr);
+        }catch (JSONException jx){
+            System.out.println(jx.getMessage());
+        }
+    }
     public boolean rechargeCard(String cardId, double amount) {
         if (cards.get(cardId) != null) {
             addUncreditedAmount(cardId, amount);
