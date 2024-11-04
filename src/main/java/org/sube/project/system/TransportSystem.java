@@ -3,10 +3,8 @@ package org.sube.project.system;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.sube.project.accounts.UserCredentials;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
-import org.sube.project.accounts.UserType;
 import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
@@ -37,12 +35,11 @@ public class TransportSystem {
         return uncreditedAmount;
     }
 
-    public User registerUser(User user) {
+    public void registerUser(User user) {
         users.put(user.getId(), user);
         cards.put(user.getCard().getId(), user.getCard());
 
         UserToFile(user);
-        return user;
     }
 
     public static void UserToFile(User user) {

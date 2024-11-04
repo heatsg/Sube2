@@ -64,6 +64,9 @@ public class UserAuthentication {
         return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, card, userType, status, userCredentials);
     }
 
+    /**
+     * Metodo para registrar un nuevo usuario con sus respectivas caracteristicas
+     */
     public static void register() {
         User newUser = enteredData();
         TransportSystem transportSystem = new TransportSystem();

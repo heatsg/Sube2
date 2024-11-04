@@ -14,25 +14,27 @@ public class Card {
     private double balance;
     private final Set<Transaction> transactionHistory;
     private boolean status;
+    private CardType cardType;
 
     public Card() {
         this.id = JSONSube.generateCardID();
         this.balance = 0;
         this.transactionHistory = new HashSet<>();
         this.status = true;
+        this.cardType = CardType.valueOf(CardType.NORMAL_CARD.toString());
     }
 
-    public Card(String id, double balance, boolean status) {
+    public Card(String id, double balance, boolean status, CardType cardType) {
         this.id = JSONSube.generateCardID();
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
         this.status = status;
+        this.cardType = CardType.valueOf(cardType.toString());
     }
 
     public double addBalance(double amount) {
         this.balance += amount;
         transactionHistory.add(new Transaction(TransactionType.RECHARGE, amount));
-        // CONTINUAR ACA, NO SE COMO REGISTRAR LA TRANSACCION POR LA ID.
         return amount;
     }
 
@@ -69,5 +71,9 @@ public class Card {
 
     public Set<Transaction> getTransactionHistory() {
         return transactionHistory;
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 }
