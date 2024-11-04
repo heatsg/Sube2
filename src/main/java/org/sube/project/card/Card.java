@@ -19,6 +19,7 @@ public class Card {
         this.id = JSONSube.generateCardID();
         this.balance = 0;
         this.transactionHistory = new HashSet<>();
+        this.status = true;
     }
 
     public Card(String id, double balance, boolean status) {
@@ -35,14 +36,15 @@ public class Card {
         return amount;
     }
 
-    public JSONObject toJson(){
-        JSONObject j=new JSONObject();
+    public JSONObject toJson() {
+        JSONObject j = new JSONObject();
+
         try {
-            j.put("id",this.id);
-            j.put("balance",this.balance);
-            j.put("transactionHsitory",this.transactionHistory);
-            j.put("status",this.status);
-        }catch (JSONException jx){
+            j.put("id", this.id);
+            j.put("balance", this.balance);
+            j.put("transactionHistory", this.transactionHistory);
+            j.put("status", this.status);
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
 

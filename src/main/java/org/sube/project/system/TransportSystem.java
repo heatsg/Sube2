@@ -37,24 +37,20 @@ public class TransportSystem {
         return uncreditedAmount;
     }
 
-    public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender, UserCredentials credentials) {
-        Card card = new Card();
-        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER, true, credentials);
-
+    public User registerUser(User user) {
         users.put(user.getId(), user);
-        cards.put(card.getId(), card);
+        cards.put(user.getCard().getId(), user.getCard());
 
         UserToFile(user);
-
         return user;
     }
 
-    public static void UserToFile(User user){
+    public static void UserToFile(User user) {
         try {
             JSONArray jarr = JSONManager.leerJSONArray(PATH.USER);
             jarr.put(user.toJson());
             JSONManager.escribir(PATH.USER, jarr);
-        }catch (JSONException jx){
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
     }

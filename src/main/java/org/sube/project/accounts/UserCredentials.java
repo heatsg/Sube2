@@ -10,6 +10,7 @@ public class UserCredentials {
      * @param documentNumber
      * @param password
      */
+
     public UserCredentials(String documentNumber, String password) {
         this.documentNumber = documentNumber;
         this.password = password;

@@ -11,13 +11,13 @@ public class User {
     private String name, surname;
     private String documentNumber;
     private int age;
-    private char gender;
+    private String gender;
     private final Card card;
     private UserType userType;
     private boolean status;
     private UserCredentials userCredentials;
 
-    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType, boolean status, UserCredentials userCredentials) {
+    public User(String name, String surname, int age, String documentNumber, String gender, Card card, UserType userType, boolean status, UserCredentials userCredentials) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
@@ -32,6 +32,7 @@ public class User {
 
     public JSONObject toJson(){
         JSONObject j = new JSONObject();
+
         try {
             j.put("id", id);
             j.put("name", name);
@@ -42,9 +43,11 @@ public class User {
             j.put("Card", card.toJson());
             j.put("UserType", userType);
             j.put("status", status);
+            j.put("password", userCredentials.getPassword());
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
+
         return j;
     }
 
@@ -64,11 +67,11 @@ public class User {
         return card;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
