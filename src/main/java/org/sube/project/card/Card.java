@@ -1,5 +1,6 @@
 package org.sube.project.card;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
@@ -27,6 +28,16 @@ public class Card {
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
         this.status = status;
+    }
+    public Card(JSONObject j){
+        this.id=j.getString("id");
+        this.balance=j.getDouble("balance");
+        this.transactionHistory=new HashSet<>();
+        JSONArray jarr=j.getJSONArray("transactionHistory");
+        for (int i = 0; i < j.length(); i++) {
+            transactionHistory.add(new Transaction(jarr.getJSONObject(i)));
+        }
+        this.status=j.getBoolean("status");
     }
 
     public double addBalance(double amount) {
