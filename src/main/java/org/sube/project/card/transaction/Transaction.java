@@ -1,5 +1,7 @@
 package org.sube.project.card.transaction;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONSube;
 
@@ -29,6 +31,29 @@ public class Transaction {
         this.dateTime = LocalDateTime.parse(dateTime);
         this.transactionType = transactionType;
         this.amount = amount;
+    }
+    public Transaction(JSONObject j){
+        try {
+            this.id = j.getInt("id");
+            this.dateTime = LocalDateTime.parse(j.getString("dateTime"));
+            this.transactionType = transactionType.valueOf(j.getString("transactiontype"));
+            this.amount = j.getDouble("amount");
+        }catch (JSONException jx){
+            System.out.println(jx.getMessage());
+        }
+    }
+
+    public JSONObject toJSON(){
+        JSONObject j = new JSONObject();
+        try {
+            j.put("id",id);
+            j.put("dateTime",dateTime);
+            j.put("transactionType",transactionType);
+            j.put("amount",amount);
+        }catch (JSONException jx){
+            System.out.println(jx.getMessage());
+        }
+        return j;
     }
 
     public int getId() {

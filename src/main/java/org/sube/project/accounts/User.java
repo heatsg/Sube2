@@ -29,10 +29,21 @@ public class User {
         this.status = status;
         this.userCredentials = userCredentials;
     }
+    public User(JSONObject j){
+        this.id = j.getInt("id");
+        this.name = j.getString("name");
+        this.surname = j.getString("surname");
+        this.age = j.getInt("age");
+        this.documentNumber = j.getString("documentnumber");
+        this.gender = j.getString("gender");
+        this.card = new Card(j.getJSONObject("Card"));
+        this.userType = UserType.valueOf(j.getString("userType"));
+        this.status = j.getBoolean("status");
+        this.userCredentials = new UserCredentials(j.getJSONObject("userCredentials"));
+    }
 
     public JSONObject toJson(){
         JSONObject j = new JSONObject();
-
         try {
             j.put("id", id);
             j.put("name", name);
@@ -43,11 +54,9 @@ public class User {
             j.put("Card", card.toJson());
             j.put("UserType", userType);
             j.put("status", status);
-            j.put("password", userCredentials.getPassword());
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
-
         return j;
     }
 

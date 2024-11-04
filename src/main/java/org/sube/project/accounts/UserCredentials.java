@@ -1,5 +1,7 @@
 package org.sube.project.accounts;
 
+import org.json.JSONObject;
+
 public class UserCredentials {
     private String documentNumber;
     private String password;
@@ -14,6 +16,10 @@ public class UserCredentials {
     public UserCredentials(String documentNumber, String password) {
         this.documentNumber = documentNumber;
         this.password = password;
+    }
+    public UserCredentials(JSONObject j){
+        this.documentNumber=j.getString("documentNumber");
+        this.password=j.getString("password");
     }
 
     public String getDocumentNumber() {
