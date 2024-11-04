@@ -1,4 +1,4 @@
-package org.sube.project.user;
+package org.sube.project.accounts;
 
 import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
@@ -12,8 +12,9 @@ public class User {
     private char gender;
     private final Card card;
     private final UserType userType;
+    private final boolean status;
 
-    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType) {
+    public User(String name, String surname, int age, String documentNumber, char gender, Card card, UserType userType, boolean status) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
@@ -22,6 +23,7 @@ public class User {
         this.gender = gender;
         this.card = card;
         this.userType = userType;
+        this.status = status;
     }
 
     public int getId() {
@@ -74,5 +76,9 @@ public class User {
 
     public UserType getUserType() {
         return userType;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 }

@@ -2,8 +2,8 @@ package org.sube.project.system;
 
 
 import org.sube.project.card.Card;
-import org.sube.project.user.User;
-import org.sube.project.user.UserType;
+import org.sube.project.accounts.User;
+import org.sube.project.accounts.UserType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class TransportSystem {
 
     public User registerUser(int identifier, String name, String surname, int age, String documentNumber, char gender) {
         Card card = new Card();
-        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER);
+        User user = new User(name, surname, age, documentNumber, gender, card, UserType.NORMAL_USER, true);
 
         users.put(user.getId(), user);
         cards.put(card.getId(), card);

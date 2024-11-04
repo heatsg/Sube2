@@ -11,6 +11,7 @@ public class Card {
     private final String id;
     private double balance;
     private final Set<Transaction> transactionHistory;
+    private boolean status;
 
     public Card() {
         this.id = JSONSube.generateCardID();
@@ -18,10 +19,11 @@ public class Card {
         this.transactionHistory = new HashSet<>();
     }
 
-    public Card(String id, double balance) {
+    public Card(String id, double balance, boolean status) {
         this.id = JSONSube.generateCardID();
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
+        this.status = status;
     }
 
     public double addBalance(double amount) {

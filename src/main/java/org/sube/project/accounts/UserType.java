@@ -1,4 +1,4 @@
-package org.sube.project.user;
+package org.sube.project.accounts;
 
 public enum UserType {
     ADMIN("Administrador"),
