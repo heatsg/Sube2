@@ -1,6 +1,5 @@
 package org.sube.project.card;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
@@ -13,13 +12,14 @@ import java.util.Set;
 public class Card {
     private final String id;
     private double balance;
-    private  Set<Transaction> transactionHistory;
+    private final Set<Transaction> transactionHistory;
     private boolean status;
 
     public Card() {
         this.id = JSONSube.generateCardID();
         this.balance = 0;
         this.transactionHistory = new HashSet<>();
+        this.status = true;
     }
 
     public Card(String id, double balance, boolean status) {
@@ -27,17 +27,6 @@ public class Card {
         this.balance = balance;
         this.transactionHistory = new HashSet<>();
         this.status = status;
-    }
-    public Card(JSONObject j){
-        this.id= j.getString("id");
-        this.balance=j.getDouble("balance");
-        this.transactionHistory=new HashSet<>();
-        JSONArray jarr=j.getJSONArray("transactionHistory");
-        int i=0;
-        while (i< j.length()){
-            transactionHistory.add(new Transaction(jarr.getJSONObject(i)));
-        }
-        this.status= j.getBoolean("status");
     }
 
     public double addBalance(double amount) {
@@ -47,14 +36,15 @@ public class Card {
         return amount;
     }
 
-    public JSONObject toJson(){
-        JSONObject j=new JSONObject();
+    public JSONObject toJson() {
+        JSONObject j = new JSONObject();
+
         try {
-            j.put("id",this.id);
-            j.put("balance",this.balance);
-            j.put("transactionHsitory",this.transactionHistory);
-            j.put("status",this.status);
-        }catch (JSONException jx){
+            j.put("id", this.id);
+            j.put("balance", this.balance);
+            j.put("transactionHistory", this.transactionHistory);
+            j.put("status", this.status);
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
 

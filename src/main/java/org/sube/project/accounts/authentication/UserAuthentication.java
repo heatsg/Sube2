@@ -20,7 +20,7 @@ public class UserAuthentication {
      * @param password La contraseña del usuario.
      * @return true si las credenciales son válidas, false en caso contrario.
      */
-    public boolean login(String documentNumber, String password) {
+    public static boolean login(String documentNumber, String password) {
         JSONArray users = JSONManager.leerJSONArray(PATH.USER);
 
         for (int i = 0; i < users.length(); i++) {
@@ -35,7 +35,7 @@ public class UserAuthentication {
         return false;
     }
 
-    private User enteredData() {
+    private static User enteredData() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingrese nombre:");
@@ -64,7 +64,10 @@ public class UserAuthentication {
         return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, card, userType, status, userCredentials);
     }
 
-    public void register() {
+    /**
+     * Metodo para registrar un nuevo usuario con sus respectivas caracteristicas
+     */
+    public static void register() {
         User newUser = enteredData();
         TransportSystem transportSystem = new TransportSystem();
         transportSystem.registerUser(newUser);

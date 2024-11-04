@@ -25,7 +25,7 @@ public class User {
         this.documentNumber = documentNumber;
         this.gender = gender;
         this.card = card;
-        this.userType = userType;
+        this.userType = UserType.valueOf(userType.toString());
         this.status = status;
         this.userCredentials = userCredentials;
     }
