@@ -8,6 +8,7 @@ import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import javax.swing.border.SoftBevelBorder;
+import java.util.Objects;
 
 public class User implements JSONCompatible {
     private final int id;
@@ -135,5 +136,18 @@ public class User implements JSONCompatible {
 
     public UserCredentials getCredentials() {
         return userCredentials;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        User user = (User) object;
+        return Objects.equals(documentNumber, user.documentNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(documentNumber);
     }
 }

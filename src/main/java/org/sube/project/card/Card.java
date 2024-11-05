@@ -9,6 +9,7 @@ import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Card implements JSONCompatible {
@@ -88,5 +89,18 @@ public class Card implements JSONCompatible {
 
     public CardType getCardType() {
         return cardType;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Card card = (Card) object;
+        return Objects.equals(id, card.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
