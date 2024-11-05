@@ -133,6 +133,10 @@ public class User implements JSONCompatible {
         return status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

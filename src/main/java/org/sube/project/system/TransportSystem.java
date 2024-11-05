@@ -44,6 +44,13 @@ public class TransportSystem {
         JSONManager.collectionToFile(users.values(), PATH.USER, true);
         JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
     }
+    public void updateCardsJSON(){
+        JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
+    }
+    public void updateUsersJSON(){
+        JSONManager.collectionToFile(users.values(), PATH.USER, true);
+    }
+
 
     private void saveUncreditedAmountsIntoJSON() {
         JSONArray jarr = new JSONArray();
@@ -135,4 +142,23 @@ public class TransportSystem {
         System.out.println("Cargas acreditadas, saldo final: " + card.getBalance());
         return true;
     }
+
+    public boolean dropCard (String id){
+        if(cards.containsKey(id)){
+            cards.get(id).setStatus(false);
+            updateCardsJSON();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dropUser (int id){
+        if(users.containsKey(id)){
+            users.get(id).setStatus(false);
+            updateUsersJSON();
+            return true;
+        }
+        return false;
+    }
+
 }
