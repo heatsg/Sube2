@@ -4,36 +4,36 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONTokener;
-import org.sube.project.accounts.User;
 import org.sube.project.util.PATH;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 
 public class JSONManager {
-    public static void escribir(PATH path, JSONObject json) {
-        escribir(path.toString(), json);
+    public static void write(PATH path, JSONObject json) {
+        write(path.toString(), json);
     }
-    public static void escribir(PATH path, JSONArray json) {
-        escribir(path.toString(), json);
+    public static void write(PATH path, JSONArray json) {
+        write(path.toString(), json);
     }
-    public static JSONObject leerJSONObject(PATH path) {
-        return leerJSONObject(path.toString());
+    public static JSONObject readJSONObject(PATH path) {
+        return readJSONObject(path.toString());
     }
-    public static JSONArray leerJSONArray(PATH path) {
-        return leerJSONArray(path.toString());
+    public static JSONArray readJSONArray(PATH path) {
+        return readJSONArray(path.toString());
     }
 
-    public static void escribir(String path, JSONObject json) {
-        try (FileWriter file = new FileWriter(path);) {
+    public static void write(String path, JSONObject json) {
+        try (FileWriter file = new FileWriter(path)) {
             file.write(json.toString(4));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void escribir(String path, JSONArray json) {
+    public static void write(String path, JSONArray json) {
         try (FileWriter file = new FileWriter(path)) {
             file.write(json.toString(4));
         } catch (IOException e) {
@@ -41,11 +41,11 @@ public class JSONManager {
         }
     }
 
-    public static JSONObject leerJSONObject(String path) {
+    public static JSONObject readJSONObject(String path) {
         return new JSONObject(getTokener(path));
     }
 
-    public static JSONArray leerJSONArray(String path) {
+    public static JSONArray readJSONArray(String path) {
         JSONTokener tokener = getTokener(path);
 
         if (tokener == null) {
@@ -71,16 +71,35 @@ public class JSONManager {
         return tokener;
     }
 
-    public static void UserToFile(User user) {
+    public static <T extends JSONCompatible> void objectToFile(T obj, PATH path, boolean overwrite) {
+        JSONArray jarr;
+        if (overwrite)
+            jarr = new JSONArray();
+        else
+            jarr = JSONManager.readJSONArray(path);
+
         try {
-            JSONArray jarr = JSONManager.leerJSONArray(PATH.USER);
-            jarr.put(user.toJson());
-            JSONManager.escribir(PATH.USER, jarr);
+            jarr.put(obj.toJSON());
+            JSONManager.write(path, jarr);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
+            jx.printStackTrace();
         }
     }
+    public static <T extends JSONCompatible> void collectionToFile(Collection<T> collection, PATH path, boolean overwrite) {
+        JSONArray jarr;
+        if (overwrite)
+            jarr = new JSONArray();
+        else
+            jarr = JSONManager.readJSONArray(path);
 
-
-
+        try {
+            for (T obj : collection)
+                jarr.put(obj.toJSON());
+            JSONManager.write(path, jarr);
+        } catch (JSONException jx) {
+            System.out.println(jx.getMessage());
+            jx.printStackTrace();
+        }
+    }
 }

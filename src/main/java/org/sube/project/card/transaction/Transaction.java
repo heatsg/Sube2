@@ -3,13 +3,14 @@ package org.sube.project.card.transaction;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.util.ID_TYPE;
+import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Transaction {
+public class Transaction implements JSONCompatible {
     private static int idCounter = JSONSube.assignID(ID_TYPE.TRANSACTION);
     private int id;
     private LocalDateTime dateTime;
@@ -55,6 +56,7 @@ public class Transaction {
             j.put("amount", amount);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
+            jx.printStackTrace();
         }
         return j;
     }

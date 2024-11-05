@@ -2,8 +2,9 @@ package org.sube.project.bus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.util.json.JSONCompatible;
 
-public class Bus {
+public class Bus implements JSONCompatible {
     public Lines line;
     public int capacity;
     public boolean disabled;
@@ -12,6 +13,12 @@ public class Bus {
         this.line = line;
         this.capacity = capacity;
         this.disabled = disabled;
+    }
+
+    public Bus(JSONObject j) {
+        this.line = Lines.valueOf(String.valueOf(j.getInt("line")));
+        this.capacity = j.getInt("capacity");
+        this.disabled = j.getBoolean("disabled");
     }
 
     public Lines getLine() {
@@ -38,24 +45,18 @@ public class Bus {
         this.capacity = capacity;
     }
 
-    public JSONObject toJson() {
+    public JSONObject toJSON() {
+        JSONObject j = new JSONObject();
+
         try {
-            JSONObject object = new JSONObject();
-            object.put("line", line);
-            object.put("capacity", capacity);
-            object.put("disabled", disabled);
-            return object;
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-            return null;
+            j.put("line", line);
+            j.put("capacity", capacity);
+            j.put("disabled", disabled);
+        } catch (JSONException jx) {
+            System.err.println(jx.getMessage());
+            jx.printStackTrace();
         }
-    }
 
-    public Bus convertToBus(JSONObject object) {
-        Lines line = Lines.valueOf(String.valueOf(object.getInt("line")));
-        int capacity = object.getInt("capacity");
-        boolean disabled = object.getBoolean("disabled");
-
-        return new Bus(line, capacity, disabled);
+        return j;
     }
 }

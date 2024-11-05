@@ -5,12 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
+import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Card {
+public class Card implements JSONCompatible {
     private final String id;
     private double balance;
     private Set<Transaction> transactionHistory;
@@ -50,7 +51,7 @@ public class Card {
         return amount;
     }
 
-    public JSONObject toJson() {
+    public JSONObject toJSON() {
         JSONObject j = new JSONObject();
 
         try {

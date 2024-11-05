@@ -19,7 +19,7 @@ public class JSONSube {
 
     public static int assignID(String idType) {
         if (!(new File(PATH.ID_COUNTERS.toString())).isFile()) return 0; // Si no encuentra el archivo retorna el valor inicial (0)
-        return JSONManager.leerJSONObject(PATH.ID_COUNTERS).getInt(idType);
+        return JSONManager.readJSONObject(PATH.ID_COUNTERS).getInt(idType);
     }
 
     public static byte[] assignCardCounterID() {
@@ -27,7 +27,7 @@ public class JSONSube {
 
         if (!(new File(PATH.ID_COUNTERS.toString())).isFile()) return array; // Si no encuentra el archivo retorna el valor inicial (0000 0000 0000)
 
-        JSONArray json = JSONManager.leerJSONArray(PATH.ID_COUNTERS);
+        JSONArray json = JSONManager.readJSONArray(PATH.ID_COUNTERS);
         for (int i = 0; i < TAMANO_ID; i++) {
             array[i] = (byte) json.getInt(i);
         }

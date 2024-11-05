@@ -21,7 +21,7 @@ public class UserAuthentication {
      * @return true si las credenciales son válidas, false en caso contrario.
      */
     public static boolean login(String documentNumber, String password) {
-        JSONArray users = JSONManager.leerJSONArray(PATH.USER);
+        JSONArray users = JSONManager.readJSONArray(PATH.USER);
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
@@ -50,7 +50,7 @@ public class UserAuthentication {
         System.out.println("Ingrese documento:");
         String storedDocument = scanner.next();
 
-        System.out.println("Ingrese genero:");
+        System.out.println("Ingrese género:");
         String storedGender = scanner.next();
 
         System.out.println("Ingrese contraseña:");

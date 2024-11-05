@@ -4,11 +4,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
+import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import javax.swing.border.SoftBevelBorder;
 
-public class User {
+public class User implements JSONCompatible {
     private final int id;
     private String name, surname;
     private String documentNumber;
@@ -45,8 +46,9 @@ public class User {
         this.userCredentials = new UserCredentials(j.getJSONObject("userCredentials"));
     }
 
-    public JSONObject toJson(){
+    public JSONObject toJSON(){
         JSONObject j = new JSONObject();
+
         try {
             j.put("id", id);
             j.put("name", name);
@@ -54,9 +56,10 @@ public class User {
             j.put("age", age);
             j.put("documentNumber", documentNumber);
             j.put("gender", gender);
-            j.put("Card", card.toJson());
-            j.put("UserType", userType);
+            j.put("Card", card.toJSON());
+            j.put("userType", userType);
             j.put("status", status);
+            j.put("userCredentials", userCredentials.toJSON());
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }

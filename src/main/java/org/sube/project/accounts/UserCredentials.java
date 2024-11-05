@@ -1,8 +1,10 @@
 package org.sube.project.accounts;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.util.json.JSONCompatible;
 
-public class UserCredentials {
+public class UserCredentials implements JSONCompatible {
     private String documentNumber;
     private String password;
 
@@ -37,5 +39,20 @@ public class UserCredentials {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject j = new JSONObject();
+
+        try {
+            j.put("documentNumber", documentNumber);
+            j.put("password", password);
+        } catch (JSONException jx) {
+            System.err.println(jx.getMessage());
+            jx.printStackTrace();
+        }
+
+        return j;
     }
 }
