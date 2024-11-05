@@ -7,7 +7,6 @@ import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
-import javax.swing.border.SoftBevelBorder;
 import java.util.Objects;
 
 public class User implements JSONCompatible {
@@ -19,9 +18,9 @@ public class User implements JSONCompatible {
     private final Card card;
     private UserType userType;
     private boolean status;
-    private UserCredentials userCredentials;
+    private String password;
 
-    public User(String name, String surname, int age, String documentNumber, String gender, Card card, UserType userType, boolean status, UserCredentials userCredentials) {
+    public User(String name, String surname, int age, String documentNumber, String gender, Card card, UserType userType, boolean status, String password) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
@@ -31,7 +30,7 @@ public class User implements JSONCompatible {
         this.card = card;
         this.userType = userType;
         this.status = status;
-        this.userCredentials = userCredentials;
+        this.password = password;
     }
 
     public User(JSONObject j){
@@ -39,12 +38,12 @@ public class User implements JSONCompatible {
         this.name = j.getString("name");
         this.surname = j.getString("surname");
         this.age = j.getInt("age");
-        this.documentNumber = j.getString("documentnumber");
+        this.documentNumber = j.getString("documentNumber");
         this.gender = j.getString("gender");
         this.card = new Card(j.getJSONObject("Card"));
         this.userType = UserType.valueOf(j.getString("userType"));
         this.status = j.getBoolean("status");
-        this.userCredentials = new UserCredentials(j.getJSONObject("userCredentials"));
+        this.password = j.getString("password");
     }
 
     public JSONObject toJSON(){
@@ -60,7 +59,7 @@ public class User implements JSONCompatible {
             j.put("Card", card.toJSON());
             j.put("userType", userType);
             j.put("status", status);
-            j.put("userCredentials", userCredentials.toJSON());
+            j.put("password", password);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
@@ -132,10 +131,6 @@ public class User implements JSONCompatible {
 
     public boolean getStatus() {
         return status;
-    }
-
-    public UserCredentials getCredentials() {
-        return userCredentials;
     }
 
     @Override

@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
+import org.sube.project.card.CardManager;
+import org.sube.project.exceptions.UserAlreadyExistsException;
 import org.sube.project.util.PATH;
 import org.sube.project.util.json.JSONManager;
 
@@ -13,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransportSystem {
+
+    CardManager cardManager = new CardManager();
 
     private final Map<Integer, User> users;
     private final Map<String, Card> cards;
@@ -39,8 +43,8 @@ public class TransportSystem {
     public void saveIntoJSON() {
         JSONManager.collectionToFile(users.values(), PATH.USER, true);
         JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
-
     }
+
     private void saveUncreditedAmountsIntoJSON() {
         JSONArray jarr = new JSONArray();
 
@@ -83,19 +87,22 @@ public class TransportSystem {
         }
     }
 
-    // FALTA: TERMINAR FUNCION DE REGISTRO
-
-    public boolean registerUser() {
+    public void registerUser() throws UserAlreadyExistsException {
         User user = UserAuthentication.getUserData();
 
-        if (!(users.containsKey(user.getId()))) {
-            users.put(user.getId(), user);
-            cards.put(user.getCard().getId(), user.getCard());
-            System.out.println("Usuario registrado correctamente.");
-            return true;
-        } else {
-            return false;
+        try {
+            if (!(users.containsKey(user.getId()))) {
+                users.put(user.getId(), user);
+                cards.put(user.getCard().getId(), user.getCard());
+                saveIntoJSON();
+                System.out.println("Usuario registrado correctamente.");
+            } else {
+                throw new UserAlreadyExistsException("Error: El usuario ya existe.");
+            }
+        } catch (UserAlreadyExistsException ex) {
+            System.out.println(ex.getMessage());
         }
+
     }
 
     public boolean rechargeCard(String cardId, double amount) {
@@ -122,7 +129,7 @@ public class TransportSystem {
             return false;
         }
 
-        card.addBalance(uncreditedAmounts.get(cardId));
+        cardManager.addBalance(card, uncreditedAmounts.get(cardId));
         uncreditedAmounts.remove(cardId);
 
         System.out.println("Cargas acreditadas, saldo final: " + card.getBalance());

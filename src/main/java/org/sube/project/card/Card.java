@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
-import org.sube.project.card.transaction.TransactionType;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
@@ -46,12 +45,6 @@ public class Card implements JSONCompatible {
         this.status = j.getBoolean("status");
     }
 
-    public double addBalance(double amount) {
-        this.balance += amount;
-        transactionHistory.add(new Transaction(TransactionType.RECHARGE, amount));
-        return amount;
-    }
-
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
 
@@ -89,6 +82,14 @@ public class Card implements JSONCompatible {
 
     public CardType getCardType() {
         return cardType;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

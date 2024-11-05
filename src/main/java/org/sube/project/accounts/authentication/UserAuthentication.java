@@ -3,9 +3,9 @@ package org.sube.project.accounts.authentication;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sube.project.accounts.User;
-import org.sube.project.accounts.UserCredentials;
 import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
+import org.sube.project.exceptions.IncorrectCredentialsException;
 import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
@@ -20,7 +20,7 @@ public class UserAuthentication {
      * @param password La contraseña del usuario.
      * @return true si las credenciales son válidas, false en caso contrario.
      */
-    public static boolean login(String documentNumber, String password) {
+    public static boolean login(String documentNumber, String password) throws IncorrectCredentialsException {
         JSONArray users = JSONManager.readJSONArray(PATH.USER);
 
         for (int i = 0; i < users.length(); i++) {
@@ -30,6 +30,8 @@ public class UserAuthentication {
 
             if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password)) {
                 return true;
+            } else {
+                throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
             }
         }
         return false;
@@ -59,9 +61,8 @@ public class UserAuthentication {
         Card card = new Card();
         UserType userType = UserType.NORMAL_USER;
         boolean status = true;
-        UserCredentials userCredentials = new UserCredentials(storedDocument, password);
 
-        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, card, userType, status, userCredentials);
+        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, card, userType, status, password);
     }
 
     /**

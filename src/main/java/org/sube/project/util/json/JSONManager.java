@@ -16,12 +16,15 @@ public class JSONManager {
     public static void write(PATH path, JSONObject json) {
         write(path.toString(), json);
     }
+
     public static void write(PATH path, JSONArray json) {
         write(path.toString(), json);
     }
+
     public static JSONObject readJSONObject(PATH path) {
         return readJSONObject(path.toString());
     }
+
     public static JSONArray readJSONArray(PATH path) {
         return readJSONArray(path.toString());
     }
@@ -33,6 +36,7 @@ public class JSONManager {
             e.printStackTrace();
         }
     }
+
     public static void write(String path, JSONArray json) {
         try (FileWriter file = new FileWriter(path)) {
             file.write(json.toString(4));
@@ -86,13 +90,13 @@ public class JSONManager {
             jx.printStackTrace();
         }
     }
+
     public static <T extends JSONCompatible> void collectionToFile(Collection<T> collection, PATH path, boolean overwrite) {
         JSONArray jarr;
         if (overwrite)
             jarr = new JSONArray();
         else
             jarr = JSONManager.readJSONArray(path);
-
         try {
             for (T obj : collection)
                 jarr.put(obj.toJSON());
