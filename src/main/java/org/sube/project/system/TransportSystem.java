@@ -78,23 +78,23 @@ public class TransportSystem {
 
     public void loadFromJSON() {
         users.clear();
-        JSONArray jarr = JSONManager.readJSONArray(PATH.USER);
-        for (int i = 0; i < jarr.length(); i++) {
-            User user = new User(jarr.getJSONObject(i));
+        JSONArray usersArray = JSONManager.readJSONArray(PATH.USER);
+        for (int i = 0; i < usersArray.length(); i++) {
+            User user = new User(usersArray.getJSONObject(i));
             users.put(user.getId(), user);
         }
 
         cards.clear();
-        jarr = JSONManager.readJSONArray(PATH.CARD);
-        for (int i = 0; i < jarr.length(); i++) {
-            Card card = new Card(jarr.getJSONObject(i));
+        JSONArray cardsArray = JSONManager.readJSONArray(PATH.CARD);
+        for (int i = 0; i < cardsArray.length(); i++) {
+            Card card = new Card(cardsArray.getJSONObject(i));
             cards.put(card.getId(), card);
         }
 
         uncreditedAmounts.clear();
-        jarr = JSONManager.readJSONArray(PATH.UNCREDITED);
-        for (int i = 0; i < jarr.length(); i++) {
-            JSONObject uncreditedAmountJSON = jarr.getJSONObject(i);
+        JSONArray uncreditedArray = JSONManager.readJSONArray(PATH.UNCREDITED);
+        for (int i = 0; i < uncreditedArray.length(); i++) {
+            JSONObject uncreditedAmountJSON = uncreditedArray.getJSONObject(i);
             uncreditedAmounts.put(uncreditedAmountJSON.getString("id"), uncreditedAmountJSON.getDouble("amount"));
         }
     }
@@ -143,8 +143,26 @@ public class TransportSystem {
 
         cardManager.addBalance(card, uncreditedAmounts.get(cardId));
         uncreditedAmounts.remove(cardId);
+        cards.put(card.getId(), card);
+        updateCardsJSON();
 
         System.out.println("Cargas acreditadas, saldo final: " + card.getBalance());
+        return true;
+    }
+
+    public boolean pay(String cardId) {
+        Card card = cards.get(cardId);
+
+        if (card == null) {
+            System.out.println("Tarjeta SUBE no encontrada.");
+            return false;
+        }
+
+        cardManager.payTicket(card);
+        cards.put(card.getId(), card);
+        updateCardsJSON();
+
+        System.out.println("Viaje pagado, Nuevo Saldo: " + card.getBalance());
         return true;
     }
 

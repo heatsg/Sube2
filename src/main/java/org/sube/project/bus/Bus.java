@@ -59,4 +59,5 @@ public class Bus implements JSONCompatible {
 
         return j;
     }
+
 }

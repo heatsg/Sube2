@@ -4,6 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
+import org.sube.project.card.transaction.TransactionType;
+import org.sube.project.card.transaction.types.TransactionPayment;
+import org.sube.project.card.transaction.types.TransactionRecharge;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
@@ -41,7 +44,11 @@ public class Card implements JSONCompatible {
         this.transactionHistory = new LinkedHashSet<>();
         JSONArray jarr = j.getJSONArray("transactionHistory");
         for (int i = 0; i < j.length(); i++) {
-            transactionHistory.add(new Transaction(jarr.getJSONObject(i)));
+            if(jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())){
+                transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
+            }
+            else transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
+
         }
         this.status = j.getBoolean("status");
     }

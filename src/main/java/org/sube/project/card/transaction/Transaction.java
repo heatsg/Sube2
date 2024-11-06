@@ -14,6 +14,7 @@ public abstract class Transaction implements JSONCompatible {
     private static int idCounter = JSONSube.assignID(ID_TYPE.TRANSACTION);
     private int id;
     private LocalDateTime dateTime;
+    private TransactionType transactionType;
     private double amount;
 
     public Transaction() {
@@ -76,6 +77,13 @@ public abstract class Transaction implements JSONCompatible {
         this.dateTime = dateTime;
     }
 
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
 
     public void viewTransaction() {
         System.out.println(this);
