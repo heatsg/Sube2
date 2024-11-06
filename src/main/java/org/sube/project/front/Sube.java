@@ -1,11 +1,15 @@
 package org.sube.project.front;
 
 import org.sube.project.front.auth.Login;
+import org.sube.project.front.auth.Register;
+import org.sube.project.util.Utilities;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * SUBE: Interfaz grafica del menu principal de la aplicacion.
@@ -56,17 +60,34 @@ public class Sube {
         crearCuentaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(subePanel);
+                frame.dispose();
 
+                Register register = new Register();
+                register.showUI(true);
             }
         });
     }
 
-    public void showUI() {
+    public void showUI(boolean input) {
         JFrame frame = new JFrame("Sistema Unico de Boleto Electronico");
+        frame.setContentPane(new Sube().subePanel);
+        Utilities.getSubeFavicon(frame);
+
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(500, 500);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION
+                );
+                if (choice == JOptionPane.YES_OPTION) {
+                    frame.dispose();
+                }
+            }
+        });
+
         frame.setLocationRelativeTo(null);
-        frame.add(subePanel);
         frame.setVisible(true);
     }
 }

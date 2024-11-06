@@ -47,10 +47,12 @@ public class TransportSystem {
         JSONManager.collectionToFile(users.values(), PATH.USER, true);
         JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
     }
-    public void updateCardsJSON(){
+
+    public void updateCardsJSON() {
         JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
     }
-    public void updateUsersJSON(){
+
+    public void updateUsersJSON() {
         JSONManager.collectionToFile(users.values(), PATH.USER, true);
     }
 
@@ -146,8 +148,8 @@ public class TransportSystem {
         return true;
     }
 
-    public boolean dropCard (String id){
-        if(cards.containsKey(id)){
+    public boolean dropCard(String id) {
+        if (cards.containsKey(id)) {
             cards.get(id).setStatus(false);
             updateCardsJSON();
             return true;
@@ -155,8 +157,8 @@ public class TransportSystem {
         return false;
     }
 
-    public boolean dropUser (int id){
-        if(users.containsKey(id)){
+    public boolean dropUser(int id) {
+        if (users.containsKey(id)) {
             users.get(id).setStatus(false);
             updateUsersJSON();
             return true;
@@ -164,39 +166,39 @@ public class TransportSystem {
         return false;
     }
 
-    public void modifyUserName(String newName,User user){
+    public void modifyUserName(String newName, User user) {
         user.setName(newName);
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         updateUsersJSON();
     }
 
-    public void modifyUserSurname(String newSurname,User user){
+    public void modifyUserSurname(String newSurname, User user) {
         user.setSurname(newSurname);
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         updateUsersJSON();
     }
 
-    public void modifyAge(int newAge,User user){
+    public void modifyAge(int newAge, User user) {
         user.setAge(newAge);
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         updateUsersJSON();
     }
 
-    public void modifyUserType(UserType type, User user){
+    public void modifyUserType(UserType type, User user) {
         user.setUserType(type);
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         updateUsersJSON();
     }
 
-    public void modifyUserPassword(String newPassword,User user){
-        user.setSurname(newPassword);
-        users.put(user.getId(),user);
+    public void modifyUserPassword(String newPassword, User user) {
+        user.setPassword(newPassword);
+        users.put(user.getId(), user);
         updateUsersJSON();
     }
 
-    public void modifyCardType(CardType type,Card card){
+    public void modifyCardType(CardType type, Card card) {
         card.setCardType(type);
-        cards.put(card.getId(),card);
+        cards.put(card.getId(), card);
         updateCardsJSON();
     }
 

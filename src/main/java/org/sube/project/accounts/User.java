@@ -125,6 +125,14 @@ public class User implements JSONCompatible {
         this.surname = surname;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserType getUserType() {
         return userType;
     }
