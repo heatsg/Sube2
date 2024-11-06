@@ -10,11 +10,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Transaction implements JSONCompatible {
+public abstract class Transaction implements JSONCompatible {
     private static int idCounter = JSONSube.assignID(ID_TYPE.TRANSACTION);
     private int id;
     private LocalDateTime dateTime;
-    private TransactionType transactionType;
     private double amount;
 
     public Transaction() {
@@ -22,17 +21,15 @@ public class Transaction implements JSONCompatible {
         this.dateTime = LocalDateTime.now();
     }
 
-    public Transaction(TransactionType transactionType, double amount) {
+    public Transaction(double amount) {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.now();
-        this.transactionType = transactionType;
         this.amount = amount;
     }
 
-    public Transaction(TransactionType transactionType, double amount, String dateTime) {
+    public Transaction(double amount, String dateTime) {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.parse(dateTime);
-        this.transactionType = transactionType;
         this.amount = amount;
     }
 
@@ -40,7 +37,6 @@ public class Transaction implements JSONCompatible {
         try {
             this.id = j.getInt("id");
             this.dateTime = LocalDateTime.parse(j.getString("dateTime"));
-            this.transactionType = TransactionType.valueOf(j.getString("transactionType"));
             this.amount = j.getDouble("amount");
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
@@ -52,7 +48,6 @@ public class Transaction implements JSONCompatible {
         try {
             j.put("id", id);
             j.put("dateTime", dateTime);
-            j.put("transactionType", transactionType);
             j.put("amount", amount);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
@@ -63,14 +58,6 @@ public class Transaction implements JSONCompatible {
 
     public int getId() {
         return id;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
     }
 
     public double getAmount() {
@@ -95,22 +82,22 @@ public class Transaction implements JSONCompatible {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Transaction that)) return false;
-        return Double.compare(that.amount, amount) == 0 && transactionType == that.transactionType;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Transaction that = (Transaction) object;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionType, amount);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "Transacción (ID: " + id +
                 " | Fecha y Hora: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")) +
-                " | Tipo: " + transactionType +
                 " | Monto: " + amount +
                 ')';
     }
