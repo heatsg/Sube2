@@ -11,14 +11,14 @@ import java.util.Objects;
 
 public class User implements JSONCompatible {
     private final int id;
-    private String name, surname;
+    private String name, surname;       //mod
     private String documentNumber;
-    private int age;
-    private String gender;
+    private int age;                    //mod
+    private String gender;              //mod
     private final Card card;
-    private UserType userType;
+    private UserType userType;          //mod
     private boolean status;
-    private String password;
+    private String password;            //mod
 
     public User(String name, String surname, int age, String documentNumber, String gender, Card card, UserType userType, boolean status, String password) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
@@ -127,6 +127,10 @@ public class User implements JSONCompatible {
 
     public UserType getUserType() {
         return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public boolean getStatus() {

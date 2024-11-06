@@ -3,16 +3,19 @@ package org.sube.project.system;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.accounts.UserType;
 import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
 import org.sube.project.card.CardManager;
+import org.sube.project.card.CardType;
 import org.sube.project.exceptions.UserAlreadyExistsException;
 import org.sube.project.util.PATH;
 import org.sube.project.util.json.JSONManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TransportSystem {
 
@@ -159,6 +162,42 @@ public class TransportSystem {
             return true;
         }
         return false;
+    }
+
+    public void modifyUserName(String newName,User user){
+        user.setName(newName);
+        users.put(user.getId(),user);
+        updateUsersJSON();
+    }
+
+    public void modifyUserSurname(String newSurname,User user){
+        user.setSurname(newSurname);
+        users.put(user.getId(),user);
+        updateUsersJSON();
+    }
+
+    public void modifyAge(int newAge,User user){
+        user.setAge(newAge);
+        users.put(user.getId(),user);
+        updateUsersJSON();
+    }
+
+    public void modifyUserType(UserType type, User user){
+        user.setUserType(type);
+        users.put(user.getId(),user);
+        updateUsersJSON();
+    }
+
+    public void modifyUserPassword(String newPassword,User user){
+        user.setSurname(newPassword);
+        users.put(user.getId(),user);
+        updateUsersJSON();
+    }
+
+    public void modifyCardType(CardType type,Card card){
+        card.setCardType(type);
+        cards.put(card.getId(),card);
+        updateCardsJSON();
     }
 
 }

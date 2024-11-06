@@ -85,6 +85,10 @@ public class Card implements JSONCompatible {
         return cardType;
     }
 
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
+    }
+
     public boolean getStatus() {
         return status;
     }
