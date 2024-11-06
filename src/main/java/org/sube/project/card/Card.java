@@ -8,6 +8,7 @@ import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,12 +17,12 @@ public class Card implements JSONCompatible {
     private double balance;
     private Set<Transaction> transactionHistory;
     private boolean status;
-    private CardType cardType;
+    private CardType cardType;      //mod
 
     public Card() {
         this.id = JSONSube.generateCardID();
         this.balance = 0;
-        this.transactionHistory = new HashSet<>();
+        this.transactionHistory = new LinkedHashSet<>();
         this.status = true;
         this.cardType = CardType.NORMAL_CARD;
     }
@@ -29,7 +30,7 @@ public class Card implements JSONCompatible {
     public Card(double balance, boolean status, CardType cardType) {
         this.id = JSONSube.generateCardID();
         this.balance = balance;
-        this.transactionHistory = new HashSet<>();
+        this.transactionHistory = new LinkedHashSet<>();
         this.status = status;
         this.cardType = cardType;
     }
@@ -37,7 +38,7 @@ public class Card implements JSONCompatible {
     public Card(JSONObject j) {
         this.id = j.getString("id");
         this.balance = j.getDouble("balance");
-        this.transactionHistory = new HashSet<>();
+        this.transactionHistory = new LinkedHashSet<>();
         JSONArray jarr = j.getJSONArray("transactionHistory");
         for (int i = 0; i < j.length(); i++) {
             transactionHistory.add(new Transaction(jarr.getJSONObject(i)));
