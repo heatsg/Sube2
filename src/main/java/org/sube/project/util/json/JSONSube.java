@@ -34,9 +34,22 @@ public class JSONSube {
         return array;
     }
 
+    /**
+     * converts a byte array into a string
+     * @param bytes
+     * @return
+     */
+    public static String convertIdFormat(byte[] bytes){
+        StringBuilder st=new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            st.append(bytes[i]);
+        }
+        return st.toString();
+    }
+
     public static String generateCardID() {
         try {
-            return "6061" + Arrays.toString(generateByteArray());
+            return "6061" + convertIdFormat(generateByteArray());
         } catch (MalformedIdException | OverflowedIdException e) {
             e.printStackTrace();
         }
