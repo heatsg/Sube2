@@ -161,4 +161,11 @@ public class User implements JSONCompatible {
     public int hashCode() {
         return Objects.hashCode(documentNumber);
     }
+
+    @Override
+    public String toString() {
+//        StringBuilder st = new StringBuilder();
+//        st.append(String.format("|%-3i|%-10s|%-10s|%-10s|%-3i|%-10s|%-10s|%-5b|",id,name,surname,documentNumber,age,gender,userType.toString(),status));
+        return String.format("| %-3s | %-12s | %-12s | %-8s | %-3s | %-10s | %-10s | %-5s |",id,name,surname,documentNumber,age,gender,userType.toString(),status);
+    }
 }

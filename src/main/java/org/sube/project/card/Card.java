@@ -116,4 +116,9 @@ public class Card implements JSONCompatible {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return String.format("| %-16s | %-5s | %-5s | %-10s |",id,balance,status,cardType.toString());
+    }
 }
