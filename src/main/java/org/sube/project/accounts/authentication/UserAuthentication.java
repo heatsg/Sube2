@@ -9,6 +9,7 @@ import org.sube.project.exceptions.IncorrectCredentialsException;
 import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.PATH;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserAuthentication {
@@ -28,13 +29,10 @@ public class UserAuthentication {
             String storedDocumentNumber = user.getString("documentNumber");
             String storedPassword = user.getString("password");
 
-            if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password)) {
+            if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password))
                 return true;
-            } else {
-                throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
-            }
         }
-        return false;
+        throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
     }
 
     private static User enteredData() {
@@ -46,8 +44,16 @@ public class UserAuthentication {
         System.out.println("Ingrese apellido:");
         String storedSurname = scanner.next();
 
-        System.out.println("Ingrese edad:");
-        int storedAge = scanner.nextInt();
+        int storedAge;
+        while (true) {
+            try {
+                System.out.println("Ingrese edad:");
+                storedAge = scanner.nextInt(); scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Formato incorrecto. Intentar de nuevo.");
+            }
+        }
 
         System.out.println("Ingrese documento:");
         String storedDocument = scanner.next();
@@ -58,18 +64,14 @@ public class UserAuthentication {
         System.out.println("Ingrese contraseña:");
         String password = scanner.next();
 
-        UserType userType = UserType.NORMAL_USER;
-        boolean status = true;
-
-        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, userType, status, password);
+        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, UserType.NORMAL_USER, true, password);
     }
 
     /**
      * Metodo para registrar un nuevo usuario con sus respectivas caracteristicas
      */
     public static User getUserData() {
-        User newUser = enteredData();
-        return newUser;
+        return enteredData();
     }
 
 

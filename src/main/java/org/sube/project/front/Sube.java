@@ -70,7 +70,7 @@ public class Sube {
     }
 
     public void showUI(boolean input) {
-        JFrame frame = new JFrame("Sistema Unico de Boleto Electronico");
+        JFrame frame = new JFrame("Sistema Único de Boleto Electrónico");
         frame.setContentPane(new Sube().subePanel);
         Utilities.getSubeFavicon(frame);
 

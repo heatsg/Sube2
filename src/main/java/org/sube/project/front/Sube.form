@@ -25,7 +25,7 @@
         <properties>
           <background color="-14211289"/>
           <foreground color="-1"/>
-          <text value="Iniciar sesion"/>
+          <text value="Iniciar sesión"/>
         </properties>
       </component>
       <component id="7b78b" class="javax.swing.JButton" binding="crearCuentaButton">

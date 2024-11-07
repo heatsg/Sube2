@@ -1,8 +1,8 @@
 package org.sube.project.card.transaction;
 
 public enum TransactionType {
-    RECHARGE("recarga"),
-    PAYMENT("pago");
+    RECHARGE("Recarga"),
+    PAYMENT("Pago");
 
     private final String description;
 

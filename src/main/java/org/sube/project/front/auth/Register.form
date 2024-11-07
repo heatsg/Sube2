@@ -73,7 +73,7 @@
             <properties>
               <font name="Arial Black" size="14" style="1"/>
               <foreground color="-393985"/>
-              <text value="INFORMACION DE CUENTA"/>
+              <text value="INFORMACIÓN DE CUENTA"/>
             </properties>
           </component>
         </children>
@@ -138,7 +138,7 @@
         </constraints>
         <properties>
           <foreground color="-1"/>
-          <text value="Nombre"/>
+          <text value="Nombres"/>
         </properties>
       </component>
       <component id="76346" class="javax.swing.JLabel">
@@ -156,7 +156,7 @@
         </constraints>
         <properties>
           <foreground color="-1"/>
-          <text value="Genero"/>
+          <text value="Género"/>
         </properties>
       </component>
       <component id="ef218" class="javax.swing.JLabel">

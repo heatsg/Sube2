@@ -19,13 +19,13 @@ public class Card implements JSONCompatible {
     private final String id;
     private final String dniOwner;
     private double balance;
-    private Set<Transaction> transactionHistory;
+    private final Set<Transaction> transactionHistory;
     private boolean status;
     private CardType cardType;
 
     public Card() {
         this.id = JSONSube.generateCardID();
-        this.dniOwner="";
+        this.dniOwner = null;
         this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
         this.status = true;
@@ -46,13 +46,14 @@ public class Card implements JSONCompatible {
         this.dniOwner=j.getString("dniOwner");
         this.balance = j.getDouble("balance");
         this.transactionHistory = new LinkedHashSet<>();
-        JSONArray jarr = j.getJSONArray("transactionHistory");
-        for (int i = 0; i < j.length(); i++) {
-            if(jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())){
-                transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
-            }
-            else transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
 
+        JSONArray jarr = j.getJSONArray("transactionHistory");
+
+        for (int i = 0; i < j.length(); i++) {
+            if (jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())){
+                transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
+            } else
+                transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
         }
         this.status = j.getBoolean("status");
     }
@@ -68,6 +69,7 @@ public class Card implements JSONCompatible {
             j.put("status", this.status);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
+            jx.printStackTrace();
         }
 
         return j;

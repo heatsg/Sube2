@@ -62,7 +62,7 @@ public class Register {
         genderBox.addItem("Masculino");
         genderBox.addItem("Femenino");
         genderBox.addItem("No binario");
-        genderBox.addItem("Prefiero no decirlo.");
+        genderBox.addItem("Prefiero no decirlo");
 
 
         // Botones //
@@ -83,7 +83,7 @@ public class Register {
 
     private void validateGenderBox() {
         if (Objects.equals(genderBox.getSelectedItem(), "<Seleccionar>")) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un genero.");
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione un género.");
         }
     }
 

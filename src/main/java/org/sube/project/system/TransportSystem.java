@@ -15,12 +15,8 @@ import org.sube.project.util.json.JSONManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class TransportSystem {
-
-    CardManager cardManager = new CardManager();
-
     private final Map<Integer, User> users;
     private final Map<String, Card> cards;
     private final Map<String, Double> uncreditedAmounts;
@@ -225,5 +221,4 @@ public class TransportSystem {
         cards.put(card.getId(), card);
         updateCardsJSON();
     }
-
 }

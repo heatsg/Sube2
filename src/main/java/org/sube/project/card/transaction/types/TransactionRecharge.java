@@ -1,12 +1,13 @@
 package org.sube.project.card.transaction.types;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
 
 import javax.swing.*;
 
-public class TransactionRecharge extends Transaction {
+public final class TransactionRecharge extends Transaction {
 
     public TransactionRecharge() {
         setTransactionType(TransactionType.RECHARGE);
@@ -29,8 +30,13 @@ public class TransactionRecharge extends Transaction {
 
     @Override
     public JSONObject toJSON() {
-        JSONObject j  = super.toJSON();
-        j.put("transactionType", TransactionType.RECHARGE.toString());
+        JSONObject j = super.toJSON();
+        try {
+            j.put("transactionType", TransactionType.RECHARGE.toString());
+        } catch (JSONException jx) {
+            System.out.println(jx.getMessage());
+            jx.printStackTrace();
+        }
         return j;
     }
 

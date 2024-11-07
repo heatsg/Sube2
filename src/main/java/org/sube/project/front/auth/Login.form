@@ -71,7 +71,7 @@
             <properties>
               <background color="-14211289"/>
               <foreground color="-1"/>
-              <text value="Iniciar sesion"/>
+              <text value="Iniciar sesión"/>
             </properties>
           </component>
           <component id="bc868" class="javax.swing.JLabel">

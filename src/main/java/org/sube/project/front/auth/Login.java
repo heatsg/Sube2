@@ -82,7 +82,7 @@ public class Login {
     }
 
     public void showUI() {
-        JFrame frame = new JFrame("Iniciar sesion");
+        JFrame frame = new JFrame("Iniciar sesión");
         frame.setContentPane(loginPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

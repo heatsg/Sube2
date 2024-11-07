@@ -7,17 +7,16 @@ import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.PATH;
 
 import java.io.File;
-import java.util.Arrays;
 
 public class JSONSube {
     private static final byte TAMANO_ID = 16 -4; // -4 por el prefijo 6061
     private static final byte[] idCounter = assignCardCounterID(); // inicializador estático
 
-    public static int assignID(ID_TYPE idType) {
-        return assignID(idType.toString());
+    public static int assignIDCounter(ID_TYPE idType) {
+        return assignIDCounter(idType.toString());
     }
 
-    public static int assignID(String idType) {
+    public static int assignIDCounter(String idType) {
         if (!(new File(PATH.ID_COUNTERS.toString())).isFile()) return 0; // Si no encuentra el archivo retorna el valor inicial (0)
         return JSONManager.readJSONObject(PATH.ID_COUNTERS).getInt(idType);
     }
@@ -40,9 +39,9 @@ public class JSONSube {
      * @return
      */
     public static String convertIdFormat(byte[] bytes){
-        StringBuilder st=new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            st.append(bytes[i]);
+        StringBuilder st = new StringBuilder();
+        for (byte Byte : bytes) {
+            st.append(Byte);
         }
         return st.toString();
     }
@@ -51,6 +50,7 @@ public class JSONSube {
         try {
             return "6061" + convertIdFormat(generateByteArray());
         } catch (MalformedIdException | OverflowedIdException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return null;

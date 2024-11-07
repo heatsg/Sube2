@@ -2,7 +2,6 @@ package org.sube.project.accounts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sube.project.card.Card;
 import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
@@ -10,28 +9,29 @@ import org.sube.project.util.json.JSONSube;
 import java.util.Objects;
 
 public class User implements JSONCompatible {
+    private static int idCounter = JSONSube.assignIDCounter(ID_TYPE.USER);
     private final int id;
     private String name, surname;
     private String documentNumber;
     private int age;
     private String gender;
     private UserType userType;
-    private boolean status;
     private String password;
+    private boolean status;
 
     public User(String name, String surname, int age, String documentNumber, String gender, UserType userType, boolean status, String password) {
-        this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
+        this.id = idCounter++;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.documentNumber = documentNumber;
         this.gender = gender;
         this.userType = userType;
-        this.status = status;
         this.password = password;
+        this.status = status;
     }
 
-    public User(JSONObject j){
+    public User(JSONObject j) {
         this.id = j.getInt("id");
         this.name = j.getString("name");
         this.surname = j.getString("surname");
@@ -39,11 +39,11 @@ public class User implements JSONCompatible {
         this.documentNumber = j.getString("documentNumber");
         this.gender = j.getString("gender");
         this.userType = UserType.valueOf(j.getString("userType"));
-        this.status = j.getBoolean("status");
         this.password = j.getString("password");
+        this.status = j.getBoolean("status");
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJSON() {
         JSONObject j = new JSONObject();
 
         try {
