@@ -4,6 +4,7 @@ public enum PATH {
     ID_COUNTERS("counters"),
     CARD("cards"),
     USER("accounts"),
+    TRANSACTION("transactions"),
     UNCREDITED("uncreditedAmounts");
 
     private final String path;

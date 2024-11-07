@@ -102,11 +102,11 @@ public abstract class Transaction implements JSONCompatible {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "Transacción (ID: " + id +
-                " | Fecha y Hora: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")) +
-                " | Monto: " + amount +
-                ')';
-    }
+//    @Override
+//    public String toString() {
+//        return "Transacción (ID: " + id +
+//                " | Fecha y Hora: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")) +
+//                " | Monto: " + amount +
+//                ')';
+//    }
 }

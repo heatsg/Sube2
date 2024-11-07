@@ -33,4 +33,9 @@ public class TransactionRecharge extends Transaction {
         j.put("transactionType", TransactionType.RECHARGE.toString());
         return j;
     }
+
+    @Override
+    public String toString() {
+        return String.format("| %-3s | %-5s | %-10s | %-20s|",getId(),getAmount(),getTransactionType().toString(),getDateTime().toString());
+    }
 }
