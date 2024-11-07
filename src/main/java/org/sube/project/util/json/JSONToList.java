@@ -46,16 +46,28 @@ public class JSONToList {
         return list;
     }
 
-    public static List<Transaction> TransactionToList(PATH path) {
+    public static List<Transaction> TransactionToList(String cardId) {
         JSONArray jarr;
         List<Transaction> list = new ArrayList<>();
         try {
-            jarr = JSONManager.readJSONArray(path);
+            jarr = JSONManager.readJSONArray(PATH.CARD);
             for (int i = 0; i < jarr.length(); i++) {
-                if(jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())){
-                    list.add(new TransactionPayment(jarr.getJSONObject(i)));
+
+                if(jarr.getJSONObject(i).getString("id").equals(cardId)){
+
+                    JSONArray jarr2=jarr.getJSONObject(i).getJSONArray("transactionHistory");
+
+                    for (int j = 0; j < jarr2.length(); j++) {
+
+                        if (jarr2.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())) {
+
+                            list.add(new TransactionPayment(jarr.getJSONObject(i)));
+
+                        } else
+                            list.add(new TransactionRecharge(jarr.getJSONObject(i)));
+                    }
                 }
-                else list.add(new TransactionRecharge(jarr.getJSONObject(i)));
+
             }
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
@@ -106,11 +118,13 @@ public class JSONToList {
         return list;
     }
 
-    /// funciones de mostrado
+    /// funcion de mostrado
 
     public static <T> void printList(List<T> list){
         System.out.println(list);
     }
+
+    /// funciones de mostrado de usuario
 
     public static void printUserList(){
         JSONToList.printList(JSONToList.UserToList(PATH.USER));
@@ -128,6 +142,8 @@ public class JSONToList {
         JSONToList.printList(JSONToList.orderByDocumentNumber(JSONToList.UserToList(PATH.USER)));
     }
 
+    /// funciones de mostrado de las tarjetas
+
     public static void printCardList(){
         JSONToList.printList(JSONToList.CardToList(PATH.CARD));
     }
@@ -140,20 +156,22 @@ public class JSONToList {
         JSONToList.printList(JSONToList.orderByBalance(JSONToList.CardToList(PATH.CARD)));
     }
 
-    public static void printTransactionList(){
-        JSONToList.printList(JSONToList.TransactionToList(PATH.TRANSACTION));
+    /// funciones de mostrado de las transacciones
+
+    public static void printTransactionList(String cardId){
+        JSONToList.printList(JSONToList.TransactionToList(cardId));
     }
 
-    public static void printTransactionListOrderedById(){
-        JSONToList.printList(JSONToList.orderByTransactionId(JSONToList.TransactionToList(PATH.TRANSACTION)));
+    public static void printTransactionListOrderedById(String cardId){
+        JSONToList.printList(JSONToList.orderByTransactionId(JSONToList.TransactionToList(cardId)));
     }
 
-    public static void printTransactionListOrderedByAmount(){
-        JSONToList.printList(JSONToList.orderByAmount(JSONToList.TransactionToList(PATH.TRANSACTION)));
+    public static void printTransactionListOrderedByAmount(String cardId){
+        JSONToList.printList(JSONToList.orderByAmount(JSONToList.TransactionToList(cardId)));
     }
 
-    public static void printTransactionListOrderedByDate(){
-        JSONToList.printList(JSONToList.orderByDate(JSONToList.TransactionToList(PATH.TRANSACTION)));
+    public static void printTransactionListOrderedByDate(String cardId){
+        JSONToList.printList(JSONToList.orderByDate(JSONToList.TransactionToList(cardId)));
     }
 
 
