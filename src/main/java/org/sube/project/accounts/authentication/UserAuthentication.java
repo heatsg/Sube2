@@ -58,11 +58,10 @@ public class UserAuthentication {
         System.out.println("Ingrese contraseña:");
         String password = scanner.next();
 
-        Card card = new Card();
         UserType userType = UserType.NORMAL_USER;
         boolean status = true;
 
-        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, card, userType, status, password);
+        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, userType, status, password);
     }
 
     /**

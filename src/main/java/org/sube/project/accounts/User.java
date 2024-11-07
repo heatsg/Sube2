@@ -11,23 +11,21 @@ import java.util.Objects;
 
 public class User implements JSONCompatible {
     private final int id;
-    private String name, surname;       //mod
+    private String name, surname;
     private String documentNumber;
-    private int age;                    //mod
-    private String gender;              //mod
-    private final Card card;
-    private UserType userType;          //mod
+    private int age;
+    private String gender;
+    private UserType userType;
     private boolean status;
-    private String password;            //mod
+    private String password;
 
-    public User(String name, String surname, int age, String documentNumber, String gender, Card card, UserType userType, boolean status, String password) {
+    public User(String name, String surname, int age, String documentNumber, String gender, UserType userType, boolean status, String password) {
         this.id = JSONSube.assignID(ID_TYPE.TRANSACTION);
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.documentNumber = documentNumber;
         this.gender = gender;
-        this.card = card;
         this.userType = userType;
         this.status = status;
         this.password = password;
@@ -40,7 +38,6 @@ public class User implements JSONCompatible {
         this.age = j.getInt("age");
         this.documentNumber = j.getString("documentNumber");
         this.gender = j.getString("gender");
-        this.card = new Card(j.getJSONObject("Card"));
         this.userType = UserType.valueOf(j.getString("userType"));
         this.status = j.getBoolean("status");
         this.password = j.getString("password");
@@ -56,7 +53,6 @@ public class User implements JSONCompatible {
             j.put("age", age);
             j.put("documentNumber", documentNumber);
             j.put("gender", gender);
-            j.put("Card", card.toJSON());
             j.put("userType", userType);
             j.put("status", status);
             j.put("password", password);
@@ -87,10 +83,6 @@ public class User implements JSONCompatible {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Card getCard() {
-        return card;
     }
 
     public String getGender() {

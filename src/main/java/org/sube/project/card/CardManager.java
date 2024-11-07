@@ -4,16 +4,19 @@ import org.sube.project.accounts.UserType;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.types.TransactionRecharge;
 
+import java.util.Scanner;
+
 public class CardManager {
 
-    private final int NORMAL_TICKET=1180;
-    public void addBalance(Card card, double amount) {
+    private static int NORMAL_TICKET=1180;
+
+    public static void addBalance(Card card, double amount) {
         card.setBalance(card.getBalance() + amount);
         card.getTransactionHistory().add(new TransactionRecharge(amount));
 
     }
 
-    public boolean payTicket(Card card){
+    public static boolean payTicket(Card card){
         if(card.getCardType()==CardType.NORMAL_CARD){
             card.setBalance((card.getBalance())-NORMAL_TICKET);
             return true;
@@ -32,4 +35,5 @@ public class CardManager {
         }
         return false;
     }
+
 }

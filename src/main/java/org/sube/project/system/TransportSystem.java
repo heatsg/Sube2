@@ -105,7 +105,7 @@ public class TransportSystem {
         try {
             if (!(users.containsKey(user.getId()))) {
                 users.put(user.getId(), user);
-                cards.put(user.getCard().getId(), user.getCard());
+//                cards.put(user.getCard().getId(), user.getCard());
                 saveIntoJSON();
                 System.out.println("Usuario registrado correctamente.");
             } else {
@@ -114,6 +114,12 @@ public class TransportSystem {
         } catch (UserAlreadyExistsException ex) {
             System.out.println(ex.getMessage());
         }
+
+    }
+
+    public void registerCard(CardType cardType,String dniOwner){
+        Card card=new Card(cardType,dniOwner);
+
 
     }
 
@@ -141,7 +147,7 @@ public class TransportSystem {
             return false;
         }
 
-        cardManager.addBalance(card, uncreditedAmounts.get(cardId));
+        CardManager.addBalance(card, uncreditedAmounts.get(cardId));
         uncreditedAmounts.remove(cardId);
         cards.put(card.getId(), card);
         updateCardsJSON();
@@ -158,7 +164,7 @@ public class TransportSystem {
             return false;
         }
 
-        cardManager.payTicket(card);
+        CardManager.payTicket(card);
         cards.put(card.getId(), card);
         updateCardsJSON();
 

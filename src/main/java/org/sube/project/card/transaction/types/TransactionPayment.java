@@ -9,9 +9,6 @@ import javax.sound.sampled.Line;
 
 public class TransactionPayment extends Transaction {
 
-
-
-
     public TransactionPayment() {
         setTransactionType(TransactionType.PAYMENT);
     }

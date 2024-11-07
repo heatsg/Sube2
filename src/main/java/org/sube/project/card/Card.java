@@ -17,29 +17,33 @@ import java.util.Set;
 
 public class Card implements JSONCompatible {
     private final String id;
+    private final String dniOwner;
     private double balance;
     private Set<Transaction> transactionHistory;
     private boolean status;
-    private CardType cardType;      //mod
+    private CardType cardType;
 
     public Card() {
         this.id = JSONSube.generateCardID();
-        this.balance = 0;
+        this.dniOwner="";
+        this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
         this.status = true;
         this.cardType = CardType.NORMAL_CARD;
     }
 
-    public Card(double balance, boolean status, CardType cardType) {
+    public Card(CardType cardType, String dniOwner) {
         this.id = JSONSube.generateCardID();
-        this.balance = balance;
+        this.dniOwner=dniOwner;
+        this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
-        this.status = status;
+        this.status = true;
         this.cardType = cardType;
     }
 
     public Card(JSONObject j) {
         this.id = j.getString("id");
+        this.dniOwner=j.getString("dniOwner");
         this.balance = j.getDouble("balance");
         this.transactionHistory = new LinkedHashSet<>();
         JSONArray jarr = j.getJSONArray("transactionHistory");
@@ -58,6 +62,7 @@ public class Card implements JSONCompatible {
 
         try {
             j.put("id", this.id);
+            j.put("dniOwner",this.dniOwner);
             j.put("balance", this.balance);
             j.put("transactionHistory", this.transactionHistory);
             j.put("status", this.status);
@@ -104,6 +109,11 @@ public class Card implements JSONCompatible {
         this.status = status;
     }
 
+    public String getDniOwner() {
+        return dniOwner;
+    }
+
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -119,6 +129,6 @@ public class Card implements JSONCompatible {
 
     @Override
     public String toString() {
-        return String.format("| %-16s | %-5s | %-5s | %-10s |",id,balance,status,cardType.toString());
+        return String.format("| %-16s | %-8 | %-5s | %-5s | %-10s |",id,dniOwner,balance,status,cardType.toString());
     }
 }
