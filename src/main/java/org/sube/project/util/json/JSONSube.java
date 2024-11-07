@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.sube.project.exceptions.MalformedIdException;
 import org.sube.project.exceptions.OverflowedIdException;
 import org.sube.project.util.ID_TYPE;
-import org.sube.project.util.PATH;
+import org.sube.project.util.Path;
 
 import java.io.File;
 
@@ -17,16 +17,16 @@ public class JSONSube {
     }
 
     public static int assignIDCounter(String idType) {
-        if (!(new File(PATH.ID_COUNTERS.toString())).isFile()) return 0; // Si no encuentra el archivo retorna el valor inicial (0)
-        return JSONManager.readJSONObject(PATH.ID_COUNTERS).getInt(idType);
+        if (!(new File(Path.ID_COUNTERS.toString())).isFile()) return 0; // Si no encuentra el archivo retorna el valor inicial (0)
+        return JSONManager.readJSONObject(Path.ID_COUNTERS).getInt(idType);
     }
 
     public static byte[] assignCardCounterID() {
         byte[] array = new byte[TAMANO_ID];
 
-        if (!(new File(PATH.ID_COUNTERS.toString())).isFile()) return array; // Si no encuentra el archivo retorna el valor inicial (0000 0000 0000)
+        if (!(new File(Path.ID_COUNTERS.toString())).isFile()) return array; // Si no encuentra el archivo retorna el valor inicial (0000 0000 0000)
 
-        JSONArray json = JSONManager.readJSONArray(PATH.ID_COUNTERS);
+        JSONArray json = JSONManager.readJSONArray(Path.ID_COUNTERS);
         for (int i = 0; i < TAMANO_ID; i++) {
             array[i] = (byte) json.getInt(i);
         }

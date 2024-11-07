@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONTokener;
-import org.sube.project.util.PATH;
+import org.sube.project.util.Path;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,19 +13,19 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class JSONManager {
-    public static void write(PATH path, JSONObject json) {
+    public static void write(Path path, JSONObject json) {
         write(path.toString(), json);
     }
 
-    public static void write(PATH path, JSONArray json) {
+    public static void write(Path path, JSONArray json) {
         write(path.toString(), json);
     }
 
-    public static JSONObject readJSONObject(PATH path) {
+    public static JSONObject readJSONObject(Path path) {
         return readJSONObject(path.toString());
     }
 
-    public static JSONArray readJSONArray(PATH path) {
+    public static JSONArray readJSONArray(Path path) {
         return readJSONArray(path.toString());
     }
 
@@ -75,7 +75,7 @@ public class JSONManager {
         return tokener;
     }
 
-    public static <T extends JSONCompatible> void objectToFile(T obj, PATH path, boolean overwrite) {
+    public static <T extends JSONCompatible> void objectToFile(T obj, Path path, boolean overwrite) {
         JSONArray jarr;
         if (overwrite)
             jarr = new JSONArray();
@@ -91,7 +91,7 @@ public class JSONManager {
         }
     }
 
-    public static <T extends JSONCompatible> void collectionToFile(Collection<T> collection, PATH path, boolean overwrite) {
+    public static <T extends JSONCompatible> void collectionToFile(Collection<T> collection, Path path, boolean overwrite) {
         JSONArray jarr;
         if (overwrite)
             jarr = new JSONArray();

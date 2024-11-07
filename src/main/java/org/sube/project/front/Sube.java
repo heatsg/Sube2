@@ -15,6 +15,8 @@ import java.awt.event.WindowEvent;
  * SUBE: Interfaz grafica del menu principal de la aplicacion.
  */
 public class Sube {
+    private static Sube instance;
+
     private JLabel subeLogoLabel;
     private JPanel subePanel;
     private JButton iniciarSesionButton;
@@ -53,7 +55,7 @@ public class Sube {
                 frame.dispose();
 
                 Login login = new Login();
-                login.showUI();
+                login.showUI(true);
             }
         });
 
@@ -69,6 +71,18 @@ public class Sube {
         });
     }
 
+    public static Sube getInstance() {
+        if (instance == null) {
+            instance = new Sube();
+        }
+        return instance;
+    }
+
+    /**
+     * Metodo para mostrar la ventana a traves de JFrame
+     *
+     * @param input
+     */
     public void showUI(boolean input) {
         JFrame frame = new JFrame("Sistema Único de Boleto Electrónico");
         frame.setContentPane(new Sube().subePanel);

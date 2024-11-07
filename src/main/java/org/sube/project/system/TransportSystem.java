@@ -4,19 +4,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.accounts.UserType;
-import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.card.Card;
 import org.sube.project.accounts.User;
 import org.sube.project.card.CardManager;
 import org.sube.project.card.CardType;
 import org.sube.project.exceptions.UserAlreadyExistsException;
-import org.sube.project.util.PATH;
+import org.sube.project.util.Path;
 import org.sube.project.util.json.JSONManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TransportSystem {
+    public static TransportSystem instance;
+
     private final Map<Integer, User> users;
     private final Map<String, Card> cards;
     private final Map<String, Double> uncreditedAmounts;
@@ -25,6 +26,13 @@ public class TransportSystem {
         this.users = new HashMap<>();
         this.cards = new HashMap<>();
         this.uncreditedAmounts = new HashMap<>();
+    }
+
+    public static TransportSystem getInstance() {
+        if (instance == null) {
+            instance = new TransportSystem();
+        }
+        return instance;
     }
 
     public Map<Integer, User> getUsers() {
@@ -40,16 +48,16 @@ public class TransportSystem {
     }
 
     public void saveIntoJSON() {
-        JSONManager.collectionToFile(users.values(), PATH.USER, true);
-        JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
+        JSONManager.collectionToFile(users.values(), Path.USER, true);
+        JSONManager.collectionToFile(cards.values(), Path.CARD, true);
     }
 
     public void updateCardsJSON() {
-        JSONManager.collectionToFile(cards.values(), PATH.CARD, true);
+        JSONManager.collectionToFile(cards.values(), Path.CARD, true);
     }
 
     public void updateUsersJSON() {
-        JSONManager.collectionToFile(users.values(), PATH.USER, true);
+        JSONManager.collectionToFile(users.values(), Path.USER, true);
     }
 
 
@@ -65,7 +73,7 @@ public class TransportSystem {
                 jarr.put(j);
             }
 
-            JSONManager.write(PATH.UNCREDITED, jarr);
+            JSONManager.write(Path.UNCREDITED, jarr);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
             jx.printStackTrace();
@@ -74,36 +82,33 @@ public class TransportSystem {
 
     public void loadFromJSON() {
         users.clear();
-        JSONArray usersArray = JSONManager.readJSONArray(PATH.USER);
+        JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
         for (int i = 0; i < usersArray.length(); i++) {
             User user = new User(usersArray.getJSONObject(i));
             users.put(user.getId(), user);
         }
 
         cards.clear();
-        JSONArray cardsArray = JSONManager.readJSONArray(PATH.CARD);
+        JSONArray cardsArray = JSONManager.readJSONArray(Path.CARD);
         for (int i = 0; i < cardsArray.length(); i++) {
             Card card = new Card(cardsArray.getJSONObject(i));
             cards.put(card.getId(), card);
         }
 
         uncreditedAmounts.clear();
-        JSONArray uncreditedArray = JSONManager.readJSONArray(PATH.UNCREDITED);
+        JSONArray uncreditedArray = JSONManager.readJSONArray(Path.UNCREDITED);
         for (int i = 0; i < uncreditedArray.length(); i++) {
             JSONObject uncreditedAmountJSON = uncreditedArray.getJSONObject(i);
             uncreditedAmounts.put(uncreditedAmountJSON.getString("id"), uncreditedAmountJSON.getDouble("amount"));
         }
     }
 
-    public void registerUser() throws UserAlreadyExistsException {
-        User user = UserAuthentication.getUserData();
+    public void registerUser(User user) throws UserAlreadyExistsException {
 
         try {
             if (!(users.containsKey(user.getId()))) {
                 users.put(user.getId(), user);
-//                cards.put(user.getCard().getId(), user.getCard());
                 saveIntoJSON();
-                System.out.println("Usuario registrado correctamente.");
             } else {
                 throw new UserAlreadyExistsException("Error: El usuario ya existe.");
             }
@@ -113,11 +118,19 @@ public class TransportSystem {
 
     }
 
-    public void registerCard(CardType cardType,String dniOwner){
-        Card card=new Card(cardType,dniOwner);
+    public void registerCard(CardType cardType, String dniOwner) {
+        Card card = new Card(cardType, dniOwner);
 
+        if (!cards.containsKey(card.getId())) {
+            cards.put(card.getId(), card);
+            updateCardsJSON();
 
+            System.out.println("Tarjeta registrada correctamente con ID: " + card.getId());
+        } else {
+            System.out.println("La tarjeta ya existe en el sistema.");
+        }
     }
+
 
     public boolean rechargeCard(String cardId, double amount) {
         if (cards.get(cardId) != null) {

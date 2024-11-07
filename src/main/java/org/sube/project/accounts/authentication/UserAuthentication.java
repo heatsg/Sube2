@@ -4,10 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
-import org.sube.project.card.Card;
 import org.sube.project.exceptions.IncorrectCredentialsException;
+import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.util.json.JSONManager;
-import org.sube.project.util.PATH;
+import org.sube.project.util.Path;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,11 +18,11 @@ public class UserAuthentication {
      * Verifica si el DNI y la contraseña son correctos.
      *
      * @param documentNumber El DNI del usuario.
-     * @param password La contraseña del usuario.
+     * @param password       La contraseña del usuario.
      * @return true si las credenciales son válidas, false en caso contrario.
      */
     public static boolean login(String documentNumber, String password) throws IncorrectCredentialsException {
-        JSONArray users = JSONManager.readJSONArray(PATH.USER);
+        JSONArray users = JSONManager.readJSONArray(Path.USER.toString());
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
@@ -35,44 +35,36 @@ public class UserAuthentication {
         throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
     }
 
-    private static User enteredData() {
-        Scanner scanner = new Scanner(System.in);
+    /**
+     * Obtiene un usuario por su número de documento.
+     *
+     * @param documentNumber El DNI del usuario.
+     * @return El objeto User correspondiente al documento.
+     * @throws UserNotFoundException Si el documento no se encuentra.
+     */
+    public static User getUserByDocumentNumber(String documentNumber) throws UserNotFoundException {
+        JSONArray users = JSONManager.readJSONArray(Path.USER.toString());
 
-        System.out.println("Ingrese nombre:");
-        String storedName = scanner.next();
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject userJson = users.getJSONObject(i);
+            String storedDocumentNumber = userJson.getString("documentNumber");
 
-        System.out.println("Ingrese apellido:");
-        String storedSurname = scanner.next();
+            if (storedDocumentNumber.equals(documentNumber)) {
+                String name = userJson.getString("name");
+                String surname = userJson.getString("surname");
+                int age = userJson.getInt("age");
+                String gender = userJson.getString("gender");
+                String password = userJson.getString("password");
+                UserType userType = UserType.valueOf(userJson.getString("userType"));
 
-        int storedAge;
-        while (true) {
-            try {
-                System.out.println("Ingrese edad:");
-                storedAge = scanner.nextInt(); scanner.nextLine();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Formato incorrecto. Intentar de nuevo.");
+                return new User(name, surname, age, documentNumber, gender, userType, true, password);
             }
         }
 
-        System.out.println("Ingrese documento:");
-        String storedDocument = scanner.next();
-
-        System.out.println("Ingrese género:");
-        String storedGender = scanner.next();
-
-        System.out.println("Ingrese contraseña:");
-        String password = scanner.next();
-
-        return new User(storedName, storedSurname, storedAge, storedDocument, storedGender, UserType.NORMAL_USER, true, password);
+        throw new UserNotFoundException("Usuario no encontrado.");
     }
-
-    /**
-     * Metodo para registrar un nuevo usuario con sus respectivas caracteristicas
-     */
-    public static User getUserData() {
-        return enteredData();
-    }
-
 
 }
+
+
+

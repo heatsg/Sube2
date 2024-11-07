@@ -1,8 +1,12 @@
 package org.sube.project.front.auth;
 
+import org.sube.project.accounts.User;
 import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.exceptions.IncorrectCredentialsException;
+import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
+import org.sube.project.front.main.MainMenu;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -11,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 public class Login {
     private JLabel cuentaLabel;
@@ -26,24 +29,10 @@ public class Login {
     private JPanel loginTitlePanel;
 
     public Login() {
-        String imagePath = "images/account.png";
-        String imageDocumentPath = "images/document.png";
-        String imagePasswordPath = "images/password.png";
+        Utilities.loadImage(logoAccountLabel, ImagesUtil.ACCOUNT_PATH, 100, 100);
 
-        ImageIcon imageIcon = new ImageIcon(imagePath);
-        ImageIcon documentImage = new ImageIcon(imageDocumentPath);
-        ImageIcon passwordImage = new ImageIcon(imagePasswordPath);
-
-        documentNumberLabel.setIcon(documentImage);
-        passwordLabel.setIcon(passwordImage);
-
-        if (imageIcon.getIconWidth() == -1) {
-            System.err.println("No se pudo cargar la imagen. Verifica la ruta del archivo.");
-        } else {
-            Image image = imageIcon.getImage();
-            Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            logoAccountLabel.setIcon(new ImageIcon(scaledImage));
-        }
+        Utilities.loadIcon(documentNumberLabel, ImagesUtil.DOCUMENT_PATH);
+        Utilities.loadIcon(passwordLabel, ImagesUtil.PASSWORD_PATH);
 
         loginTitlePanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -63,25 +52,37 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String storedDocument = documentText.getText();
-                String storedPassword = Arrays.toString(passwordText.getPassword());
+                String storedPassword = new String(passwordText.getPassword());
 
                 try {
                     boolean signed = UserAuthentication.login(storedDocument, storedPassword);
                     if (signed) {
-                        // NO HECHO TODAVIA
-                        incorrectLabel.setText("");
+                        User loggedUser = UserAuthentication.getUserByDocumentNumber(storedDocument);
+
+                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(loginPanel);
+                        frame.dispose();
+
+                        MainMenu menu = new MainMenu(loggedUser);
+                        menu.showUI(true, loggedUser);
                     } else {
-                        incorrectLabel.setText("Documento o contraseña incorrectos.");
+                        JOptionPane.showMessageDialog(null, "Documento o contraseña incorrectos.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 } catch (IncorrectCredentialsException ex) {
-                    throw new RuntimeException(ex);
+                    System.out.println(ex.getMessage());
+                } catch (UserNotFoundException ex) {
+
                 }
             }
         });
     }
 
-    public void showUI() {
+    /**
+     * Metodo para mostrar la ventana a traves de JFrame
+     *
+     * @param input
+     */
+    public void showUI(boolean input) {
         JFrame frame = new JFrame("Iniciar sesión");
         frame.setContentPane(loginPanel);
         Utilities.getSubeFavicon(frame);

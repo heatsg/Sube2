@@ -12,7 +12,7 @@ import org.sube.project.front.Sube;
 public class Main {
     public static void main(String[] args) {
         Sube sube = new Sube();
-        sube.showUI();
+        sube.showUI(true);
 //        Card c1=new Card(100.0,true, CardType.NORMAL_CARD);
 //        User u1= new User("bro","broapellido",10,"12345678","masculino",c1, UserType.NORMAL_USER,true,"123");
 //        System.out.println(u1.toString());
