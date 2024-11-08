@@ -127,50 +127,61 @@ public class JSONToList {
     /// funciones de mostrado de usuario
 
     public static void printUserList(){
+        System.out.println("|Id  |Nombre      |Apellido    |Documento |Edad |Genero    |Usuario   |Estado |");
         JSONToList.printList(JSONToList.UserToList(Path.USER));
     }
 
     public static void printUserListOrderedById(){
+        System.out.println("|Id  |Nombre      |Apellido    |Documento |Edad |Genero    |Usuario   |Estado |");
         JSONToList.printList(JSONToList.orderByUserId(JSONToList.UserToList(Path.USER)));
     }
 
     public static void printUserListOrderedBySurname(){
+        System.out.println("|Id  |Nombre      |Apellido    |Documento |Edad |Genero    |Usuario   |Estado |");
         JSONToList.printList(JSONToList.orderBySurname(JSONToList.UserToList(Path.USER)));
     }
 
     public static void printUserListOrderedByDocumentNumber(){
+        System.out.println("|Id  |Nombre      |Apellido    |Documento |Edad |Genero    |Usuario   |Estado |");
         JSONToList.printList(JSONToList.orderByDocumentNumber(JSONToList.UserToList(Path.USER)));
     }
 
     /// funciones de mostrado de las tarjetas
 
     public static void printCardList(){
+        System.out.println("|Numero de tarjeta |Documento |Balance |Estado |Tarjeta    |");
         JSONToList.printList(JSONToList.CardToList(Path.CARD));
     }
 
     public static void printCardListOrderedById(){
+        System.out.println("|Numero de tarjeta |Documento |Balance |Estado |Tarjeta    |");
         JSONToList.printList(JSONToList.orderByCardId(JSONToList.CardToList(Path.CARD)));
     }
 
     public static void printCardListOrderedByBalance(){
+        System.out.println("|Numero de tarjeta |Documento |Balance |Estado |Tarjeta    |");
         JSONToList.printList(JSONToList.orderByBalance(JSONToList.CardToList(Path.CARD)));
     }
 
     /// funciones de mostrado de las transacciones
 
     public static void printTransactionList(String cardId){
+        System.out.println("|Id  |Coste  |Transaccion |Fecha                         |");
         JSONToList.printList(JSONToList.TransactionToList(cardId));
     }
 
     public static void printTransactionListOrderedById(String cardId){
+        System.out.println("|Id  |Coste  |Transaccion |Fecha                         |");
         JSONToList.printList(JSONToList.orderByTransactionId(JSONToList.TransactionToList(cardId)));
     }
 
     public static void printTransactionListOrderedByAmount(String cardId){
+        System.out.println("|Id  |Coste  |Transaccion |Fecha                         |");
         JSONToList.printList(JSONToList.orderByAmount(JSONToList.TransactionToList(cardId)));
     }
 
     public static void printTransactionListOrderedByDate(String cardId){
+        System.out.println("|Id  |Coste  |Transaccion |Fecha                         |");
         JSONToList.printList(JSONToList.orderByDate(JSONToList.TransactionToList(cardId)));
     }
 

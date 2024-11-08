@@ -131,6 +131,6 @@ public class Card implements JSONCompatible {
 
     @Override
     public String toString() {
-        return String.format("| %-16s | %-8 | %-5s | %-5s | %-10s |",id,dniOwner,balance,status,cardType.toString());
+        return String.format("|%-17s |%-8s |%-7s |%-6s |%-10s |",id,dniOwner,balance,status,cardType.toString());
     }
 }

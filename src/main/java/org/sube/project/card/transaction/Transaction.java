@@ -108,4 +108,10 @@ public abstract class Transaction implements JSONCompatible {
 //                " | Monto: " + amount +
 //                ')';
 //    }
+
+
+//    @Override
+//    public String toString() {
+//        return String.format("|%-3s |%-15s |%-11s |%-5 |",id,dateTime.toString(),transactionType.toString(),amount);
+//    }
 }
