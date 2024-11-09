@@ -191,7 +191,7 @@
           <text value="Dar de baja"/>
         </properties>
       </component>
-      <component id="2dda6" class="javax.swing.JButton" binding="misTarjetasButton">
+      <component id="2dda6" class="javax.swing.JButton" binding="miTarjetaButton">
         <constraints>
           <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -199,26 +199,6 @@
           <background color="-14211289"/>
           <foreground color="-1"/>
           <text value="Mi tarjeta"/>
-        </properties>
-      </component>
-      <component id="44f39" class="javax.swing.JButton" binding="gestionarSaldoButton">
-        <constraints>
-          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-14211289"/>
-          <foreground color="-1"/>
-          <text value="Gestionar saldo"/>
-        </properties>
-      </component>
-      <component id="709c2" class="javax.swing.JButton" binding="beneficiosButton" default-binding="true">
-        <constraints>
-          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-14211289"/>
-          <foreground color="-1"/>
-          <text value="Beneficios"/>
         </properties>
       </component>
       <component id="ea3af" class="javax.swing.JLabel">
@@ -255,6 +235,16 @@
           <background color="-14211289"/>
           <foreground color="-1"/>
           <text value="Mis datos"/>
+        </properties>
+      </component>
+      <component id="709c2" class="javax.swing.JButton" binding="beneficiosButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-14211289"/>
+          <foreground color="-1"/>
+          <text value="Beneficios"/>
         </properties>
       </component>
     </children>

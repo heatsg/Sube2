@@ -55,6 +55,9 @@ public class Register {
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                TransportSystem transportSystem = new TransportSystem();
+                transportSystem.loadFromJSON();
+
                 String name = nameText.getText();
                 String surname = surnameText.getText();
                 int age = Integer.parseInt(ageText.getText());
@@ -70,7 +73,7 @@ public class Register {
                         JOptionPane.showMessageDialog(null, "Por favor, ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), UserType.NORMAL_USER, true, password);
-                        TransportSystem.getInstance().registerUser(newUser);
+                        transportSystem.registerUser(newUser);
                         JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.", "Registrado", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } catch (UserAlreadyExistsException ex) {

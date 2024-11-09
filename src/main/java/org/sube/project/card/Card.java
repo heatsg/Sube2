@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class Card implements JSONCompatible {
     private final String id;
-    private final String dniOwner;
+    private String dniOwner;
     private double balance;
     private final Set<Transaction> transactionHistory;
     private boolean status;
@@ -25,7 +25,7 @@ public class Card implements JSONCompatible {
 
     public Card() {
         this.id = JSONSube.generateCardID();
-        this.dniOwner = null;
+        this.dniOwner = "";
         this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
         this.status = true;
@@ -34,7 +34,7 @@ public class Card implements JSONCompatible {
 
     public Card(CardType cardType, String dniOwner) {
         this.id = JSONSube.generateCardID();
-        this.dniOwner=dniOwner;
+        this.dniOwner = dniOwner;
         this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
         this.status = true;
@@ -43,17 +43,19 @@ public class Card implements JSONCompatible {
 
     public Card(JSONObject j) {
         this.id = j.getString("id");
-        this.dniOwner=j.getString("dniOwner");
+        this.dniOwner = j.getString("dniOwner");
         this.balance = j.getDouble("balance");
         this.transactionHistory = new LinkedHashSet<>();
 
         JSONArray jarr = j.getJSONArray("transactionHistory");
 
-        for (int i = 0; i < j.length(); i++) {
-            if (jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())){
-                transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
-            } else
-                transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
+        if (!jarr.isEmpty()) {
+            for (int i = 0; i < jarr.length(); i++) {
+                if (jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())) {
+                    transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
+                } else
+                    transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
+            }
         }
         this.status = j.getBoolean("status");
     }
@@ -63,9 +65,9 @@ public class Card implements JSONCompatible {
 
         try {
             j.put("id", this.id);
-            j.put("dniOwner",this.dniOwner);
+            j.put("dniOwner", this.dniOwner);
             j.put("balance", this.balance);
-            j.put("transactionHistory", this.transactionHistory);
+            j.put("transactionHistory", new JSONArray(transactionHistory));
             j.put("status", this.status);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
@@ -115,6 +117,9 @@ public class Card implements JSONCompatible {
         return dniOwner;
     }
 
+    public void setDniOwner(String dniOwner) {
+        this.dniOwner = dniOwner;
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -131,6 +136,6 @@ public class Card implements JSONCompatible {
 
     @Override
     public String toString() {
-        return String.format("|%-17s |%-8s |%-7s |%-6s |%-10s |",id,dniOwner,balance,status,cardType.toString());
+        return String.format("|%-17s |%-8s |%-7s |%-6s |%-10s |", id, dniOwner, balance, status, cardType.toString());
     }
 }

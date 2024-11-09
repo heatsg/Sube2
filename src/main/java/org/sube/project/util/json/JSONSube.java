@@ -46,7 +46,7 @@ public class JSONSube {
         return st.toString();
     }
 
-    public static String generateCardID() {
+    /*public static String generateCardID() {
         try {
             return "6061" + convertIdFormat(generateByteArray());
         } catch (MalformedIdException | OverflowedIdException e) {
@@ -54,6 +54,10 @@ public class JSONSube {
             e.printStackTrace();
         }
         return null;
+    }*/
+
+    public static String generateCardID() {
+        return "6061" + generateRandomCardID();
     }
 
     // Genera un número de dígitos TAMANO_ID a partir del idCounter
@@ -72,4 +76,19 @@ public class JSONSube {
         idCounter[i]++;
         return idCounter;
     }
+
+    private static String generateRandomCardID() {
+        int[] id = new int[TAMANO_ID];
+
+        for (int i = 0; i < 12; i++) {
+            id[i] = (int) (Math.random() * 8 + 1);
+        }
+
+        StringBuilder st = new StringBuilder();
+        for (int i : id) {
+            st.append(i);
+        }
+        return st.toString();
+    }
+
 }

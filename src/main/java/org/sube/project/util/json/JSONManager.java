@@ -59,7 +59,6 @@ public class JSONManager {
         return new JSONArray(tokener);
     }
 
-
     public static JSONTokener getTokener(String path) {
         JSONTokener tokener = null;
 

@@ -1,12 +1,11 @@
 package org.sube.project.front.main;
 
-import org.json.JSONObject;
 import org.sube.project.accounts.User;
 import org.sube.project.front.Sube;
 import org.sube.project.front.main.account.Account;
+import org.sube.project.front.main.card.CardManagement;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
-import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,7 @@ public class MainMenu {
     private JLabel menuAccountLabel;
     private JLabel menuTitleLabel;
     private JPanel menuTitlePanel;
-    private JButton misTarjetasButton;
+    private JButton miTarjetaButton;
     private JButton cerrarSesionButton;
     private JButton gestionarSaldoButton;
     private JPanel separatorPanel;
@@ -61,10 +60,13 @@ public class MainMenu {
             }
         });
 
-        misTarjetasButton.addActionListener(new ActionListener() {
+        miTarjetaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(menuPanel);
 
+                CardManagement cardManagement = new CardManagement(user);
+                cardManagement.showUI(true, user);
             }
         });
 
@@ -75,11 +77,10 @@ public class MainMenu {
             }
         });
 
-        cerrarSesionButton.addActionListener(new ActionListener() {
+        beneficiosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Utilities.disposeWindow(menuPanel);
-                Sube.getInstance().showUI(true);
+
             }
         });
 
@@ -98,6 +99,14 @@ public class MainMenu {
                                 "DNI: " + user.getDocumentNumber() +
                                 "\n" +
                                 "Genero: " + user.getGender(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        cerrarSesionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(menuPanel);
+                Sube.getInstance().showUI(true);
             }
         });
     }

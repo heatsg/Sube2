@@ -28,6 +28,11 @@ public class TransportSystem {
         this.uncreditedAmounts = new HashMap<>();
     }
 
+    /**
+     * Metodo para obtener una instancia de la clase TransportSystem.
+     *
+     * @return
+     */
     public static TransportSystem getInstance() {
         if (instance == null) {
             instance = new TransportSystem();
@@ -47,20 +52,32 @@ public class TransportSystem {
         return uncreditedAmounts;
     }
 
+    /**
+     * Metodo para guardar colecciones en JSON
+     */
     public void saveIntoJSON() {
         JSONManager.collectionToFile(users.values(), Path.USER, true);
         JSONManager.collectionToFile(cards.values(), Path.CARD, true);
     }
 
+    /**
+     * Metodo para actualizar el arreglo de las tarjetas en JSON
+     */
     public void updateCardsJSON() {
         JSONManager.collectionToFile(cards.values(), Path.CARD, true);
     }
 
+    /**
+     * Metodo para actualizar el arreglo de usuarios en JSON
+     */
     public void updateUsersJSON() {
         JSONManager.collectionToFile(users.values(), Path.USER, true);
     }
 
 
+    /**
+     * Metodo para guardar el dinero no acreditado en JSON
+     */
     private void saveUncreditedAmountsIntoJSON() {
         JSONArray jarr = new JSONArray();
 
@@ -80,6 +97,9 @@ public class TransportSystem {
         }
     }
 
+    /**
+     * Metodo para cargar usuarios, tarjetas y dinero no acreditado desde JSON
+     */
     public void loadFromJSON() {
         users.clear();
         JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
@@ -94,7 +114,9 @@ public class TransportSystem {
             Card card = new Card(cardsArray.getJSONObject(i));
             cards.put(card.getId(), card);
         }
+    }
 
+    public void loadUncreditedAmountsFromJson() {
         uncreditedAmounts.clear();
         JSONArray uncreditedArray = JSONManager.readJSONArray(Path.UNCREDITED);
         for (int i = 0; i < uncreditedArray.length(); i++) {
@@ -103,6 +125,12 @@ public class TransportSystem {
         }
     }
 
+    /**
+     * Metodo para registrar un nuevo Usuario.
+     *
+     * @param user
+     * @throws UserAlreadyExistsException
+     */
     public void registerUser(User user) throws UserAlreadyExistsException {
         try {
             if (!(users.containsKey(user.getDocumentNumber()))) {
@@ -117,6 +145,12 @@ public class TransportSystem {
 
     }
 
+    /**
+     * Metodo para registrar una nueva tarjeta.
+     *
+     * @param cardType
+     * @param dniOwner
+     */
     public void registerCard(CardType cardType, String dniOwner) {
         Card card = new Card(cardType, dniOwner);
 
@@ -131,6 +165,13 @@ public class TransportSystem {
     }
 
 
+    /**
+     * Metodo para recargar nuevos montos en la tarjeta.
+     *
+     * @param cardId
+     * @param amount
+     * @return
+     */
     public boolean rechargeCard(String cardId, double amount) {
         if (cards.get(cardId) != null) {
             addUncreditedAmount(cardId, amount);
@@ -142,10 +183,22 @@ public class TransportSystem {
         }
     }
 
+    /**
+     * Metodo para añadir nuevos montos no acreditados en la tarjeta.
+     *
+     * @param cardId
+     * @param amount
+     */
     public void addUncreditedAmount(String cardId, double amount) {
         uncreditedAmounts.put(cardId, uncreditedAmounts.get(cardId) + amount);
     }
 
+    /**
+     * Metodo para acreditar el dinero en la tarjeta.
+     *
+     * @param cardId
+     * @return
+     */
     public boolean creditIntoCard(String cardId) {
         Card card = cards.get(cardId);
 
@@ -163,6 +216,12 @@ public class TransportSystem {
         return true;
     }
 
+    /**
+     * Metodo para pagar un boleto de Sube con la tarjeta.
+     *
+     * @param cardId
+     * @return
+     */
     public boolean pay(String cardId) {
         Card card = cards.get(cardId);
 
@@ -179,6 +238,12 @@ public class TransportSystem {
         return true;
     }
 
+    /**
+     * Metodo para dar de baja una tarjeta.
+     *
+     * @param id
+     * @return
+     */
     public boolean dropCard(String id) {
         if (cards.containsKey(id)) {
             cards.get(id).setStatus(false);
@@ -188,6 +253,12 @@ public class TransportSystem {
         return false;
     }
 
+    /**
+     * Metodo para dar de baja un usuario.
+     *
+     * @param document
+     * @return
+     */
     public boolean dropUser(String document) {
         if (users.containsKey(document)) {
             users.get(document).setStatus(false);
@@ -197,6 +268,12 @@ public class TransportSystem {
         return false;
     }
 
+    /**
+     *
+     *
+     * @param newName
+     * @param user
+     */
     public void modifyUserName(String newName, User user) {
         user.setName(newName);
         users.put(user.getDocumentNumber(), user);

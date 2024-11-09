@@ -37,10 +37,13 @@ public abstract class Transaction implements JSONCompatible {
     public Transaction(JSONObject j) {
         try {
             this.id = j.getInt("id");
-            this.dateTime = LocalDateTime.parse(j.getString("dateTime"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss");
+            this.dateTime = LocalDateTime.parse(j.getString("dateTime"), formatter);
             this.amount = j.getDouble("amount");
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
+        } catch (java.time.format.DateTimeParseException e) {
+            System.out.println("Error al parsear la fecha: " + e.getMessage());
         }
     }
 
