@@ -1,9 +1,7 @@
 package org.sube.project.exceptions;
 
-import org.sube.project.accounts.User;
-
-public class UserTakenDown extends Exception{
-    public UserTakenDown (String message){
+public class WrongPasswordException extends Exception{
+    public WrongPasswordException (String message){
         super(message);
     }
 
