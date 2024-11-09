@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class UserAuthentication {
 
+    public static User loggedUser;
+
     /**
      * Verifica si el DNI y la contraseña son correctos.
      *
@@ -21,18 +23,25 @@ public class UserAuthentication {
      * @param password       La contraseña del usuario.
      * @return true si las credenciales son válidas, false en caso contrario.
      */
-    public static boolean login(String documentNumber, String password) throws IncorrectCredentialsException {
+    public static boolean login(String documentNumber, String password) throws IncorrectCredentialsException, UserNotFoundException {
         JSONArray users = JSONManager.readJSONArray(Path.USER.toString());
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
             String storedDocumentNumber = user.getString("documentNumber");
             String storedPassword = user.getString("password");
+            boolean storedStatus = user.getBoolean("status");
 
-            if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password))
-                return true;
+            if (storedStatus) {
+                if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password)) {
+                    loggedUser = getUserByDocumentNumber(documentNumber);
+                    return true;
+                } else {
+                    throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
+                }
+            }
         }
-        throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
+        return false;
     }
 
     /**
@@ -62,6 +71,14 @@ public class UserAuthentication {
         }
 
         throw new UserNotFoundException("Usuario no encontrado.");
+    }
+
+    public static User getLoggedUser() {
+        return loggedUser;
+    }
+
+    public static void logout() {
+        loggedUser = null;
     }
 
 }

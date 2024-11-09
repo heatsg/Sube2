@@ -18,7 +18,7 @@ import java.util.Map;
 public class TransportSystem {
     public static TransportSystem instance;
 
-    private final Map<Integer, User> users;
+    private final Map<String, User> users;
     private final Map<String, Card> cards;
     private final Map<String, Double> uncreditedAmounts;
 
@@ -35,7 +35,7 @@ public class TransportSystem {
         return instance;
     }
 
-    public Map<Integer, User> getUsers() {
+    public Map<String, User> getUsers() {
         return users;
     }
 
@@ -85,7 +85,7 @@ public class TransportSystem {
         JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
         for (int i = 0; i < usersArray.length(); i++) {
             User user = new User(usersArray.getJSONObject(i));
-            users.put(user.getId(), user);
+            users.put(user.getDocumentNumber(), user);
         }
 
         cards.clear();
@@ -104,10 +104,9 @@ public class TransportSystem {
     }
 
     public void registerUser(User user) throws UserAlreadyExistsException {
-
         try {
-            if (!(users.containsKey(user.getId()))) {
-                users.put(user.getId(), user);
+            if (!(users.containsKey(user.getDocumentNumber()))) {
+                users.put(user.getDocumentNumber(), user);
                 saveIntoJSON();
             } else {
                 throw new UserAlreadyExistsException("Error: El usuario ya existe.");
@@ -144,7 +143,6 @@ public class TransportSystem {
     }
 
     public void addUncreditedAmount(String cardId, double amount) {
-        // Almacena acumulativamente en el map
         uncreditedAmounts.put(cardId, uncreditedAmounts.get(cardId) + amount);
     }
 
@@ -190,9 +188,9 @@ public class TransportSystem {
         return false;
     }
 
-    public boolean dropUser(int id) {
-        if (users.containsKey(id)) {
-            users.get(id).setStatus(false);
+    public boolean dropUser(String document) {
+        if (users.containsKey(document)) {
+            users.get(document).setStatus(false);
             updateUsersJSON();
             return true;
         }
@@ -201,31 +199,37 @@ public class TransportSystem {
 
     public void modifyUserName(String newName, User user) {
         user.setName(newName);
-        users.put(user.getId(), user);
+        users.put(user.getDocumentNumber(), user);
         updateUsersJSON();
     }
 
     public void modifyUserSurname(String newSurname, User user) {
         user.setSurname(newSurname);
-        users.put(user.getId(), user);
+        users.put(user.getDocumentNumber(), user);
         updateUsersJSON();
     }
 
     public void modifyAge(int newAge, User user) {
         user.setAge(newAge);
-        users.put(user.getId(), user);
+        users.put(user.getDocumentNumber(), user);
+        updateUsersJSON();
+    }
+
+    public void modifyGender(String gender, User user) {
+        user.setGender(gender);
+        users.put(user.getDocumentNumber(), user);
         updateUsersJSON();
     }
 
     public void modifyUserType(UserType type, User user) {
         user.setUserType(type);
-        users.put(user.getId(), user);
+        users.put(user.getDocumentNumber(), user);
         updateUsersJSON();
     }
 
     public void modifyUserPassword(String newPassword, User user) {
         user.setPassword(newPassword);
-        users.put(user.getId(), user);
+        users.put(user.getDocumentNumber(), user);
         updateUsersJSON();
     }
 

@@ -7,6 +7,7 @@ import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public abstract class Transaction implements JSONCompatible {
@@ -68,8 +69,8 @@ public abstract class Transaction implements JSONCompatible {
         this.amount = amount;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDateTime() {
+        return dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss"));
     }
 
     public void setDateTime(LocalDateTime dateTime) {

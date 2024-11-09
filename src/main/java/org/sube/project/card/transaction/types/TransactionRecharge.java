@@ -42,6 +42,6 @@ public final class TransactionRecharge extends Transaction {
 
     @Override
     public String toString() {
-        return String.format("|%-3s |%-6s |%-11s |%-29s |",getId(),getAmount(),getTransactionType().toString(),getDateTime().toString());
+        return String.format("|%-3s |%-6s |%-11s |%-29s |", getId(), getAmount(), getTransactionType().toString(), getDateTime());
     }
 }

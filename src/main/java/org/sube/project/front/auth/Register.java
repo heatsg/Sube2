@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Register {
@@ -61,13 +60,14 @@ public class Register {
                 int age = Integer.parseInt(ageText.getText());
                 String documentNumber = documentNumberText.getText();
                 String password = new String(passText.getPassword());
-                validateGenderBox();
 
                 try {
                     if (documentNumber.length() < 8) {
                         JOptionPane.showMessageDialog(null, "El documento debe tener al menos 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (password.length() < 8) {
                         JOptionPane.showMessageDialog(null, "Por favor, ingrese una contraseña mayor a 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (validateGenderBox()) {
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), UserType.NORMAL_USER, true, password);
                         TransportSystem.getInstance().registerUser(newUser);
@@ -93,10 +93,11 @@ public class Register {
         });
     }
 
-    private void validateGenderBox() {
+    private boolean validateGenderBox() {
         if (Objects.equals(genderBox.getSelectedItem(), "<Seleccionar>")) {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione un género.");
         }
+        return false;
     }
 
     private void clearAllFields() {
@@ -133,6 +134,8 @@ public class Register {
                     frame.dispose();
                     Sube sube = new Sube();
                     sube.showUI(true);
+                } else {
+                    showUI(true);
                 }
             }
         });

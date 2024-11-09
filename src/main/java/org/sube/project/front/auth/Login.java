@@ -68,10 +68,10 @@ public class Login {
                         JOptionPane.showMessageDialog(null, "Documento o contraseña incorrectos.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
 
-                } catch (IncorrectCredentialsException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (UserNotFoundException ex) {
-
+                } catch (IncorrectCredentialsException | UserNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -90,12 +90,13 @@ public class Login {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION
-                );
+                int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     frame.dispose();
                     Sube sube = new Sube();
                     sube.showUI(true);
+                } else {
+                    showUI(true);
                 }
             }
         });

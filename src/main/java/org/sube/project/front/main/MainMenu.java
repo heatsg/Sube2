@@ -1,9 +1,12 @@
 package org.sube.project.front.main;
 
+import org.json.JSONObject;
 import org.sube.project.accounts.User;
 import org.sube.project.front.Sube;
+import org.sube.project.front.main.account.Account;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
+import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +30,7 @@ public class MainMenu {
     private JButton gestionarCuentaButton;
     private JButton beneficiosButton;
     private JButton darDeBajaButton;
+    private JButton verMisDatosButton;
 
     public MainMenu(User user) {
         Utilities.loadImage(menuAccountLabel, ImagesUtil.ACCOUNT_PATH, 50, 50);
@@ -47,6 +51,15 @@ public class MainMenu {
 
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Numero de Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
+
+        gestionarCuentaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(menuPanel);
+                Account account = new Account(user);
+                account.showUI(true, user);
+            }
+        });
 
         misTarjetasButton.addActionListener(new ActionListener() {
             @Override
@@ -69,7 +82,26 @@ public class MainMenu {
                 Sube.getInstance().showUI(true);
             }
         });
+
+        verMisDatosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "Datos:" +
+                                "\n" + "\n" +
+                                "Nombre: " + user.getName() +
+                                "\n" +
+                                "Apellido: " + user.getSurname() +
+                                "\n" +
+                                "Edad: " + user.getAge() +
+                                "\n" +
+                                "DNI: " + user.getDocumentNumber() +
+                                "\n" +
+                                "Genero: " + user.getGender(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
+
 
     /**
      * Método para mostrar la ventana a través de JFrame
@@ -89,6 +121,8 @@ public class MainMenu {
                 if (choice == JOptionPane.YES_OPTION) {
                     frame.dispose();
                     Sube.getInstance().showUI(true);
+                } else {
+                    showUI(true, user);
                 }
             }
         });

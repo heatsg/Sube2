@@ -79,7 +79,7 @@ public class JSONToList {
     /// funciones de ordenado
 
     public static List<User> orderByUserId(List<User> list) {
-        list.sort(Comparator.comparingInt(User::getId));
+        list.sort(Comparator.comparing(User::getDocumentNumber));
         return list;
     }
 

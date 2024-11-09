@@ -1,4 +1,4 @@
-package org.sube.project.front.main.saldo;
+package org.sube.project.front.main.account.saldo;
 
 public class BalanceManagement {
 
