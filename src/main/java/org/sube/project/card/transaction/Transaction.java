@@ -2,7 +2,6 @@ package org.sube.project.card.transaction;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONSube;
 
@@ -11,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public abstract class Transaction implements JSONCompatible {
-    private static int idCounter = JSONSube.assignIDCounter(ID_TYPE.TRANSACTION);
+    private static int idCounter = JSONSube.assignTransactionIDCounter();
     private int id;
     private LocalDateTime dateTime;
     private TransactionType transactionType;

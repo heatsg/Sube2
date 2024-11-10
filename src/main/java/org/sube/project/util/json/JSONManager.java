@@ -56,6 +56,7 @@ public class JSONManager {
             System.err.println("Error al leer el JSONArray: JSONTokener es nulo.");
             return new JSONArray();
         }
+
         return new JSONArray(tokener);
     }
 

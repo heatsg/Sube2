@@ -26,6 +26,7 @@ public class TransportSystem {
         this.users = new HashMap<>();
         this.cards = new HashMap<>();
         this.uncreditedAmounts = new HashMap<>();
+        instance = this;
     }
 
     /**
@@ -105,14 +106,16 @@ public class TransportSystem {
         JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
         for (int i = 0; i < usersArray.length(); i++) {
             User user = new User(usersArray.getJSONObject(i));
-            users.put(user.getDocumentNumber(), user);
+            if (user.getStatus())
+                users.put(user.getDocumentNumber(), user);
         }
 
         cards.clear();
         JSONArray cardsArray = JSONManager.readJSONArray(Path.CARD);
         for (int i = 0; i < cardsArray.length(); i++) {
             Card card = new Card(cardsArray.getJSONObject(i));
-            cards.put(card.getId(), card);
+            if (card.getStatus())
+                cards.put(card.getId(), card);
         }
     }
 

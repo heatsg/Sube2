@@ -2,9 +2,7 @@ package org.sube.project.accounts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sube.project.util.ID_TYPE;
 import org.sube.project.util.json.JSONCompatible;
-import org.sube.project.util.json.JSONSube;
 
 import java.util.Objects;
 
@@ -57,16 +55,6 @@ public class User implements JSONCompatible {
 
         return j;
     }
-
-    /*public static User convertToUser(JSONObject object) {
-        int id = object.getInt("id");
-        String name = object.getString("name");
-        String surname = object.getString("surname");
-        int age = object.getInt("age");
-        String documentNumber = object.getString("documentNumber");
-        String gender = object.getString("gender");
-        JSONObject card1 = object.getJSONObject("card");
-    }*/
 
 
     public String getName() {
@@ -132,6 +120,7 @@ public class User implements JSONCompatible {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 
     @Override
     public boolean equals(Object object) {
