@@ -5,7 +5,8 @@ public enum Path {
     CARD("cards"),
     USER("accounts"),
     TRANSACTION("transactions"),
-    UNCREDITED("uncreditedAmounts");
+    UNCREDITED("uncreditedAmounts"),
+    REQUEST("requests");
 
     private final String path;
     Path(String path) { // en registry se guardarían los .json para que esté más ordenado no sé
