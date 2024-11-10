@@ -24,7 +24,7 @@ public class Card implements JSONCompatible {
     private CardType cardType;
 
     public Card() {
-        this.id = JSONSube.generateCardID();
+        this.id = JSONSube.generateRandomCardID();
         this.dniOwner = "";
         this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
@@ -33,7 +33,7 @@ public class Card implements JSONCompatible {
     }
 
     public Card(CardType cardType, String dniOwner) {
-        this.id = JSONSube.generateCardID();
+        this.id = JSONSube.generateRandomCardID();
         this.dniOwner = dniOwner;
         this.balance = 1000;
         this.transactionHistory = new LinkedHashSet<>();
