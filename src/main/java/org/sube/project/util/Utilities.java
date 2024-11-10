@@ -1,6 +1,8 @@
 package org.sube.project.util;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class Utilities {
@@ -55,5 +57,14 @@ public class Utilities {
     public static void loadIcon(JLabel label, String imagePath) {
         ImageIcon imageIcon = new ImageIcon(imagePath);
         label.setIcon(imageIcon);
+    }
+
+    public static void activateTable(JTable table, JScrollPane scrollPane, DefaultTableModel tableModel) {
+        table.setModel(tableModel);
+
+        scrollPane.setViewportView(table);
+        table.setVisible(true);
+        table.setModel(tableModel);
+        tableModel.fireTableDataChanged();
     }
 }

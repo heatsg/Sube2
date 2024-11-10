@@ -49,7 +49,7 @@ public class MainMenu {
         menuTitlePanel.add(menuTitleLabel, gbc);
 
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
-        documentLabel.setText("<html>Numero de Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
+        documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
 
         gestionarCuentaButton.addActionListener(new ActionListener() {
             @Override
@@ -67,13 +67,6 @@ public class MainMenu {
 
                 CardManagement cardManagement = new CardManagement(user);
                 cardManagement.showUI(true, user);
-            }
-        });
-
-        gestionarSaldoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
 
@@ -102,6 +95,13 @@ public class MainMenu {
             }
         });
 
+        darDeBajaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         cerrarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +109,8 @@ public class MainMenu {
                 Sube.getInstance().showUI(true);
             }
         });
+
+
     }
 
 

@@ -1,15 +1,12 @@
 package org.sube.project.card;
 
 import org.json.JSONArray;
-import org.sube.project.accounts.UserType;
-import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.types.TransactionRecharge;
 import org.sube.project.util.Path;
 import org.sube.project.util.json.JSONManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class CardManager {
 

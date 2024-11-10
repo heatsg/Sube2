@@ -12,6 +12,7 @@ import org.sube.project.exceptions.UserAlreadyExistsException;
 import org.sube.project.util.Path;
 import org.sube.project.util.json.JSONManager;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,9 +83,9 @@ public class TransportSystem {
     private void saveUncreditedAmountsIntoJSON() {
         JSONArray jarr = new JSONArray();
 
-        JSONObject j = new JSONObject();
         try {
             for (String cardId : uncreditedAmounts.keySet()) {
+                JSONObject j = new JSONObject();
                 j.put("id", cardId);
                 j.put("amount", uncreditedAmounts.get(cardId));
 
@@ -117,16 +118,17 @@ public class TransportSystem {
             if (card.getStatus())
                 cards.put(card.getId(), card);
         }
-    }
 
-    public void loadUncreditedAmountsFromJson() {
         uncreditedAmounts.clear();
         JSONArray uncreditedArray = JSONManager.readJSONArray(Path.UNCREDITED);
         for (int i = 0; i < uncreditedArray.length(); i++) {
             JSONObject uncreditedAmountJSON = uncreditedArray.getJSONObject(i);
-            uncreditedAmounts.put(uncreditedAmountJSON.getString("id"), uncreditedAmountJSON.getDouble("amount"));
+            String cardId = uncreditedAmountJSON.getString("id");
+            double amount = uncreditedAmountJSON.getDouble("amount");
+            uncreditedAmounts.put(cardId, amount);
         }
     }
+
 
     /**
      * Metodo para registrar un nuevo Usuario.
@@ -193,8 +195,11 @@ public class TransportSystem {
      * @param amount
      */
     public void addUncreditedAmount(String cardId, double amount) {
-        uncreditedAmounts.put(cardId, uncreditedAmounts.get(cardId) + amount);
+        double currentAmount = uncreditedAmounts.getOrDefault(cardId, 0.0);
+        uncreditedAmounts.put(cardId, currentAmount + amount);
+        saveUncreditedAmountsIntoJSON();
     }
+
 
     /**
      * Metodo para acreditar el dinero en la tarjeta.
@@ -203,21 +208,31 @@ public class TransportSystem {
      * @return
      */
     public boolean creditIntoCard(String cardId) {
-        Card card = cards.get(cardId);
-
-        if (card == null) {
-            System.out.println("Tarjeta SUBE no encontrada.");
+        if (!cards.containsKey(cardId)) {
+            System.out.println("Tarjeta con ID " + cardId + " no encontrada en el registro de tarjetas.");
             return false;
         }
 
+        if (!uncreditedAmounts.containsKey(cardId)) {
+            System.out.println("No hay saldo pendiente para la tarjeta con ID: " + cardId);
+            return false;
+        }
+
+        Card card = cards.get(cardId);
+
         CardManager.addBalance(card, uncreditedAmounts.get(cardId));
         uncreditedAmounts.remove(cardId);
+        saveUncreditedAmountsIntoJSON();
+
         cards.put(card.getId(), card);
         updateCardsJSON();
 
-        System.out.println("Cargas acreditadas, saldo final: " + card.getBalance());
+        JOptionPane.showMessageDialog(null, "Cargas acreditadas, saldo final: " + card.getBalance(), "Acreditacion", JOptionPane.INFORMATION_MESSAGE);
+
         return true;
     }
+
+
 
     /**
      * Metodo para pagar un boleto de Sube con la tarjeta.

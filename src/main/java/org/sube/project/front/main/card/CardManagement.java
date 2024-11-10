@@ -6,6 +6,7 @@ import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.front.main.MainMenu;
+import org.sube.project.system.TransportSystem;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -15,9 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class CardManagement {
 
@@ -53,7 +51,8 @@ public class CardManagement {
 
                 int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
                 if (card != null) {
-                    CardManager.addBalance(card, Double.parseDouble(rechargeValues[selectedOption]));
+                    TransportSystem.getInstance().addUncreditedAmount(card.getId(), Double.parseDouble(rechargeValues[selectedOption]));
+                    //CardManager.addBalance(card, Double.parseDouble(rechargeValues[selectedOption]));
                     CardManager.updateCardFile(card);
                 }
             }
@@ -62,9 +61,29 @@ public class CardManagement {
         acreditarTarjetaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                TransportSystem transportSystem = new TransportSystem();
+                transportSystem.loadFromJSON();
 
+                Card card = getCard(user.getDocumentNumber());
+
+                if (card != null) {
+                    String cardId = card.getId();
+
+                    System.out.println("ID de tarjeta a acreditar: " + cardId);
+
+                    boolean credited = transportSystem.creditIntoCard(cardId);
+                    if (credited) {
+                        JOptionPane.showMessageDialog(cardManagementPanel, "Saldo acreditado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
+                    } else {
+                        JOptionPane.showMessageDialog(cardManagementPanel, "No hay saldo pendiente para acreditar o la tarjeta no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(cardManagementPanel, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+
 
         darDeBajaButton.addActionListener(new ActionListener() {
             @Override
@@ -162,6 +181,8 @@ public class CardManagement {
                 int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     frame.dispose();
+                    MainMenu menu = new MainMenu(user);
+                    menu.showUI(true, user);
 
                 } else {
                     showUI(true, user);

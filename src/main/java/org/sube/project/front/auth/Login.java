@@ -1,10 +1,12 @@
 package org.sube.project.front.auth;
 
 import org.sube.project.accounts.User;
+import org.sube.project.accounts.UserType;
 import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.exceptions.IncorrectCredentialsException;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
+import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.front.main.MainMenu;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
@@ -62,8 +64,13 @@ public class Login {
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(loginPanel);
                         frame.dispose();
 
-                        MainMenu menu = new MainMenu(loggedUser);
-                        menu.showUI(true, loggedUser);
+                        if (loggedUser.getUserType() == UserType.ADMIN) {
+                            AdminMenu adminMenu = new AdminMenu(loggedUser);
+                            adminMenu.showUI(true, loggedUser);
+                        } else {
+                            MainMenu menu = new MainMenu(loggedUser);
+                            menu.showUI(true, loggedUser);
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "Documento o contraseña incorrectos.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
