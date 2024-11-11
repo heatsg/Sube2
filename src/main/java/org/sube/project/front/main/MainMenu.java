@@ -4,6 +4,9 @@ import org.sube.project.accounts.User;
 import org.sube.project.front.Sube;
 import org.sube.project.front.main.account.Account;
 import org.sube.project.front.main.card.CardManagement;
+import org.sube.project.request.Request;
+import org.sube.project.request.RequestHandler;
+import org.sube.project.request.UserTakeDownRequest;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
@@ -98,9 +101,21 @@ public class MainMenu {
         darDeBajaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar de baja su cuenta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
 
+                if (confirm == JOptionPane.YES_OPTION) {
+                    RequestHandler<Request> requestHandler = new RequestHandler<>();
+                    int requestId = (int) (Math.random() * 10000);
+                    UserTakeDownRequest request = new UserTakeDownRequest(requestId, user.getDocumentNumber());
+
+                    requestHandler.addRequest(request);
+                    requestHandler.requestsToFile();
+
+                    JOptionPane.showMessageDialog(null, "La solicitud de baja ha sido enviada exitosamente.", "Solicitud Enviada", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
+
 
         cerrarSesionButton.addActionListener(new ActionListener() {
             @Override

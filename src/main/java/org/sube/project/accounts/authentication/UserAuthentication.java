@@ -9,9 +9,6 @@ import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.util.json.JSONManager;
 import org.sube.project.util.Path;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public class UserAuthentication {
 
     public static User loggedUser;
@@ -24,7 +21,8 @@ public class UserAuthentication {
      * @return true si las credenciales son válidas, false en caso contrario.
      */
     public static boolean login(String documentNumber, String password) throws IncorrectCredentialsException, UserNotFoundException {
-        JSONArray users = JSONManager.readJSONArray(Path.USER.toString());
+        JSONArray users = JSONManager.readJSONArray(Path.USER);
+        boolean userFound = false;
 
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
@@ -32,17 +30,22 @@ public class UserAuthentication {
             String storedPassword = user.getString("password");
             boolean storedStatus = user.getBoolean("status");
 
-            if (storedStatus) {
-                if (storedDocumentNumber.equals(documentNumber) && storedPassword.equals(password)) {
+            if (storedDocumentNumber.equals(documentNumber)) {
+                userFound = true;
+                if (storedStatus && storedPassword.equals(password)) {
                     loggedUser = getUserByDocumentNumber(documentNumber);
                     return true;
-                } else {
-                    throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
                 }
             }
         }
-        return false;
+
+        if (!userFound) {
+            throw new UserNotFoundException("Usuario no encontrado o dado de baja.");
+        } else {
+            throw new IncorrectCredentialsException("Documento o contraseña incorrectos.");
+        }
     }
+
 
     /**
      * Obtiene un usuario por su número de documento.

@@ -8,7 +8,9 @@ import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
 import org.sube.project.request.Requestable;
 import org.sube.project.request.UserTakeDownRequest;
+import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
+import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -34,39 +36,103 @@ public class UserUnsuscriber {
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
-    public UserUnsuscriber(User user) {
+    public UserUnsuscriber(User user) throws UserNotFoundException {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Apellido");
         tableModel.addColumn("DNI");
+        tableModel.addColumn("Estado");
+
         Utilities.activateTable(table1, scrollPane, tableModel);
+        loadRequestsIntoTable();
 
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    loadRequestsIntoTable();
+                } catch (UserNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
         aceptarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                int selectedRow = table1.getSelectedRow();
+                if (selectedRow != -1) {
+                    String dni = tableModel.getValueAt(selectedRow, 2).toString();
+                    approveRequest(dni);
+                    try {
+                        loadRequestsIntoTable();
+                    } catch (UserNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una solicitud para aceptar.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
         denegarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para denegar solicitud
+                int selectedRow = table1.getSelectedRow();
+                if (selectedRow != -1) {
+                    String document = tableModel.getValueAt(selectedRow, 2).toString();
+                    denyRequest(document);
+                    try {
+                        loadRequestsIntoTable();
+                    } catch (UserNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una solicitud para denegar.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
+    }
 
-        verDetallesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para ver detalles
+    private void loadRequestsIntoTable() throws UserNotFoundException {
+        tableModel.setRowCount(0);
+        List<Requestable> requests = Request.loadRequestsFromFile();
+
+        for (Requestable request : requests) {
+            if (request instanceof UserTakeDownRequest userRequest && ((UserTakeDownRequest) request).getStatus()) {
+                User user = getUserByDocumentNumber(userRequest.getDocumentNumber());
+                tableModel.addRow(new Object[]{
+                        user.getName(),
+                        user.getSurname(),
+                        user.getDocumentNumber(),
+                        "Pendiente"
+                });
             }
-        });
+        }
+    }
+
+    private void approveRequest(String documentNumber) {
+        RequestHandler<Request> requestHandler = new RequestHandler<>();
+        for (Requestable request : Request.loadRequestsFromFile()) {
+            if (request instanceof UserTakeDownRequest && ((UserTakeDownRequest) request).getDocumentNumber().equals(documentNumber)) {
+                requestHandler.takeDownRequest((Request) request);
+                JSONManager.updateUserStatus(((UserTakeDownRequest) request).getDocumentNumber(), false, Path.USER);
+                JOptionPane.showMessageDialog(null, "La solicitud ha sido aprobada.", "Solicitud Aprobada", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
+        }
+        requestHandler.requestsToFile();
+    }
+
+    private void denyRequest(String documentNumber) {
+        RequestHandler<Request> requestHandler = new RequestHandler<>();
+        for (Requestable request : Request.loadRequestsFromFile()) {
+            if (request instanceof UserTakeDownRequest && ((UserTakeDownRequest) request).getDocumentNumber().equals(documentNumber)) {
+                ((UserTakeDownRequest) request).setStatus(false);
+                JOptionPane.showMessageDialog(null, "La solicitud ha sido denegada.", "Solicitud Denegada", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
+        }
+        requestHandler.requestsToFile();
     }
 
     /**

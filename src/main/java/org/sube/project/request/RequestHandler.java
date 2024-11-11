@@ -34,7 +34,7 @@ public class RequestHandler<T extends Request> {
         }
     }
 
-    public void RequestsToFile() {
+    public void requestsToFile() {
         JSONArray jarr = new JSONArray();
 
         for (T request : RequestList) {

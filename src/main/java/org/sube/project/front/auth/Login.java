@@ -67,10 +67,11 @@ public class Login {
                         if (loggedUser.getUserType() == UserType.ADMIN) {
                             AdminMenu adminMenu = new AdminMenu(loggedUser);
                             adminMenu.showUI(true, loggedUser);
-                        } else {
+                        } else if (loggedUser.getUserType() == UserType.NORMAL_USER) {
                             MainMenu menu = new MainMenu(loggedUser);
                             menu.showUI(true, loggedUser);
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Documento o contraseña incorrectos.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -82,6 +83,7 @@ public class Login {
                 }
             }
         });
+
     }
 
     /**

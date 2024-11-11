@@ -1,6 +1,7 @@
 package org.sube.project.front.admin;
 
 import org.sube.project.accounts.User;
+import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
 import org.sube.project.front.admin.users.UserUnsuscriber;
 import org.sube.project.util.Utilities;
@@ -13,7 +14,7 @@ import java.awt.event.WindowEvent;
 
 public class AdminMenu {
     private JButton gestionarTarjetasButton;
-    private JButton gestionarUsuariosButton;
+    private JButton solicitudesDeBajaButton;
     private JButton volverButton;
     private JPanel adminMenuPanel;
     private JLabel nameLabel;
@@ -25,11 +26,16 @@ public class AdminMenu {
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
 
-        gestionarUsuariosButton.addActionListener(new ActionListener() {
+        solicitudesDeBajaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Utilities.disposeWindow(adminMenuPanel);
-                UserUnsuscriber userManagement = new UserUnsuscriber(user);
+                UserUnsuscriber userManagement = null;
+                try {
+                    userManagement = new UserUnsuscriber(user);
+                } catch (UserNotFoundException ex) {
+                    ex.printStackTrace();
+                }
                 userManagement.showUI(true, user);
             }
         });
@@ -45,7 +51,8 @@ public class AdminMenu {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Utilities.disposeWindow(adminMenuPanel);
+                Sube.getInstance().showUI(true);
             }
         });
     }

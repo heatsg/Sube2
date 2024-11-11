@@ -106,4 +106,18 @@ public class JSONManager {
             jx.printStackTrace();
         }
     }
+
+    public static void updateUserStatus(String documentNumber, boolean status, Path path) {
+        JSONArray usersArray = readJSONArray(path);
+
+        for (int i = 0; i < usersArray.length(); i++) {
+            JSONObject user = usersArray.getJSONObject(i);
+
+            if (user.getString("documentNumber").equals(documentNumber)) {
+                user.put("status", status);
+                break;
+            }
+        }
+        write(path, usersArray);
+    }
 }
