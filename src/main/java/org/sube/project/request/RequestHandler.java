@@ -35,7 +35,7 @@ public class RequestHandler<T extends Request> {
     }
 
     public void requestsToFile() {
-        JSONArray jarr = new JSONArray();
+        JSONArray jarr = JSONManager.readJSONArray(Path.REQUEST);
 
         for (T request : RequestList) {
             jarr.put(request.toJSON());

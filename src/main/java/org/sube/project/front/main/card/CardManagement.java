@@ -6,6 +6,10 @@ import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.front.main.MainMenu;
+import org.sube.project.request.Request;
+import org.sube.project.request.RequestHandler;
+import org.sube.project.request.card.CardTakeDownRequest;
+import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.system.TransportSystem;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
@@ -88,7 +92,18 @@ public class CardManagement {
         darDeBajaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
+                Card card = getCard(user.getDocumentNumber());
+                if (confirm == JOptionPane.YES_OPTION) {
+                    RequestHandler<Request> requestHandler = new RequestHandler<>();
+                    int requestId = (int) (Math.random() * 10000);
+                    CardTakeDownRequest request= new CardTakeDownRequest(requestId, user.getDocumentNumber(), card.getId());
 
+                    requestHandler.addRequest(request);
+                    requestHandler.requestsToFile();
+
+                    JOptionPane.showMessageDialog(null, "La solicitud de baja ha sido enviada exitosamente.", "Solicitud Enviada", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
