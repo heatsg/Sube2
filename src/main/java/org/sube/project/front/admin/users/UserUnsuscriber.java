@@ -1,13 +1,12 @@
 package org.sube.project.front.admin.users;
 
 import org.sube.project.accounts.User;
-import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
 import org.sube.project.request.Requestable;
-import org.sube.project.request.UserTakeDownRequest;
+import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -23,7 +22,7 @@ import java.util.List;
 import static org.sube.project.accounts.authentication.UserAuthentication.getUserByDocumentNumber;
 
 public class UserUnsuscriber {
-    private JPanel userManagementPanel;
+    private JPanel userUnsuscriberPanel;
     private JTable table1;
     private JTextField textField1;
     private JScrollPane scrollPane;
@@ -91,6 +90,39 @@ public class UserUnsuscriber {
                 }
             }
         });
+
+        inhabilitadosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(userUnsuscriberPanel);
+
+                UnsuscribedUsers unsuscribedUsers = new UnsuscribedUsers(user);
+                unsuscribedUsers.showUI(true, user);
+            }
+        });
+
+        verDetallesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                User userTable = Utilities.getUserTableByDocument(table1, tableModel, 2);
+                JOptionPane.showMessageDialog(null,
+                        "Datos:" +
+                                "\n" + "\n" +
+                                "Nombre: " + userTable.getName() +
+                                "\n" +
+                                "Apellido: " + userTable.getSurname() +
+                                "\n" +
+                                "Edad: " + userTable.getAge() +
+                                "\n" +
+                                "DNI: " + userTable.getDocumentNumber() +
+                                "\n" +
+                                "Genero: " + userTable.getGender() +
+                                "\n" +
+                                "Tipo de Usuario: " + userTable.getUserType() +
+                                "\n" +
+                                "Estado: " + userTable.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 
     private void loadRequestsIntoTable() throws UserNotFoundException {
@@ -142,7 +174,7 @@ public class UserUnsuscriber {
      */
     public void showUI(boolean input, User user) {
         JFrame frame = new JFrame("Gestionar usuarios");
-        frame.setContentPane(userManagementPanel);
+        frame.setContentPane(userUnsuscriberPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(550, 400);

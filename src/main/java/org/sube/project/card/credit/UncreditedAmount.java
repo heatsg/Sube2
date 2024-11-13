@@ -11,26 +11,26 @@ public class UncreditedAmount implements JSONCompatible {
     private double amount;
     private boolean status;
 
-    public UncreditedAmount(String id,double amount){
-        this.id=id;
-        this.amount=amount;
-        this.status=true;
+    public UncreditedAmount(String id, double amount) {
+        this.id = id;
+        this.amount = amount;
+        this.status = true;
     }
 
-    public UncreditedAmount(JSONObject j){
-        this.id=j.getString("id");
-        this.amount=j.getDouble("amount");
-        this.status=j.getBoolean("status");
+    public UncreditedAmount(JSONObject j) {
+        this.id = j.getString("id");
+        this.amount = j.getDouble("amount");
+        this.status = j.getBoolean("status");
     }
 
     @Override
     public JSONObject toJSON() {
-        JSONObject j=new JSONObject();
+        JSONObject j = new JSONObject();
         try {
-            j.put("id",id);
-            j.put("amount",amount);
-            j.put("status",status);
-        }catch (JSONException jx){
+            j.put("id", id);
+            j.put("amount", amount);
+            j.put("status", status);
+        } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }
         return j;

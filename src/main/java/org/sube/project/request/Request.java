@@ -3,6 +3,8 @@ package org.sube.project.request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.request.card.CardTakeDownRequest;
+import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.util.Path;
 import org.sube.project.util.json.JSONCompatible;
 import org.sube.project.util.json.JSONManager;

@@ -6,7 +6,7 @@ import org.sube.project.front.main.account.Account;
 import org.sube.project.front.main.card.CardManagement;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
-import org.sube.project.request.UserTakeDownRequest;
+import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 

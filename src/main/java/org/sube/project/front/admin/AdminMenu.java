@@ -3,6 +3,7 @@ package org.sube.project.front.admin;
 import org.sube.project.accounts.User;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
+import org.sube.project.front.admin.users.UserList;
 import org.sube.project.front.admin.users.UserUnsuscriber;
 import org.sube.project.util.Utilities;
 
@@ -19,6 +20,8 @@ public class AdminMenu {
     private JPanel adminMenuPanel;
     private JLabel nameLabel;
     private JLabel documentLabel;
+    private JButton listaDeUsuariosButton;
+    private JButton solicitudesDeBeneficiosButton;
 
 
     public AdminMenu(User user) {
@@ -53,6 +56,23 @@ public class AdminMenu {
             public void actionPerformed(ActionEvent e) {
                 Utilities.disposeWindow(adminMenuPanel);
                 Sube.getInstance().showUI(true);
+            }
+        });
+
+        listaDeUsuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(adminMenuPanel);
+
+                UserList userList = new UserList(user);
+                userList.showUI(true, user);
+            }
+        });
+
+        solicitudesDeBeneficiosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

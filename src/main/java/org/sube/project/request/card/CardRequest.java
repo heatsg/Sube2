@@ -1,17 +1,27 @@
-package org.sube.project.request;
+package org.sube.project.request.card;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.request.Request;
 
-public class UserTakeDownRequest extends Request {
-    public UserTakeDownRequest(int id, String documentNumber) {
+public abstract class CardRequest extends Request {
+
+    private String cardId;
+
+    public CardRequest(int id, String documentNumber, String cardId) {
         super(id, documentNumber);
         setRequestType(getClass().getSimpleName());
+        this.cardId = cardId;
     }
 
-    public UserTakeDownRequest(JSONObject j) {
+    public CardRequest(JSONObject j) {
         super(j);
+        this.cardId = j.getString("cardId");
         setRequestType(j.getString("RequestType"));
+    }
+
+    public String getCardId() {
+        return cardId;
     }
 
     @Override
@@ -19,6 +29,7 @@ public class UserTakeDownRequest extends Request {
         JSONObject j = super.toJSON();
         try {
             j.put("RequestType", getRequestType());
+            j.put("cardId", cardId);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         }

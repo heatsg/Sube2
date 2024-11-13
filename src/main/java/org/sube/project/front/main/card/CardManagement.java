@@ -155,7 +155,7 @@ public class CardManagement {
         JSONArray array = JSONManager.readJSONArray(Path.CARD);
 
         for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).getString("id").equals(id)) {
+            if (array.getJSONObject(i).getString("id").equals(id) && array.getJSONObject(i).getString("dniOwner").equalsIgnoreCase("")) {
                 return true;
             }
         }

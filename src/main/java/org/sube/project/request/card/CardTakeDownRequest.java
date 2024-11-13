@@ -1,6 +1,5 @@
-package org.sube.project.request;
+package org.sube.project.request.card;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CardTakeDownRequest extends CardRequest {

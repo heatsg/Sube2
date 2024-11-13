@@ -1,4 +1,4 @@
-package org.sube.project.util.sorted_print;
+package org.sube.project.util.sortedprint;
 
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
@@ -20,7 +20,7 @@ public class MapToList {
         return list;
     }
 
-    public static List<User> OrderList(List<User> list, USER_ORDERS order) {
+    public static List<User> OrderList(List<User> list, UserOrder order) {
         switch (order) {
             case SURNAME -> list.sort(Comparator.comparing(User::getSurname));
             case DOCUMENT_NUMBER -> list.sort(Comparator.comparing(User::getDocumentNumber));
@@ -28,14 +28,16 @@ public class MapToList {
         }
         return list;
     }
-    public static List<Card> OrderList(List<Card> list, CARD_ORDERS order) {
+
+    public static List<Card> OrderList(List<Card> list, CardOrder order) {
         switch (order) {
             case ID -> list.sort(Comparator.comparing(Card::getId));
             case BALANCE -> list.sort(Comparator.comparing(Card::getBalance));
         }
         return list;
     }
-    public static List<Transaction> OrderList(List<Transaction> list, TRANSACTION_ORDERS order) {
+
+    public static List<Transaction> OrderList(List<Transaction> list, TransactionOrder order) {
         switch (order) {
             case ID -> list.sort(Comparator.comparing(Transaction::getId));
             case AMOUNT -> list.sort(Comparator.comparing(Transaction::getAmount));
@@ -43,6 +45,7 @@ public class MapToList {
         }
         return list;
     }
+
     public static <K, T> void printList(Map<K, T> map) {
         System.out.println(TransportMapToList(map));
     }
@@ -55,15 +58,17 @@ public class MapToList {
         }
     }
 
-    public static void printOrdered(Map<String, User> map, USER_ORDERS order) {
+    public static void printOrdered(Map<String, User> map, UserOrder order) {
         printHeader(TYPE.USER);
         System.out.println(OrderList(TransportMapToList(map), order));
     }
-    public static void printOrdered(Map<String, Card> map, CARD_ORDERS order) {
+
+    public static void printOrdered(Map<String, Card> map, CardOrder order) {
         printHeader(TYPE.CARD);
         System.out.println(OrderList(TransportMapToList(map), order));
     }
-    public static void printOrdered(Map<String, Transaction> map, TRANSACTION_ORDERS order) {
+
+    public static void printOrdered(Map<String, Transaction> map, TransactionOrder order) {
         printHeader(TYPE.TRANSACTION);
         System.out.println(OrderList(TransportMapToList(map), order));
     }
