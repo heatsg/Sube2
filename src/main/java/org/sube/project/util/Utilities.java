@@ -3,6 +3,9 @@ package org.sube.project.util;
 import org.json.JSONArray;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.authentication.UserAuthentication;
+import org.sube.project.card.Card;
+import org.sube.project.card.CardManager;
+import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.util.json.JSONManager;
 
@@ -84,19 +87,20 @@ public class Utilities {
         tableModel.fireTableDataChanged();
     }
 
-    public static String getDocumentRow(JTable table, DefaultTableModel tableModel, int column) {
+    public static String getIdentifierRow(JTable table, DefaultTableModel tableModel, int column) {
         int selectedRow = table.getSelectedRow();
-        String document = "";
+        String identifier = "";
 
         if (selectedRow != -1) {
-            document = tableModel.getValueAt(selectedRow, column).toString();
+            identifier = tableModel.getValueAt(selectedRow, column).toString();
         }
 
-        return document;
+        return identifier;
     }
 
+
     public static User getUserTableByDocument(JTable table, DefaultTableModel tableModel, int column) {
-        String document = Utilities.getDocumentRow(table, tableModel, column);
+        String document = Utilities.getIdentifierRow(table, tableModel, column);
         User userTable = null;
 
         if (document != null) {
@@ -110,6 +114,21 @@ public class Utilities {
         return userTable;
     }
 
+    public static Card getCardTableByID(JTable table, DefaultTableModel tableModel, int column) {
+        String id = Utilities.getIdentifierRow(table, tableModel, column);
+        Card cardTable = null;
+
+        if (id != null) {
+            try {
+                cardTable = CardManager.getCardByID(id);
+            } catch (CardNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        return cardTable;
+    }
+
     public static java.util.List<User> getAllUsers() {
         JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
         List<User> usersList = new ArrayList<>();
@@ -119,5 +138,16 @@ public class Utilities {
         }
 
         return usersList;
+    }
+
+    public static List<Card> getAllCards() {
+        JSONArray cardsArray = JSONManager.readJSONArray(Path.CARD);
+        List<Card> cardsList = new ArrayList<>();
+
+        for (int i = 0; i < cardsArray.length(); i++) {
+            cardsList.add(new Card(cardsArray.getJSONObject(i)));
+        }
+
+        return cardsList;
     }
 }

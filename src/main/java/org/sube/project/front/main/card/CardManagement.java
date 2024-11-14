@@ -92,12 +92,12 @@ public class CardManagement {
         darDeBajaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar de baja la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
                 Card card = getCard(user.getDocumentNumber());
                 if (confirm == JOptionPane.YES_OPTION) {
                     RequestHandler<Request> requestHandler = new RequestHandler<>();
                     int requestId = (int) (Math.random() * 10000);
-                    CardTakeDownRequest request= new CardTakeDownRequest(requestId, user.getDocumentNumber(), card.getId());
+                    CardTakeDownRequest request = new CardTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber(), card.getId());
 
                     requestHandler.addRequest(request);
                     requestHandler.requestsToFile();
@@ -148,7 +148,7 @@ public class CardManagement {
         JSONArray array = JSONManager.readJSONArray(Path.CARD);
 
         for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)){
+            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)) {
                 return true;
             }
         }
@@ -159,7 +159,7 @@ public class CardManagement {
         JSONArray array = JSONManager.readJSONArray(Path.CARD);
 
         for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)){
+            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)) {
                 return new Card(array.getJSONObject(i));
             }
         }
@@ -170,13 +170,14 @@ public class CardManagement {
         JSONArray array = JSONManager.readJSONArray(Path.CARD);
 
         for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).getString("id").equals(id) && array.getJSONObject(i).getString("dniOwner").equalsIgnoreCase("")) {
+            if (array.getJSONObject(i).getString("id").equals(id)
+                    && array.getJSONObject(i).getString("dniOwner").equalsIgnoreCase("")
+                    && array.getJSONObject(i).getBoolean("status")) {
                 return true;
             }
         }
         return false;
     }
-
 
 
     /**

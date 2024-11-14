@@ -1,15 +1,16 @@
-package org.sube.project.front.admin.users;
+package org.sube.project.front.admin.cards;
 
 import org.sube.project.accounts.User;
-import org.sube.project.exceptions.UserNotFoundException;
+import org.sube.project.card.Card;
+import org.sube.project.card.CardManager;
+import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
 import org.sube.project.request.Requestable;
-import org.sube.project.request.user.UserTakeDownRequest;
-import org.sube.project.util.Path;
+import org.sube.project.request.card.CardRequest;
+import org.sube.project.request.card.CardTakeDownRequest;
 import org.sube.project.util.Utilities;
-import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,10 +20,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-import static org.sube.project.accounts.authentication.UserAuthentication.getUserByDocumentNumber;
-
-public class UserUnsuscriber {
-    private JPanel userUnsuscriberPanel;
+public class CardUnsuscriber {
+    private JPanel cardUnsuscriberPanel;
     private JTable table1;
     private JTextField textField1;
     private JScrollPane scrollPane;
@@ -36,11 +35,12 @@ public class UserUnsuscriber {
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
-    public UserUnsuscriber(User user) throws UserNotFoundException {
-        tableModel.addColumn("Nombre");
-        tableModel.addColumn("Apellido");
-        tableModel.addColumn("DNI");
+    public CardUnsuscriber(User user) throws CardNotFoundException {
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Tipo de Tarjeta");
+        tableModel.addColumn("DNI Asociado");
         tableModel.addColumn("Estado");
+        tableModel.addColumn("Balance");
 
         Utilities.activateTable(table1, scrollPane, tableModel);
         loadRequestsIntoTable();
@@ -51,7 +51,7 @@ public class UserUnsuscriber {
                 tableModel.setRowCount(0);
                 try {
                     loadRequestsIntoTable();
-                } catch (UserNotFoundException ex) {
+                } catch (CardNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
                 updatedTableLabel.setText("<html><span style='color: #08FF00'> Tabla actualizada </span></html>");
@@ -63,16 +63,18 @@ public class UserUnsuscriber {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    String dni = tableModel.getValueAt(selectedRow, 2).toString();
-                    approveRequest(dni);
+                    String cardID = tableModel.getValueAt(selectedRow, 0).toString();
+                    approveRequest(cardID);
                     try {
                         loadRequestsIntoTable();
-                    } catch (UserNotFoundException ex) {
+                    } catch (CardNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una solicitud para aceptar.", "Error", JOptionPane.WARNING_MESSAGE);
                 }
+
+                actualizarButton.doClick();
             }
         });
 
@@ -81,76 +83,81 @@ public class UserUnsuscriber {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-                    String document = tableModel.getValueAt(selectedRow, 2).toString();
-                    denyRequest(document);
+                    String cardID = tableModel.getValueAt(selectedRow, 0).toString();
+                    denyRequest(cardID);
                     try {
                         loadRequestsIntoTable();
-                    } catch (UserNotFoundException ex) {
+                    } catch (CardNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una solicitud para denegar.", "Error", JOptionPane.WARNING_MESSAGE);
                 }
+
+                actualizarButton.doClick();
             }
         });
 
         inhabilitadosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Utilities.disposeWindow(userUnsuscriberPanel);
+                Utilities.disposeWindow(cardUnsuscriberPanel);
 
-                UnsuscribedUsers unsuscribedUsers = new UnsuscribedUsers(user);
-                unsuscribedUsers.showUI(true, user);
+                UnsuscribedCards unsuscribedCards = new UnsuscribedCards(user);
+                unsuscribedCards.showUI(true, user);
             }
         });
 
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User tableUser = Utilities.getUserTableByDocument(table1, tableModel, 2);
+                Card tableCard = Utilities.getCardTableByID(table1, tableModel, 2);
                 JOptionPane.showMessageDialog(null,
                         "Datos:" +
                                 "\n" + "\n" +
-                                "Nombre: " + tableUser.getName() +
+                                "ID: " + tableCard.getId() +
                                 "\n" +
-                                "Apellido: " + tableUser.getSurname() +
+                                "Tipo de Tarjeta: " + tableCard.getCardType().toString() +
                                 "\n" +
-                                "Edad: " + tableUser.getAge() +
+                                "DNI Asociado: " + tableCard.getDniOwner() +
                                 "\n" +
-                                "DNI: " + tableUser.getDocumentNumber() +
+                                "Estado: " + tableCard.getStatus() +
                                 "\n" +
-                                "Genero: " + tableUser.getGender() +
-                                "\n" +
-                                "Tipo de Usuario: " + tableUser.getUserType() +
-                                "\n" +
-                                "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+                                "Balance: " + tableCard.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
 
-    private void loadRequestsIntoTable() throws UserNotFoundException {
+    private void loadRequestsIntoTable() throws CardNotFoundException {
         tableModel.setRowCount(0);
         List<Requestable> requests = Request.loadRequestsFromFile();
 
         for (Requestable request : requests) {
-            if (request instanceof UserTakeDownRequest userRequest && ((UserTakeDownRequest) request).getStatus()) {
-                User user = getUserByDocumentNumber(userRequest.getDocumentNumber());
-                tableModel.addRow(new Object[]{
-                        user.getName(),
-                        user.getSurname(),
-                        user.getDocumentNumber(),
-                        "Pendiente"
-                });
+            if (request instanceof CardTakeDownRequest cardRequest && ((CardTakeDownRequest) request).getStatus()) {
+                try {
+                    Card card = CardManager.getCardByID(cardRequest.getCardId());
+                    tableModel.addRow(new Object[]{
+                            card.getId(),
+                            card.getCardType().toString(),
+                            card.getDniOwner(),
+                            card.getStatus(),
+                            card.getBalance(),
+                    });
+                } catch (CardNotFoundException e) {
+                    System.out.println("Error al encontrar la tarjeta: " + e.getMessage());
+                }
             }
         }
     }
 
-    private void approveRequest(String documentNumber) {
-        RequestHandler<Request> requestHandler = new RequestHandler<>();
-        for (Requestable request : Request.loadRequestsFromFile()) {
-            if (request instanceof UserTakeDownRequest && ((UserTakeDownRequest) request).getDocumentNumber().equals(documentNumber)) {
-                requestHandler.takeDownRequest((Request) request);
-                JSONManager.updateUserStatus(((UserTakeDownRequest) request).getDocumentNumber(), false, Path.USER);
+
+    private void approveRequest(String cardID) {
+        RequestHandler<CardRequest> requestHandler = new RequestHandler<>();
+        for (Requestable request : CardRequest.loadRequestsFromFile()) {
+            if (request instanceof CardTakeDownRequest && ((CardTakeDownRequest) request).getCardId().equals(cardID)) {
+                requestHandler.takeDownRequest((CardRequest) request);
+                CardManager.setCardDocumentNumber(cardID, "");
+                Request.updateRequestStatus(((CardTakeDownRequest) request).getId(), false);
                 JOptionPane.showMessageDialog(null, "La solicitud ha sido aprobada.", "Solicitud Aprobada", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
@@ -158,11 +165,11 @@ public class UserUnsuscriber {
         requestHandler.requestsToFile();
     }
 
-    private void denyRequest(String documentNumber) {
-        RequestHandler<Request> requestHandler = new RequestHandler<>();
-        for (Requestable request : Request.loadRequestsFromFile()) {
-            if (request instanceof UserTakeDownRequest && ((UserTakeDownRequest) request).getDocumentNumber().equals(documentNumber)) {
-                ((UserTakeDownRequest) request).setStatus(false);
+    private void denyRequest(String cardID) {
+        RequestHandler<CardRequest> requestHandler = new RequestHandler<>();
+        for (Requestable request : CardRequest.loadRequestsFromFile()) {
+            if (request instanceof CardTakeDownRequest && ((CardTakeDownRequest) request).getCardId().equals(cardID)) {
+                Request.updateRequestStatus(((CardTakeDownRequest) request).getId(), false);
                 JOptionPane.showMessageDialog(null, "La solicitud ha sido denegada.", "Solicitud Denegada", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
@@ -177,7 +184,7 @@ public class UserUnsuscriber {
      */
     public void showUI(boolean input, User user) {
         JFrame frame = new JFrame("Gestionar usuarios");
-        frame.setContentPane(userUnsuscriberPanel);
+        frame.setContentPane(cardUnsuscriberPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(550, 400);

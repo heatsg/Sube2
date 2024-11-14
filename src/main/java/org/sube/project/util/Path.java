@@ -4,7 +4,6 @@ public enum Path {
     ID_COUNTERS("counters"),
     CARD("cards"),
     USER("accounts"),
-    TRANSACTION("transactions"),
     UNCREDITED("uncreditedAmounts"),
     REQUEST("requests");
 

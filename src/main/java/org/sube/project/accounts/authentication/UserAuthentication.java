@@ -72,7 +72,6 @@ public class UserAuthentication {
                 return new User(name, surname, age, documentNumber, gender, userType, true, password);
             }
         }
-
         throw new UserNotFoundException("Usuario no encontrado.");
     }
 

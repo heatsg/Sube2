@@ -30,7 +30,7 @@ public class RequestHandler<T extends Request> {
             RequestList.remove(request);
             request.setStatus(false);
             RequestList.add(request);
-            RequestList.sort(Comparator.comparingInt(T::getId));
+            RequestList.sort(Comparator.comparing(T::getId));
         }
     }
 

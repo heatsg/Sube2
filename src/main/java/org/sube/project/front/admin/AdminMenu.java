@@ -1,9 +1,12 @@
 package org.sube.project.front.admin;
 
 import org.sube.project.accounts.User;
+import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
-import org.sube.project.front.admin.users.UserList;
+import org.sube.project.front.admin.cards.CardUnsuscriber;
+import org.sube.project.front.admin.cards.CardsManagement;
+import org.sube.project.front.admin.users.UsersManagement;
 import org.sube.project.front.admin.users.UserUnsuscriber;
 import org.sube.project.util.Utilities;
 
@@ -20,8 +23,9 @@ public class AdminMenu {
     private JPanel adminMenuPanel;
     private JLabel nameLabel;
     private JLabel documentLabel;
-    private JButton listaDeUsuariosButton;
+    private JButton gestionarUsuariosButton;
     private JButton solicitudesDeBeneficiosButton;
+    private JButton solicitudesDeBajaButton1;
 
 
     public AdminMenu(User user) {
@@ -47,7 +51,10 @@ public class AdminMenu {
         gestionarTarjetasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(adminMenuPanel);
 
+                CardsManagement cardsManagement = new CardsManagement(user);
+                cardsManagement.showUI(true, user);
             }
         });
 
@@ -59,12 +66,12 @@ public class AdminMenu {
             }
         });
 
-        listaDeUsuariosButton.addActionListener(new ActionListener() {
+        gestionarUsuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Utilities.disposeWindow(adminMenuPanel);
 
-                UserList userList = new UserList(user);
+                UsersManagement userList = new UsersManagement(user);
                 userList.showUI(true, user);
             }
         });
@@ -73,6 +80,21 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+
+        solicitudesDeBajaButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(adminMenuPanel);
+
+                CardUnsuscriber cardUnsuscriber = null;
+                try {
+                    cardUnsuscriber = new CardUnsuscriber(user);
+                } catch (CardNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                cardUnsuscriber.showUI(true, user);
             }
         });
     }

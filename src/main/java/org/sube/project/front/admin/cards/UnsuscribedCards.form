@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.sube.project.front.admin.users.UserUnsuscriber">
-  <grid id="27dc6" binding="userUnsuscriberPanel" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.sube.project.front.admin.cards.UnsuscribedCards">
+  <grid id="27dc6" binding="unsuscribedCardsPanel" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="503" height="400"/>
@@ -26,18 +26,18 @@
             </constraints>
             <properties>
               <font name="Arial Black" size="24" style="1"/>
-              <foreground color="-262913"/>
-              <text value="SOLICITUDES DE BAJA"/>
+              <foreground color="-1"/>
+              <text value="TARJETAS INHABILITADAS"/>
             </properties>
           </component>
         </children>
       </grid>
       <scrollpane id="b5a0" binding="scrollPane">
         <constraints>
-          <grid row="4" column="1" row-span="4" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="3" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="line" title="Usuarios">
+        <border type="line" title="Tarjetas">
           <title-color color="-16777216"/>
           <color color="-16777216"/>
         </border>
@@ -54,28 +54,8 @@
         </constraints>
         <properties>
           <background color="-14211289"/>
-          <foreground color="-328449"/>
+          <foreground color="-1"/>
           <text value="Actualizar"/>
-        </properties>
-      </component>
-      <component id="2f4db" class="javax.swing.JButton" binding="aceptarButton">
-        <constraints>
-          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-14211289"/>
-          <foreground color="-328449"/>
-          <text value="Aceptar"/>
-        </properties>
-      </component>
-      <component id="5f21e" class="javax.swing.JButton" binding="denegarButton">
-        <constraints>
-          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-14211289"/>
-          <foreground color="-328449"/>
-          <text value="Denegar"/>
         </properties>
       </component>
       <component id="8bfda" class="javax.swing.JTextField" binding="textField1" default-binding="true">
@@ -97,7 +77,7 @@
       </component>
       <component id="48901" class="javax.swing.JButton" binding="verDetallesButton">
         <constraints>
-          <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-14211289"/>
@@ -115,7 +95,7 @@
       </component>
       <component id="205a5" class="javax.swing.JLabel">
         <constraints>
-          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value=""/>
@@ -129,7 +109,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="73770" class="javax.swing.JLabel">
+      <component id="5779b" class="javax.swing.JLabel">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -137,7 +117,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="8e612" class="javax.swing.JLabel">
+      <component id="b37f3" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -145,22 +125,32 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="56c33" class="javax.swing.JButton" binding="inhabilitadosButton" default-binding="true">
+      <component id="a3bec" class="javax.swing.JLabel" binding="updatedCardsTableLabel">
         <constraints>
-          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="5f21e" class="javax.swing.JButton" binding="habilitarButton">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-14211289"/>
           <foreground color="-1"/>
-          <text value="Inhabilitados"/>
+          <text value="Habilitar"/>
         </properties>
       </component>
-      <component id="a4906" class="javax.swing.JLabel" binding="updatedTableLabel">
+      <component id="752b6" class="javax.swing.JButton" binding="volverButton" default-binding="true">
         <constraints>
-          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value=""/>
+          <background color="-14211289"/>
+          <foreground color="-1"/>
+          <text value="Volver"/>
         </properties>
       </component>
     </children>

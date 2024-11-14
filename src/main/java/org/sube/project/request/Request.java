@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Request implements JSONCompatible, Requestable {
-    private int id;
+    private String id;
     private LocalDateTime date;
     private String documentNumber;
     private String RequestType;
     private boolean status;
 
-    public Request(int id, String documentNumber) {
+    public Request(String id, String documentNumber) {
         this.id = id;
         this.date = LocalDateTime.now();
         this.documentNumber = documentNumber;
@@ -29,7 +29,7 @@ public abstract class Request implements JSONCompatible, Requestable {
     }
 
     public Request(JSONObject j) {
-        this.id = j.getInt("id");
+        this.id = j.getString("id");
         this.date = LocalDateTime.parse(j.getString("date"));
         this.documentNumber = j.getString("documentNumber");
         this.status = j.getBoolean("status");
@@ -49,11 +49,11 @@ public abstract class Request implements JSONCompatible, Requestable {
         return j;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -98,6 +98,20 @@ public abstract class Request implements JSONCompatible, Requestable {
         }
 
         return requestList;
+    }
+
+    public static void updateRequestStatus(String id, boolean status) {
+        JSONArray requestArray = JSONManager.readJSONArray(Path.REQUEST);
+
+        for (int i = 0; i < requestArray.length(); i++) {
+            JSONObject request = requestArray.getJSONObject(i);
+
+            if (request.getString("id").equals(id)) {
+                request.put("status", status);
+                break;
+            }
+        }
+        JSONManager.write(Path.REQUEST, requestArray);
     }
 
     @Override

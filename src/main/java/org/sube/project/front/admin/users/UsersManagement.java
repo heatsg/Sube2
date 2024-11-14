@@ -17,7 +17,7 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserList {
+public class UsersManagement {
     private JPanel userTotalPanel;
     private JScrollPane scrollPane;
 
@@ -40,10 +40,11 @@ public class UserList {
     private JButton confirmarButton;
     private JPanel modifyPanel;
     private JPanel userListPanel;
+    private JLabel updatedUsersTableLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
-    public UserList(User user) {
+    public UsersManagement(User user) {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Apellido");
         tableModel.addColumn("Edad");
@@ -64,9 +65,9 @@ public class UserList {
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (tableModel.getRowCount() != Utilities.getAllUsers().size()) {
-                    loadUsersOnTable();
-                }
+                tableModel.setRowCount(0);
+                loadUsersOnTable();
+                updatedUsersTableLabel.setText("<html><span style='color: #08FF00'> Tabla actualizada </span></html>");
             }
         });
 
@@ -99,29 +100,31 @@ public class UserList {
                 User user = Utilities.getUserTableByDocument(table1, tableModel, 3);
                 JSONManager.updateUserStatus(user.getDocumentNumber(), false, Path.USER);
                 JOptionPane.showMessageDialog(null, "Usuario dado de baja correctamente.", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+
+                actualizarButton.doClick();
             }
         });
 
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User userTable = Utilities.getUserTableByDocument(table1, tableModel, 3);
+                User tableUser = Utilities.getUserTableByDocument(table1, tableModel, 3);
                 JOptionPane.showMessageDialog(null,
                         "Datos:" +
                                 "\n" + "\n" +
-                                "Nombre: " + userTable.getName() +
+                                "Nombre: " + tableUser.getName() +
                                 "\n" +
-                                "Apellido: " + userTable.getSurname() +
+                                "Apellido: " + tableUser.getSurname() +
                                 "\n" +
-                                "Edad: " + userTable.getAge() +
+                                "Edad: " + tableUser.getAge() +
                                 "\n" +
-                                "DNI: " + userTable.getDocumentNumber() +
+                                "DNI: " + tableUser.getDocumentNumber() +
                                 "\n" +
-                                "Genero: " + userTable.getGender() +
+                                "Genero: " + tableUser.getGender() +
                                 "\n" +
-                                "Tipo de Usuario: " + userTable.getUserType() +
+                                "Tipo de Usuario: " + tableUser.getUserType() +
                                 "\n" +
-                                "Estado: " + userTable.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+                                "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -163,6 +166,8 @@ public class UserList {
                 JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.", "Modificado", JOptionPane.INFORMATION_MESSAGE);
                 modifyPanel.setVisible(false);
                 userListPanel.setVisible(true);
+
+                actualizarButton.doClick();
             }
         });
     }
@@ -200,7 +205,7 @@ public class UserList {
      * @param input
      */
     public void showUI(boolean input, User user) {
-        JFrame frame = new JFrame("Lista de Usuarios");
+        JFrame frame = new JFrame("Usuarios");
         frame.setContentPane(userTotalPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

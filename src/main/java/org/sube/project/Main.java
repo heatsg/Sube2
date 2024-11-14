@@ -27,6 +27,12 @@ public class Main {
         jsonArray.put(user.toJSON());
         JSONManager.write(Path.USER, jsonArray);*/
 
+        /*JSONArray jsonArray = new JSONArray();
+        Card card = new Card();
+
+        jsonArray.put(card.toJSON());
+        JSONManager.write(Path.CARD, jsonArray);*/
+
 
     }
 }

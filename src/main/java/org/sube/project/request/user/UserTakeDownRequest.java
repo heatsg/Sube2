@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.sube.project.request.Request;
 
 public class UserTakeDownRequest extends Request {
-    public UserTakeDownRequest(int id, String documentNumber) {
+    public UserTakeDownRequest(String id, String documentNumber) {
         super(id, documentNumber);
         setRequestType(getClass().getSimpleName());
     }

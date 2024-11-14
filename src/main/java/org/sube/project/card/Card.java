@@ -43,6 +43,7 @@ public class Card implements JSONCompatible {
 
     public Card(JSONObject j) {
         this.id = j.getString("id");
+        this.cardType = CardType.valueOf(j.getString("cardType"));
         this.dniOwner = j.getString("dniOwner");
         this.balance = j.getDouble("balance");
         this.transactionHistory = new LinkedHashSet<>();
@@ -64,11 +65,12 @@ public class Card implements JSONCompatible {
         JSONObject j = new JSONObject();
 
         try {
-            j.put("id", this.id);
-            j.put("dniOwner", this.dniOwner);
-            j.put("balance", this.balance);
+            j.put("id", id);
+            j.put("cardType", cardType);
+            j.put("dniOwner", dniOwner);
+            j.put("balance", balance);
             j.put("transactionHistory", new JSONArray(transactionHistory));
-            j.put("status", this.status);
+            j.put("status", status);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
             jx.printStackTrace();

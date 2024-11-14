@@ -106,7 +106,7 @@ public class MainMenu {
                 if (confirm == JOptionPane.YES_OPTION) {
                     RequestHandler<Request> requestHandler = new RequestHandler<>();
                     int requestId = (int) (Math.random() * 10000);
-                    UserTakeDownRequest request = new UserTakeDownRequest(requestId, user.getDocumentNumber());
+                    UserTakeDownRequest request = new UserTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber());
 
                     requestHandler.addRequest(request);
                     requestHandler.requestsToFile();

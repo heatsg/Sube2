@@ -1,12 +1,7 @@
 package org.sube.project.front.admin.users;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.sube.project.accounts.User;
-import org.sube.project.accounts.authentication.UserAuthentication;
 import org.sube.project.exceptions.UserNotFoundException;
-import org.sube.project.front.admin.AdminMenu;
-import org.sube.project.system.TransportSystem;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -17,11 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UnsuscribedUsers {
-    private JTextField textField1;
+    private JTextField searchField;
     private JTable table1;
     private JButton verDetallesButton;
     private JButton volverButton;
@@ -29,6 +22,7 @@ public class UnsuscribedUsers {
     private JButton actualizarButton;
     private JPanel unsuscribedUsersPanel;
     private JScrollPane scrollPane;
+    private JLabel updatedTableLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -45,6 +39,7 @@ public class UnsuscribedUsers {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadUnsuscribedUsersOnTable();
+                updatedTableLabel.setText("<html><span style='color: #08FF00'> Tabla actualizada </span></html>");
             }
         });
 
@@ -76,29 +71,32 @@ public class UnsuscribedUsers {
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User userTable = Utilities.getUserTableByDocument(table1, tableModel, 2);
+                User tableUser = Utilities.getUserTableByDocument(table1, tableModel, 2);
                 JOptionPane.showMessageDialog(null,
                         "Datos:" +
                                 "\n" + "\n" +
-                                "Nombre: " + userTable.getName() +
+                                "Nombre: " + tableUser.getName() +
                                 "\n" +
-                                "Apellido: " + userTable.getSurname() +
+                                "Apellido: " + tableUser.getSurname() +
                                 "\n" +
-                                "Edad: " + userTable.getAge() +
+                                "Edad: " + tableUser.getAge() +
                                 "\n" +
-                                "DNI: " + userTable.getDocumentNumber() +
+                                "DNI: " + tableUser.getDocumentNumber() +
                                 "\n" +
-                                "Genero: " + userTable.getGender() +
+                                "Genero: " + tableUser.getGender() +
                                 "\n" +
-                                "Tipo de Usuario: " + userTable.getUserType() +
+                                "Tipo de Usuario: " + tableUser.getUserType() +
                                 "\n" +
-                                "Estado: " + userTable.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+                                "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
 
+    /**
+     * Metodo para dar de alta o rehabilitar a un usuario de la tabla
+     */
     private void suscribeUser() {
-        String document = Utilities.getDocumentRow(table1, tableModel, 2);
+        String document = Utilities.getIdentifierRow(table1, tableModel, 2);
 
         if (document != null) {
             JSONManager.updateUserStatus(document, true, Path.USER);
@@ -107,21 +105,18 @@ public class UnsuscribedUsers {
         }
     }
 
-
-
+    /**
+     * Metodo para cargar Usuarios con status = false en la tabla.
+     */
     private void loadUnsuscribedUsersOnTable() {
-        JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
-
-        tableModel.setRowCount(0);
-        for (int i = 0; i < usersArray.length(); i++) {
-            JSONObject user = usersArray.getJSONObject(i);
-
-            if (!user.getBoolean("status")) {
-                String name = user.getString("name");
-                String surname = user.getString("surname");
-                String documentNumber = user.getString("documentNumber");
-
-                tableModel.addRow(new Object[]{name, surname, documentNumber, "Inhabilitado"});
+        for (User user : Utilities.getAllUsers()) {
+            if (!user.getStatus()) {
+                tableModel.addRow(new Object[]{
+                        user.getName(),
+                        user.getSurname(),
+                        user.getDocumentNumber(),
+                        "Inhabilitado",
+                });
             }
         }
     }

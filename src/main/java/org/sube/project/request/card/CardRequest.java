@@ -8,7 +8,7 @@ public abstract class CardRequest extends Request {
 
     private String cardId;
 
-    public CardRequest(int id, String documentNumber, String cardId) {
+    public CardRequest(String id, String documentNumber, String cardId) {
         super(id, documentNumber);
         setRequestType(getClass().getSimpleName());
         this.cardId = cardId;

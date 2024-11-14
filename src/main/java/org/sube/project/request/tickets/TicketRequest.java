@@ -8,7 +8,7 @@ import org.sube.project.request.card.CardRequest;
 public class TicketRequest extends CardRequest {
     private CardType requestType;
 
-    public TicketRequest(int id, String documentNumber, String cardId, CardType requestType) {
+    public TicketRequest(String id, String documentNumber, String cardId, CardType requestType) {
         super(id, documentNumber, cardId);
         this.requestType = requestType;
     }

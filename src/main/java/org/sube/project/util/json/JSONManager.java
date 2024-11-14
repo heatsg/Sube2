@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONTokener;
+import org.sube.project.card.CardType;
 import org.sube.project.util.Path;
 
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public class JSONManager {
     public static void write(Path path, JSONObject json) {
@@ -119,5 +121,9 @@ public class JSONManager {
             }
         }
         write(path, usersArray);
+    }
+
+    public static <T extends JSONCompatible> void updateFile(Path type, List<T> list) {
+        JSONManager.collectionToFile(list, type, true);
     }
 }
