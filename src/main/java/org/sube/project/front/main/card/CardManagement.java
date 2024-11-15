@@ -52,13 +52,13 @@ public class CardManagement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
-
-                int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
                 if (card != null) {
+                    int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
                     TransportSystem.getInstance().addUncreditedAmount(card.getId(), Double.parseDouble(rechargeValues[selectedOption]));
                     //CardManager.addBalance(card, Double.parseDouble(rechargeValues[selectedOption]));
                     CardManager.updateCardFile(card);
-                }
+                } else JOptionPane.showMessageDialog(cardManagementPanel, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         });
 
@@ -92,18 +92,23 @@ public class CardManagement {
         darDeBajaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar de baja la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
-                if (confirm == JOptionPane.YES_OPTION) {
-                    RequestHandler<Request> requestHandler = new RequestHandler<>();
-                    int requestId = (int) (Math.random() * 10000);
-                    CardTakeDownRequest request = new CardTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber(), card.getId());
 
-                    requestHandler.addRequest(request);
-                    requestHandler.requestsToFile();
+                if(card!=null){
+                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar de baja la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
 
-                    JOptionPane.showMessageDialog(null, "La solicitud de baja ha sido enviada exitosamente.", "Solicitud Enviada", JOptionPane.INFORMATION_MESSAGE);
-                }
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        RequestHandler<Request> requestHandler = new RequestHandler<>();
+                        int requestId = (int) (Math.random() * 10000);
+                        CardTakeDownRequest request = new CardTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber(), card.getId());
+
+                        requestHandler.addRequest(request);
+                        requestHandler.requestsToFile();
+
+                        JOptionPane.showMessageDialog(null, "La solicitud de baja ha sido enviada exitosamente.", "Solicitud Enviada", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else
+                    JOptionPane.showMessageDialog(cardManagementPanel, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

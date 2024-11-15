@@ -55,8 +55,7 @@ public class Register {
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransportSystem transportSystem = new TransportSystem();
-                transportSystem.loadFromJSON();
+                TransportSystem transportSystem = TransportSystem.getInstance();
 
                 String name = nameText.getText();
                 String surname = surnameText.getText();
@@ -65,12 +64,15 @@ public class Register {
                 String password = new String(passText.getPassword());
 
                 try {
-                    if (documentNumber.length() < 8) {
-                        JOptionPane.showMessageDialog(null, "El documento debe tener al menos 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                    if (documentNumber.length() != 8) {
+                        JOptionPane.showMessageDialog(null, "El documento debe tener 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     } else if (password.length() < 8) {
                         JOptionPane.showMessageDialog(null, "Por favor, ingrese una contraseña mayor a 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (validateGenderBox()) {
-                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    } else if (!validateGenderBox()) {
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un género.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        return;
                     } else {
                         User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), UserType.NORMAL_USER, true, password);
                         transportSystem.registerUser(newUser);
@@ -98,9 +100,9 @@ public class Register {
 
     private boolean validateGenderBox() {
         if (Objects.equals(genderBox.getSelectedItem(), "<Seleccionar>")) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un género.");
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void clearAllFields() {
