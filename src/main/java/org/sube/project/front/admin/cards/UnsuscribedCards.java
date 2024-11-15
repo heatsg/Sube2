@@ -3,11 +3,11 @@ package org.sube.project.front.admin.cards;
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
-import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
-import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +19,7 @@ public class UnsuscribedCards {
     private JButton actualizarButton;
     private JButton modificarButton;
     private JButton habilitarButton;
-    private JTextField textField1;
+    private JTextField searchField;
 
     private JPanel unsuscribedCardsPanel;
     private JScrollPane scrollPane;
@@ -29,6 +29,7 @@ public class UnsuscribedCards {
     private JButton verDetallesButton;
     private JButton volverButton;
     private JLabel updatedCardsTableLabel;
+    private JLabel searchNotResultsLabel;
 
     public UnsuscribedCards(User user) {
         tableModel.addColumn("ID");
@@ -87,7 +88,51 @@ public class UnsuscribedCards {
                 cardsManagement.showUI(true, user);
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterUnsuscribedCardsOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterUnsuscribedCardsOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterUnsuscribedCardsOnTable();
+            }
+        });
     }
+
+    private void filterUnsuscribedCardsOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundCards = false;
+
+        for (Card card : Utilities.getAllCards()) {
+            if (!card.getStatus() && card.getId().toLowerCase().contains(searchText)) {
+                tableModel.addRow(new Object[]{
+                        card.getId(),
+                        card.getCardType().toString(),
+                        card.getDniOwner(),
+                        card.getStatus(),
+                        card.getBalance(),
+                });
+                foundCards = true;
+            }
+        }
+
+        if (!foundCards) {
+            searchNotResultsLabel.setText("Busqueda sin resultados");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
+    }
+
 
     /**
      * Metodo para dar de alta o rehabilitar una tarjeta seleccionada de la tabla.

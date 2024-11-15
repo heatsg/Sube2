@@ -1,0 +1,32 @@
+[
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "qwe",
+        "documentNumber": "33333333",
+        "name": "test2",
+        "userType": "NORMAL_USER",
+        "age": 40,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "asd",
+        "documentNumber": "99999999",
+        "name": "test",
+        "userType": "ADMIN",
+        "age": 40,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Bercovsky",
+        "documentNumber": "46814665",
+        "name": "Juan Pablo",
+        "userType": "NORMAL_USER",
+        "age": 23,
+        "status": true
+    }
+]

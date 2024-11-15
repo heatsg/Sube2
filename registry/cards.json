@@ -1,0 +1,39 @@
+[
+    {
+        "dniOwner": "33333333",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061562527444854",
+        "status": true
+    },
+    {
+        "dniOwner": "46814665",
+        "balance": 6640,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [
+            {
+                "dateTime": "14-11-2024, 18:24:53",
+                "transactionType": "RECHARGE",
+                "amount": 5000,
+                "id": 0
+            },
+            {
+                "dateTime": "14-11-2024, 18:24:56",
+                "transactionType": "RECHARGE",
+                "amount": 3000,
+                "id": 1
+            }
+        ],
+        "id": "6061562521444852",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061638124736365",
+        "status": true
+    }
+]

@@ -15,26 +15,26 @@ public abstract class Transaction implements JSONCompatible {
     private LocalDateTime dateTime;
     private TransactionType transactionType;
     private double amount;
-    private boolean isProcessed; // Campo para indicar si la transacción ha sido procesada
+    //private boolean isProcessed; // Campo para indicar si la transacción ha sido procesada
 
     public Transaction() {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.now();
-        this.isProcessed = false;
+        //this.isProcessed = false;
     }
 
     public Transaction(double amount) {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.now();
         this.amount = amount;
-        this.isProcessed = false;
+        //this.isProcessed = false;
     }
 
     public Transaction(double amount, String dateTime) {
         this.id = idCounter++;
         this.dateTime = LocalDateTime.parse(dateTime);
         this.amount = amount;
-        this.isProcessed = false;
+        //this.isProcessed = false;
     }
 
     public Transaction(JSONObject j) {
@@ -43,7 +43,7 @@ public abstract class Transaction implements JSONCompatible {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss");
             this.dateTime = LocalDateTime.parse(j.getString("dateTime"), formatter);
             this.amount = j.getDouble("amount");
-            this.isProcessed = j.optBoolean("isProcessed", false); // Cargar isProcessed, predeterminado a false si no existe
+            //this.isProcessed = j.optBoolean("isProcessed", false); // Cargar isProcessed, predeterminado a false si no existe
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
         } catch (java.time.format.DateTimeParseException e) {
@@ -57,7 +57,7 @@ public abstract class Transaction implements JSONCompatible {
             j.put("id", id);
             j.put("dateTime", dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")));
             j.put("amount", amount);
-            j.put("isProcessed", isProcessed); // Guardar el estado de isProcessed en JSON
+            //j.put("isProcessed", isProcessed); // Guardar el estado de isProcessed en JSON
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
             jx.printStackTrace();
@@ -66,13 +66,13 @@ public abstract class Transaction implements JSONCompatible {
     }
 
     // Getters y Setters para el nuevo atributo isProcessed
-    public boolean isProcessed() {
+    /*public boolean isProcessed() {
         return isProcessed;
     }
 
     public void setProcessed(boolean isProcessed) {
         this.isProcessed = isProcessed;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -122,6 +122,6 @@ public abstract class Transaction implements JSONCompatible {
     @Override
     public String toString() {
         return String.format("Transacción (ID: %d | Fecha y Hora: %s | Monto: %.2f | Procesada: %s)",
-                id, dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")), amount, isProcessed ? "Sí" : "No");
+                id, dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")), amount);
     }
 }

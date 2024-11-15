@@ -247,6 +247,16 @@
           <text value="Beneficios"/>
         </properties>
       </component>
+      <component id="eee53" class="javax.swing.JButton" binding="servicioDeTransporteButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-14211289"/>
+          <foreground color="-1"/>
+          <text value="Servicio de transporte"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

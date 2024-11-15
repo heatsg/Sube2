@@ -12,6 +12,8 @@ import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +26,7 @@ import static org.sube.project.accounts.authentication.UserAuthentication.getUse
 public class UserUnsuscriber {
     private JPanel userUnsuscriberPanel;
     private JTable table1;
-    private JTextField textField1;
+    private JTextField searchField;
     private JScrollPane scrollPane;
 
     private JButton actualizarButton;
@@ -33,6 +35,7 @@ public class UserUnsuscriber {
     private JButton verDetallesButton;
     private JButton inhabilitadosButton;
     private JLabel updatedTableLabel;
+    private JLabel searchNotResultsLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -126,7 +129,59 @@ public class UserUnsuscriber {
                                 "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterUserUnsuscriberOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterUserUnsuscriberOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterUserUnsuscriberOnTable();
+            }
+        });
     }
+
+    private void filterUserUnsuscriberOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundUsers = false;
+
+        for (Requestable request : Request.loadRequestsFromFile()) {
+            if (request instanceof UserTakeDownRequest userRequest && userRequest.getStatus()) {
+                User user = null;
+                try {
+                    user = getUserByDocumentNumber(userRequest.getDocumentNumber());
+                } catch (UserNotFoundException e) {
+                    continue;
+                }
+
+                if (user.getDocumentNumber().toLowerCase().contains(searchText)) {
+                    tableModel.addRow(new Object[]{
+                            user.getName(),
+                            user.getSurname(),
+                            user.getDocumentNumber(),
+                            "Pendiente"
+                    });
+                    foundUsers = true;
+                }
+            }
+        }
+
+        if (!foundUsers) {
+            searchNotResultsLabel.setText("Busqueda sin resultados");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
+    }
+
 
     private void loadRequestsIntoTable() throws UserNotFoundException {
         tableModel.setRowCount(0);

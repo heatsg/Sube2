@@ -4,15 +4,20 @@ import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.exceptions.CardNotFoundException;
+import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
 import org.sube.project.request.Requestable;
 import org.sube.project.request.card.CardRequest;
 import org.sube.project.request.card.CardTakeDownRequest;
+import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.util.Utilities;
+import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,10 +25,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import static org.sube.project.accounts.authentication.UserAuthentication.getUserByDocumentNumber;
+
 public class CardUnsuscriber {
     private JPanel cardUnsuscriberPanel;
     private JTable table1;
-    private JTextField textField1;
+    private JTextField searchField;
     private JScrollPane scrollPane;
 
     private JButton actualizarButton;
@@ -32,6 +39,7 @@ public class CardUnsuscriber {
     private JButton verDetallesButton;
     private JButton inhabilitadosButton;
     private JLabel updatedTableLabel;
+    private JLabel searchNotResultsLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -126,6 +134,58 @@ public class CardUnsuscriber {
                                 "Balance: " + tableCard.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterUnsuscriberRequestsOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterUnsuscriberRequestsOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterUnsuscriberRequestsOnTable();
+            }
+        });
+    }
+
+    private void filterUnsuscriberRequestsOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundCards = false;
+
+        for (Requestable request : Request.loadRequestsFromFile()) {
+            if (request instanceof CardTakeDownRequest cardRequest && cardRequest.getStatus()) {
+                Card card = null;
+                try {
+                    card = CardManager.getCardByID(cardRequest.getCardId());
+                } catch (CardNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                if (card.getId().toLowerCase().contains(searchText)) {
+                    tableModel.addRow(new Object[]{
+                            card.getId(),
+                            card.getCardType().toString(),
+                            card.getDniOwner(),
+                            card.getStatus(),
+                            card.getBalance(),
+                    });
+                    foundCards = true;
+                }
+            }
+        }
+
+        if (!foundCards) {
+            searchNotResultsLabel.setText("Busqueda sin resultados");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
     }
 
     private void loadRequestsIntoTable() throws CardNotFoundException {
@@ -204,4 +264,5 @@ public class CardUnsuscriber {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
 }

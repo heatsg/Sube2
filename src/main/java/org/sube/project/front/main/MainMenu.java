@@ -1,8 +1,11 @@
 package org.sube.project.front.main;
 
 import org.sube.project.accounts.User;
+import org.sube.project.bus.BusManager;
+import org.sube.project.bus.Lines;
 import org.sube.project.front.Sube;
 import org.sube.project.front.main.account.Account;
+import org.sube.project.front.main.bus.Bus;
 import org.sube.project.front.main.card.CardManagement;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
@@ -33,6 +36,7 @@ public class MainMenu {
     private JButton beneficiosButton;
     private JButton darDeBajaButton;
     private JButton verMisDatosButton;
+    private JButton servicioDeTransporteButton;
 
     public MainMenu(User user) {
         Utilities.loadImage(menuAccountLabel, ImagesUtil.ACCOUNT_PATH, 50, 50);
@@ -50,6 +54,8 @@ public class MainMenu {
 
         gbc.gridx = 1;
         menuTitlePanel.add(menuTitleLabel, gbc);
+
+        BusManager busManager = new BusManager();
 
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
@@ -125,6 +131,32 @@ public class MainMenu {
             }
         });
 
+        servicioDeTransporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<String> linesBox = busManager.loadBusLines();
+
+                int selectedOption = JOptionPane.showOptionDialog(
+                        menuPanel,
+                        linesBox,
+                        "Selecciona una línea de transporte",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        null,
+                        null
+                );
+
+                if (selectedOption != JOptionPane.CLOSED_OPTION) {
+                    String selectedLine = (String) linesBox.getSelectedItem();
+
+                    if (selectedLine != null) {
+                        Bus bus = new Bus(user, selectedLine);
+                        bus.showUI(true, user);
+                    }
+                }
+            }
+        });
 
     }
 

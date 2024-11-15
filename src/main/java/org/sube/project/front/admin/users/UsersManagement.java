@@ -3,12 +3,15 @@ package org.sube.project.front.admin.users;
 import org.json.JSONArray;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
+import org.sube.project.card.Card;
 import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +30,7 @@ public class UsersManagement {
     private JButton deshabilitarButton;
     private JButton verDetallesButton;
     private JButton inhabilitadosButton;
-    private JTextField searchText;
+    private JTextField searchField;
     private JButton volverButton;
     private JTextField nameField;
     private JTextField surnameField;
@@ -41,6 +44,7 @@ public class UsersManagement {
     private JPanel modifyPanel;
     private JPanel userListPanel;
     private JLabel updatedUsersTableLabel;
+    private JLabel searchNotResultsLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -170,7 +174,56 @@ public class UsersManagement {
                 actualizarButton.doClick();
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterUsersOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterUsersOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterUsersOnTable();
+            }
+        });
     }
+
+    /**
+     * Metodo para filtrar en la busqueda de Usuarios por documento
+     */
+    private void filterUsersOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundUsers = false;
+
+        for (User user : Utilities.getAllUsers()) {
+            if (user.getDocumentNumber().toLowerCase().contains(searchText)) {
+                tableModel.addRow(new Object[]{
+                        user.getName(),
+                        user.getSurname(),
+                        user.getAge(),
+                        user.getDocumentNumber(),
+                        user.getGender(),
+                        user.getUserType().toString(),
+                        user.getStatus(),
+                });
+                foundUsers = true;
+            }
+        }
+
+        if (!foundUsers) {
+            searchNotResultsLabel.setText("Busqueda sin resultados.");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
+    }
+
 
     private User getAllModifiedFields() {
         String name = nameField.getText();

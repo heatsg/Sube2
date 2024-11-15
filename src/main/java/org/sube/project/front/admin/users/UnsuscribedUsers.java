@@ -1,12 +1,15 @@
 package org.sube.project.front.admin.users;
 
 import org.sube.project.accounts.User;
+import org.sube.project.card.Card;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +26,7 @@ public class UnsuscribedUsers {
     private JPanel unsuscribedUsersPanel;
     private JScrollPane scrollPane;
     private JLabel updatedTableLabel;
+    private JLabel searchNotResultsLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -90,6 +94,51 @@ public class UnsuscribedUsers {
                                 "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterUnsuscribedUsersOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterUnsuscribedUsersOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterUnsuscribedUsersOnTable();
+            }
+        });
+    }
+
+    private void filterUnsuscribedUsersOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundUsers = false;
+
+        for (User user : Utilities.getAllUsers()) {
+            if (!user.getStatus() && user.getDocumentNumber().toLowerCase().contains(searchText)) {
+                tableModel.addRow(new Object[]{
+                        user.getName(),
+                        user.getSurname(),
+                        user.getAge(),
+                        user.getDocumentNumber(),
+                        user.getGender(),
+                        user.getUserType().toString(),
+                        user.getStatus(),
+                });
+                foundUsers = true;
+            }
+        }
+
+        if (!foundUsers) {
+            searchNotResultsLabel.setText("Busqueda sin resultados");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
     }
 
     /**

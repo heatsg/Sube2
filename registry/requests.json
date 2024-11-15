@@ -1,0 +1,26 @@
+[
+    {
+        "date": "2024-11-13T21:26:25.782234500",
+        "documentNumber": "46814665",
+        "cardId": "6061834247241215",
+        "id": "4837",
+        "status": false,
+        "RequestType": "CardTakeDownRequest"
+    },
+    {
+        "date": "2024-11-14T18:40:42.980353",
+        "documentNumber": "46814665",
+        "cardId": "6061562521444852",
+        "id": "1881",
+        "status": false,
+        "RequestType": "CardTakeDownRequest"
+    },
+    {
+        "date": "2024-11-14T18:42:00.192751400",
+        "documentNumber": "33333333",
+        "cardId": "6061562527444854",
+        "id": "1202",
+        "status": false,
+        "RequestType": "CardTakeDownRequest"
+    }
+]

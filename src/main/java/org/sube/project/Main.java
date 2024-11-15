@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.accounts.authentication.UserAuthentication;
+import org.sube.project.bus.Bus;
+import org.sube.project.bus.BusManager;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardType;
 import org.sube.project.card.transaction.Transaction;
@@ -27,12 +29,10 @@ public class Main {
         jsonArray.put(user.toJSON());
         JSONManager.write(Path.USER, jsonArray);*/
 
-        /*JSONArray jsonArray = new JSONArray();
+        /*JSONArray jsonArray = JSONManager.readJSONArray(Path.CARD);
         Card card = new Card();
 
         jsonArray.put(card.toJSON());
         JSONManager.write(Path.CARD, jsonArray);*/
-
-
     }
 }

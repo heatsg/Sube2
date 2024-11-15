@@ -68,7 +68,7 @@
           <text value="Deshabilitar"/>
         </properties>
       </component>
-      <component id="de655" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="de655" class="javax.swing.JTextField" binding="searchField">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -149,11 +149,12 @@
           <text value="Volver"/>
         </properties>
       </component>
-      <component id="d20c0" class="javax.swing.JLabel">
+      <component id="d20c0" class="javax.swing.JLabel" binding="searchNotResultsLabel">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <foreground color="-63232"/>
           <text value=""/>
         </properties>
       </component>

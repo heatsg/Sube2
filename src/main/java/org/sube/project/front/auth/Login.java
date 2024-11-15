@@ -61,8 +61,7 @@ public class Login {
                     if (signed) {
                         User loggedUser = UserAuthentication.getUserByDocumentNumber(storedDocument);
 
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(loginPanel);
-                        frame.dispose();
+                        Utilities.disposeWindow(loginPanel);
 
                         if (loggedUser.getUserType() == UserType.ADMIN) {
                             AdminMenu adminMenu = new AdminMenu(loggedUser);

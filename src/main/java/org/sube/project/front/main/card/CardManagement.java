@@ -38,7 +38,7 @@ public class CardManagement {
         String[] rechargeValues = {"2000", "3000", "5000"};
 
         if (registeredCard(user.getDocumentNumber())) {
-            Card card = getCard(user.getDocumentNumber());
+            Card card = Utilities.getManualCard(user.getDocumentNumber());
             cardNumberLabel.setText("Numero: " + card.getId());
             balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
             registrarTarjetaButton.setVisible(false);
@@ -51,7 +51,7 @@ public class CardManagement {
         cargarSaldoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card card = getCard(user.getDocumentNumber());
+                Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
                 if (card != null) {
@@ -68,7 +68,7 @@ public class CardManagement {
                 TransportSystem transportSystem = new TransportSystem();
                 transportSystem.loadFromJSON();
 
-                Card card = getCard(user.getDocumentNumber());
+                Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 if (card != null) {
                     String cardId = card.getId();
@@ -93,7 +93,7 @@ public class CardManagement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea dar de baja la tarjeta?", "Confirmar Baja", JOptionPane.YES_NO_OPTION);
-                Card card = getCard(user.getDocumentNumber());
+                Card card = Utilities.getManualCard(user.getDocumentNumber());
                 if (confirm == JOptionPane.YES_OPTION) {
                     RequestHandler<Request> requestHandler = new RequestHandler<>();
                     int requestId = (int) (Math.random() * 10000);
@@ -129,7 +129,8 @@ public class CardManagement {
                         throw new CardNotFoundException("Numero de tarjeta no existente");
                     }
 
-                    Card card = getCard(user.getDocumentNumber());
+                    Card card = Utilities.getManualCard(user.getDocumentNumber());
+
                     if (card != null) {
                         cardNumberLabel.setText("Numero: " + card.getId());
                         balanceInfoLabel.setVisible(true);
@@ -155,16 +156,6 @@ public class CardManagement {
         return false;
     }
 
-    private Card getCard(String documentNumber) {
-        JSONArray array = JSONManager.readJSONArray(Path.CARD);
-
-        for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)) {
-                return new Card(array.getJSONObject(i));
-            }
-        }
-        return null;
-    }
 
     private boolean validateCardID(String id) {
         JSONArray array = JSONManager.readJSONArray(Path.CARD);

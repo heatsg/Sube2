@@ -11,7 +11,6 @@ import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +128,7 @@ public class Utilities {
         return cardTable;
     }
 
-    public static java.util.List<User> getAllUsers() {
+    public static List<User> getAllUsers() {
         JSONArray usersArray = JSONManager.readJSONArray(Path.USER);
         List<User> usersList = new ArrayList<>();
 
@@ -150,4 +149,19 @@ public class Utilities {
 
         return cardsList;
     }
+
+    public static Card getManualCard(String documentNumber) {
+        JSONArray array = JSONManager.readJSONArray(Path.CARD);
+
+        for (int i = 0; i < array.length(); i++) {
+            if (array.getJSONObject(i).getString("dniOwner").equals(documentNumber)) {
+                return new Card(array.getJSONObject(i));
+            }
+        }
+        return null;
+    }
+
+
+
+
 }

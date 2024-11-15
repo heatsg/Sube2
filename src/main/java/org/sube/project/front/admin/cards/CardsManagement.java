@@ -3,11 +3,12 @@ package org.sube.project.front.admin.cards;
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
-import org.sube.project.card.CardType;
 import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ public class CardsManagement {
     private JButton actualizarButton;
     private JButton modificarButton;
     private JButton deshabilitarButton;
-    private JTextField textField1;
+    private JTextField searchField;
     private JPanel cardsManagementPanel;
     private JScrollPane scrollPane;
     private JButton verDetallesButton;
@@ -27,9 +28,9 @@ public class CardsManagement {
     private JButton volverButton;
     private JLabel updatedTableLabel;
     private JButton verTransaccionesButton;
+    private JLabel searchNotResultsLabel;
 
     DefaultTableModel tableModel = new DefaultTableModel();
-
 
     public CardsManagement(User user) {
         tableModel.addColumn("ID");
@@ -56,7 +57,6 @@ public class CardsManagement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Card card = Utilities.getCardTableByID(table1, tableModel, 0);
-
                 String associatedDocument = card.getDniOwner();
 
                 int selectedOption = JOptionPane.showOptionDialog(cardsManagementPanel, "Modificar tipo de tarjeta", "Tarjeta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, cardTypes, cardTypes[0]);
@@ -120,6 +120,65 @@ public class CardsManagement {
                 adminMenu.showUI(true, user);
             }
         });
+
+        verTransaccionesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Card selectedCard = Utilities.getCardTableByID(table1, tableModel, 0);
+                if (selectedCard != null) {
+                    CardTransactions cardTransactions = new CardTransactions(user, selectedCard);
+                    cardTransactions.showUI(true, user);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una tarjeta para ver sus transacciones.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterCardsOnTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterCardsOnTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterCardsOnTable();
+            }
+        });
+    }
+
+    /**
+     * Metodo para filtrar en la busqueda de tarjetas por ID
+     */
+    private void filterCardsOnTable() {
+        String searchText = searchField.getText().toLowerCase();
+        tableModel.setRowCount(0);
+
+        boolean foundCards = false;
+
+        for (Card card : Utilities.getAllCards()) {
+            if (card.getId().toLowerCase().contains(searchText)) {
+                tableModel.addRow(new Object[]{
+                        card.getId(),
+                        card.getCardType().toString(),
+                        card.getDniOwner(),
+                        card.getStatus(),
+                        card.getBalance(),
+                });
+                foundCards = true;
+            }
+        }
+
+        if (!foundCards) {
+            searchNotResultsLabel.setText("Busqueda sin resultados.");
+        } else {
+            searchNotResultsLabel.setText("");
+        }
     }
 
 
@@ -134,7 +193,6 @@ public class CardsManagement {
             });
         }
     }
-
 
     /**
      * Método para mostrar la ventana a través de JFrame
