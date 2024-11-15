@@ -57,6 +57,10 @@ public class Bus {
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 if (card != null) {
+                    if(card.getBalance()<(-1180)){
+                        JOptionPane.showMessageDialog(null, "Saldo insuficiente", "Pago Rechazado", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     CardManager.payTicket(card);
 
                     transportSystem.getCards().put(card.getId(), card);

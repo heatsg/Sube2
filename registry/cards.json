@@ -1,26 +1,43 @@
 [
     {
-        "dniOwner": "33333333",
-        "balance": 1000,
-        "cardType": "NORMAL_CARD",
-        "transactionHistory": [],
-        "id": "6061562527444854",
-        "status": true
-    },
-    {
-        "dniOwner": "46814665",
-        "balance": 1300,
-        "cardType": "NORMAL_CARD",
-        "transactionHistory": [],
-        "id": "6061562521444852",
-        "status": true
-    },
-    {
         "dniOwner": "",
         "balance": 1000,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [],
-        "id": "6061638124736365",
+        "id": "6061411726436252",
+        "status": true
+    },
+    {
+        "dniOwner": "46738943",
+        "balance": 8640,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [
+            {
+                "transactionType": "recarga",
+                "dateTime": "15-11-2024, 19:34:38",
+                "amount": 5000,
+                "id": "fcc35df4-f3e8-4e51-9e5c-dada3d2c4617"
+            },
+            {
+                "transactionType": "recarga",
+                "dateTime": "15-11-2024, 19:34:42",
+                "amount": 5000,
+                "id": "c036a674-ea46-4e91-82f7-668f03dd77ad"
+            },
+            {
+                "transactionType": "pago",
+                "dateTime": "15-11-2024, 19:39:04",
+                "amount": 1180,
+                "id": "d5fe2349-ce37-400d-8fc0-c2b7d679a06d"
+            },
+            {
+                "transactionType": "pago",
+                "dateTime": "15-11-2024, 19:39:13",
+                "amount": 1180,
+                "id": "4f009b55-df37-4040-8579-8087d650227f"
+            }
+        ],
+        "id": "6061522867353182",
         "status": true
     }
 ]

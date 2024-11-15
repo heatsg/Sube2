@@ -12,22 +12,22 @@ import java.time.LocalDateTime;
 public final class TransactionPayment extends Transaction {
 
     public TransactionPayment() {
-        setTransactionType(TransactionType.PAYMENT);
+        setTransactionType(TransactionType.PAYMENT.toString());
     }
 
     public TransactionPayment(JSONObject j) {
         super(j);
-        setTransactionType(TransactionType.PAYMENT);
+        setTransactionType(TransactionType.PAYMENT.toString());
     }
 
     public TransactionPayment(double amount, String dateTime) {
         super(amount, dateTime);
-        setTransactionType(TransactionType.PAYMENT);
+        setTransactionType(TransactionType.PAYMENT.toString());
     }
 
     public TransactionPayment(double amount) {
         super(amount);
-        setTransactionType(TransactionType.PAYMENT);
+        setTransactionType(TransactionType.PAYMENT.toString());
     }
 
     @Override

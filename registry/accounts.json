@@ -28,5 +28,15 @@
         "userType": "NORMAL_USER",
         "age": 23,
         "status": true
+    },
+    {
+        "password": "hola1234",
+        "gender": "Masculino",
+        "surname": "tucker",
+        "documentNumber": "46738943",
+        "name": "santiago",
+        "userType": "NORMAL_USER",
+        "age": 15,
+        "status": true
     }
 ]

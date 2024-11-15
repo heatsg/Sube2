@@ -13,7 +13,7 @@ import java.util.UUID;
 public abstract class Transaction implements JSONCompatible {
     private String id;
     private LocalDateTime dateTime;
-    private TransactionType transactionType;
+    private String transactionType;
     private double amount;
 
     public Transaction() {
@@ -79,11 +79,11 @@ public abstract class Transaction implements JSONCompatible {
         this.dateTime = dateTime;
     }
 
-    public TransactionType getTransactionType() {
+    public String getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
+    public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
 

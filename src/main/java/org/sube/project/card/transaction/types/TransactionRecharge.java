@@ -10,22 +10,22 @@ import javax.swing.*;
 public final class TransactionRecharge extends Transaction {
 
     public TransactionRecharge() {
-        setTransactionType(TransactionType.RECHARGE);
+        setTransactionType(TransactionType.RECHARGE.toString());
     }
 
     public TransactionRecharge(JSONObject j) {
         super(j);
-        setTransactionType(TransactionType.RECHARGE);
+        setTransactionType(TransactionType.RECHARGE.toString());
     }
 
     public TransactionRecharge(double amount, String dateTime) {
         super(amount, dateTime);
-        setTransactionType(TransactionType.RECHARGE);
+        setTransactionType(TransactionType.RECHARGE.toString());
     }
 
     public TransactionRecharge(double amount) {
         super(amount);
-        setTransactionType(TransactionType.RECHARGE);
+        setTransactionType(TransactionType.RECHARGE.toString());
     }
 
     @Override
