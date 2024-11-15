@@ -9,22 +9,9 @@
     },
     {
         "dniOwner": "46814665",
-        "balance": 6640,
+        "balance": 1300,
         "cardType": "NORMAL_CARD",
-        "transactionHistory": [
-            {
-                "dateTime": "14-11-2024, 18:24:53",
-                "transactionType": "RECHARGE",
-                "amount": 5000,
-                "id": 0
-            },
-            {
-                "dateTime": "14-11-2024, 18:24:56",
-                "transactionType": "RECHARGE",
-                "amount": 3000,
-                "id": 1
-            }
-        ],
+        "transactionHistory": [],
         "id": "6061562521444852",
         "status": true
     },

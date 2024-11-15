@@ -52,12 +52,14 @@ public class Card implements JSONCompatible {
 
         if (!jarr.isEmpty()) {
             for (int i = 0; i < jarr.length(); i++) {
-                if (jarr.getJSONObject(i).getString("transactionType").equals(TransactionType.PAYMENT.toString())) {
+                if (jarr.getJSONObject(i).getString("transactionType").equalsIgnoreCase(TransactionType.PAYMENT.toString())) {
                     transactionHistory.add(new TransactionPayment(jarr.getJSONObject(i)));
-                } else
+                } else if (jarr.getJSONObject(i).getString("transactionType").equalsIgnoreCase(TransactionType.RECHARGE.toString())) {
                     transactionHistory.add(new TransactionRecharge(jarr.getJSONObject(i)));
+                }
             }
         }
+
         this.status = j.getBoolean("status");
     }
 

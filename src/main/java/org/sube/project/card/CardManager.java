@@ -2,7 +2,7 @@ package org.sube.project.card;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.sube.project.accounts.UserType;
+import org.sube.project.card.transaction.types.TransactionPayment;
 import org.sube.project.card.transaction.types.TransactionRecharge;
 import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.util.Path;
@@ -24,6 +24,7 @@ public class CardManager {
         if (card == null || card.getCardType() == null) return false;
 
         card.setBalance(card.getBalance() - card.getCardType().getFinalPrice(BASE_TICKET));
+        card.getTransactionHistory().add(new TransactionPayment(card.getCardType().getFinalPrice(BASE_TICKET)));
         return true;
     }
 

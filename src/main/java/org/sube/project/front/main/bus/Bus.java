@@ -3,11 +3,13 @@ package org.sube.project.front.main.bus;
 import org.sube.project.accounts.User;
 import org.sube.project.bus.Lines;
 import org.sube.project.card.Card;
+import org.sube.project.card.CardManager;
 import org.sube.project.front.main.MainMenu;
 import org.sube.project.system.TransportSystem;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,11 +20,36 @@ public class Bus {
     private JButton pagarBoletoButton;
     private JButton acreditarTarjetaButton;
     private JButton consultarSaldoButton;
+    private JLabel lineLabel;
+    private JLabel busTitleLabel;
 
     public Bus(User user, String line) {
 
         TransportSystem transportSystem = new TransportSystem();
         transportSystem.loadFromJSON();
+
+        lineLabel.setText("Linea " + line);
+
+        busPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        busPanel.add(busTitleLabel, gbc);
+
+        gbc.gridy = 1;
+        busPanel.add(lineLabel, gbc);
+
+        gbc.gridy = 2;
+        busPanel.add(pagarBoletoButton, gbc);
+
+        gbc.gridy = 3;
+        busPanel.add(acreditarTarjetaButton, gbc);
+
+        gbc.gridy = 4;
+        busPanel.add(consultarSaldoButton, gbc);
 
         pagarBoletoButton.addActionListener(new ActionListener() {
             @Override
@@ -30,7 +57,7 @@ public class Bus {
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 if (card != null) {
-                    card.setBalance(card.getBalance() - card.getCardType().getFinalPrice(1180));
+                    CardManager.payTicket(card);
 
                     transportSystem.getCards().put(card.getId(), card);
                     transportSystem.updateCardsJSON();
