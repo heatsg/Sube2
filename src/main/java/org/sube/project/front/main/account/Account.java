@@ -39,6 +39,8 @@ public class Account extends JFrame {
     public Account(User user) {
 
         TransportSystem transportSystem = new TransportSystem();
+        transportSystem.loadFromJSON();
+
         Object[] genderOptions = {"Masculino", "Femenino", "No binario", "Prefiero no decirlo"};
 
         changePasswordPanel.setVisible(false);

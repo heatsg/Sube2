@@ -54,28 +54,38 @@ public class UnsuscribedCards {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
-                suscribeCard();
-                JOptionPane.showMessageDialog(null, "Tarjeta rehabilitada correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
-                tableModel.removeRow(selectedRow);
+
+                if (selectedRow != -1) {
+                    suscribeCard();
+                    JOptionPane.showMessageDialog(null, "Tarjeta rehabilitada correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                    tableModel.removeRow(selectedRow);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card card = Utilities.getCardTableByID(table1, tableModel, 0);
-                JOptionPane.showMessageDialog(null,
-                        "Datos:" +
-                                "\n" + "\n" +
-                                "ID: " + card.getId() +
-                                "\n" +
-                                "Tipo de Tarjeta: " + card.getCardType().toString() +
-                                "\n" +
-                                "DNI Asociado: " + card.getDniOwner() +
-                                "\n" +
-                                "Estado: " + card.getStatus() +
-                                "\n" +
-                                "Balance: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                int selectedRow = table1.getSelectedRow();
+                if (selectedRow != -1) {
+                    Card card = Utilities.getCardTableByID(table1, tableModel, 0);
+                    JOptionPane.showMessageDialog(null,
+                            "Datos:" +
+                                    "\n" + "\n" +
+                                    "ID: " + card.getId() +
+                                    "\n" +
+                                    "Tipo de Tarjeta: " + card.getCardType().toString() +
+                                    "\n" +
+                                    "DNI Asociado: " + card.getDniOwner() +
+                                    "\n" +
+                                    "Estado: " + card.getStatus() +
+                                    "\n" +
+                                    "Balance: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona una tarjeta", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 

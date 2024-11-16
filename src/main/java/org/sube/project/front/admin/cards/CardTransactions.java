@@ -74,7 +74,7 @@ public class CardTransactions {
                 for (int j = 0; j < transactionHistory.length(); j++) {
                     JSONObject transaction = transactionHistory.getJSONObject(j);
 
-                    int transactionId = transaction.getInt("id");
+                    String transactionId = transaction.getString("id");
                     String transactionType = transaction.getString("transactionType");
                     String dateTime = transaction.getString("dateTime");
                     double amount = transaction.getDouble("amount");

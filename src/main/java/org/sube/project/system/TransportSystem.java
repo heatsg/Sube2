@@ -169,25 +169,6 @@ public class TransportSystem {
         }
     }
 
-
-    /**
-     * Metodo para recargar nuevos montos en la tarjeta.
-     *
-     * @param cardId
-     * @param amount
-     * @return
-     */
-    public boolean rechargeCard(String cardId, double amount) {
-        if (cards.get(cardId) != null) {
-            addUncreditedAmount(cardId, amount);
-            System.out.println("Recarga exitosa (" + amount + ')');
-            return true;
-        } else {
-            System.out.println("Tarjeta SUBE no encontrada.");
-            return false;
-        }
-    }
-
     /**
      * Metodo para añadir nuevos montos no acreditados en la tarjeta.
      *
@@ -229,30 +210,6 @@ public class TransportSystem {
 
         JOptionPane.showMessageDialog(null, "Cargas acreditadas, saldo final: " + card.getBalance(), "Acreditacion", JOptionPane.INFORMATION_MESSAGE);
 
-        return true;
-    }
-
-
-
-    /**
-     * Metodo para pagar un boleto de Sube con la tarjeta.
-     *
-     * @param cardId
-     * @return
-     */
-    public boolean pay(String cardId) {
-        Card card = cards.get(cardId);
-
-        if (card == null) {
-            System.out.println("Tarjeta SUBE no encontrada.");
-            return false;
-        }
-
-        CardManager.payTicket(card);
-        cards.put(card.getId(), card);
-        updateCardsJSON();
-
-        System.out.println("Viaje pagado, Nuevo Saldo: " + card.getBalance());
         return true;
     }
 

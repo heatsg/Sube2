@@ -8,8 +8,8 @@ public abstract class CardRequest extends Request {
 
     private String cardId;
 
-    public CardRequest(String id, String documentNumber, String cardId) {
-        super(id, documentNumber);
+    public CardRequest(String documentNumber, String cardId) {
+        super(documentNumber);
         setRequestType(getClass().getSimpleName());
         this.cardId = cardId;
     }
@@ -17,7 +17,7 @@ public abstract class CardRequest extends Request {
     public CardRequest(JSONObject j) {
         super(j);
         this.cardId = j.getString("cardId");
-        setRequestType(j.getString("RequestType"));
+        setRequestType(j.getString("requestType"));
     }
 
     public String getCardId() {
@@ -28,7 +28,7 @@ public abstract class CardRequest extends Request {
     public JSONObject toJSON() {
         JSONObject j = super.toJSON();
         try {
-            j.put("RequestType", getRequestType());
+            j.put("requestType", getRequestType());
             j.put("cardId", cardId);
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());

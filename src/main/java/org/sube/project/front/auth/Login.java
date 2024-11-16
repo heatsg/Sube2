@@ -29,6 +29,7 @@ public class Login {
     private JLabel logoAccountLabel;
     private JLabel incorrectLabel;
     private JPanel loginTitlePanel;
+    private JButton volverButton;
 
     public Login() {
         Utilities.loadImage(logoAccountLabel, ImagesUtil.ACCOUNT_PATH, 100, 100);
@@ -83,6 +84,13 @@ public class Login {
             }
         });
 
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(loginPanel);
+                Sube.getInstance().showUI(true);
+            }
+        });
     }
 
     /**

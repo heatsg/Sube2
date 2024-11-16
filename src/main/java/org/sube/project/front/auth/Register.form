@@ -106,7 +106,7 @@
       </component>
       <component id="51236" class="javax.swing.JButton" binding="registrarseButton">
         <constraints>
-          <grid row="10" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-14211289"/>
@@ -116,7 +116,7 @@
       </component>
       <component id="c6efa" class="javax.swing.JButton" binding="vaciarTodosLosCamposButton" default-binding="true">
         <constraints>
-          <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-14211289"/>
@@ -236,6 +236,16 @@
         </constraints>
         <properties>
           <text value=""/>
+        </properties>
+      </component>
+      <component id="48335" class="javax.swing.JButton" binding="volverButton" default-binding="true">
+        <constraints>
+          <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-14211289"/>
+          <foreground color="-1"/>
+          <text value="Volver"/>
         </properties>
       </component>
     </children>

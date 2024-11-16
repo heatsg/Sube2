@@ -2,11 +2,11 @@
     {
         "password": "password",
         "gender": "Masculino",
-        "surname": "qwe",
+        "surname": "qqqq",
         "documentNumber": "33333333",
-        "name": "test2",
+        "name": "asdas",
         "userType": "NORMAL_USER",
-        "age": 40,
+        "age": 14,
         "status": true
     },
     {
@@ -26,17 +26,7 @@
         "documentNumber": "46814665",
         "name": "Juan Pablo",
         "userType": "NORMAL_USER",
-        "age": 23,
-        "status": true
-    },
-    {
-        "password": "hola1234",
-        "gender": "Masculino",
-        "surname": "tucker",
-        "documentNumber": "46738943",
-        "name": "santiago",
-        "userType": "NORMAL_USER",
-        "age": 15,
+        "age": 19,
         "status": true
     }
 ]

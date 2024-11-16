@@ -1,6 +1,7 @@
 package org.sube.project.front.admin.users;
 
 import org.sube.project.accounts.User;
+import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
 import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.util.Path;
@@ -51,9 +52,14 @@ public class UnsuscribedUsers {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
-                suscribeUser();
-                JOptionPane.showMessageDialog(null, "Usuario rehabilitado correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
-                tableModel.removeRow(selectedRow);
+
+                if (selectedRow != -1) {
+                    suscribeUser();
+                    JOptionPane.showMessageDialog(null, "Usuario rehabilitado correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                    tableModel.removeRow(selectedRow);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona un usuario", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -188,6 +194,7 @@ public class UnsuscribedUsers {
                 int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     frame.dispose();
+
                     UserUnsuscriber userUnsuscriber = null;
                     try {
                         userUnsuscriber = new UserUnsuscriber(user);

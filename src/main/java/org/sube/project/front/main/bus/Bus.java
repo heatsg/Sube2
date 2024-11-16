@@ -1,7 +1,6 @@
 package org.sube.project.front.main.bus;
 
 import org.sube.project.accounts.User;
-import org.sube.project.bus.Lines;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.front.main.MainMenu;
@@ -22,6 +21,7 @@ public class Bus {
     private JButton consultarSaldoButton;
     private JLabel lineLabel;
     private JLabel busTitleLabel;
+    private JButton volverButton;
 
     public Bus(User user, String line) {
 
@@ -111,6 +111,16 @@ public class Bus {
                     JOptionPane.showMessageDialog(null, "Tarjeta no encontrada o no registrada", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
+            }
+        });
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(busPanel);
+
+                MainMenu menu = new MainMenu(user);
+                menu.showUI(true, user);
             }
         });
     }

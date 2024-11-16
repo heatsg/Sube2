@@ -56,49 +56,68 @@ public class CardsManagement {
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card card = Utilities.getCardTableByID(table1, tableModel, 0);
-                String associatedDocument = card.getDniOwner();
+                int selectedRow = table1.getSelectedRow();
+                if (selectedRow != -1) {
+                    Card card = Utilities.getCardTableByID(table1, tableModel, 0);
+                    String associatedDocument = card.getDniOwner();
 
-                int selectedOption = JOptionPane.showOptionDialog(cardsManagementPanel, "Modificar tipo de tarjeta", "Tarjeta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, cardTypes, cardTypes[0]);
-                String newDocument = JOptionPane.showInputDialog(cardsManagementPanel, "Modificar documento asociado", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, associatedDocument).toString();
+                    if (associatedDocument != null) {
+                        int selectedOption = JOptionPane.showOptionDialog(cardsManagementPanel, "Modificar tipo de tarjeta", "Tarjeta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, cardTypes, cardTypes[0]);
+                        String newDocument = JOptionPane.showInputDialog(cardsManagementPanel, "Modificar documento asociado", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, associatedDocument).toString();
 
-                CardManager.setCardDocumentNumber(card.getId(), newDocument);
-                CardManager.updateCardType(card.getId(), cardTypes[selectedOption]);
+                        CardManager.setCardDocumentNumber(card.getId(), newDocument);
+                        CardManager.updateCardType(card.getId(), cardTypes[selectedOption]);
 
-                actualizarButton.doClick();
+                        actualizarButton.doClick();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+
             }
         });
 
         deshabilitarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card card = Utilities.getCardTableByID(table1, tableModel, 0);
+                int selectedRow = table1.getSelectedRow();
 
-                if (card.getStatus()) {
-                    CardManager.updateCardStatus(card.getId(), false);
-                    JOptionPane.showMessageDialog(null, "Tarjeta dada de baja correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                if (selectedRow != -1) {
+                    Card card = Utilities.getCardTableByID(table1, tableModel, 0);
+                    if (card != null && card.getStatus()) {
+                        CardManager.updateCardStatus(card.getId(), false);
+                        JOptionPane.showMessageDialog(null, "Tarjeta dada de baja correctamente", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                        actualizarButton.doClick();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Esta tarjeta ya ha sido dada de baja", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Esta tarjeta ya ha sido dada de baja", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-                actualizarButton.doClick();
             }
         });
 
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card card = Utilities.getCardTableByID(table1, tableModel, 0);
-                JOptionPane.showMessageDialog(null,
-                        "Datos:" +
-                                "\n" + "\n" +
-                                "Numero: " + card.getId() +
-                                "\n" +
-                                "Tipo de Tarjeta: " + card.getCardType().toString() +
-                                "\n" +
-                                "Documento Asociado: " + card.getDniOwner() +
-                                "\n" +
-                                "Balance actual: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                int selectedRow = table1.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    Card card = Utilities.getCardTableByID(table1, tableModel, 0);
+                    JOptionPane.showMessageDialog(null,
+                            "Datos:" +
+                                    "\n" + "\n" +
+                                    "Numero: " + card.getId() +
+                                    "\n" +
+                                    "Tipo de Tarjeta: " + card.getCardType().toString() +
+                                    "\n" +
+                                    "Documento Asociado: " + card.getDniOwner() +
+                                    "\n" +
+                                    "Balance actual: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -124,12 +143,18 @@ public class CardsManagement {
         verTransaccionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Card selectedCard = Utilities.getCardTableByID(table1, tableModel, 0);
-                if (selectedCard != null) {
-                    CardTransactions cardTransactions = new CardTransactions(user, selectedCard);
-                    cardTransactions.showUI(true, user);
+                int selectedRow = table1.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    Card selectedCard = Utilities.getCardTableByID(table1, tableModel, 0);
+                    if (selectedCard != null) {
+                        CardTransactions cardTransactions = new CardTransactions(user, selectedCard);
+                        cardTransactions.showUI(true, user);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione una tarjeta para ver sus transacciones.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione una tarjeta para ver sus transacciones.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

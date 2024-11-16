@@ -2,6 +2,9 @@ package org.sube.project.accounts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.card.Card;
+import org.sube.project.card.CardManager;
+import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.util.json.JSONCompatible;
 
 import java.util.Objects;
@@ -120,7 +123,6 @@ public class User implements JSONCompatible {
     public void setStatus(boolean status) {
         this.status = status;
     }
-
 
     @Override
     public boolean equals(Object object) {

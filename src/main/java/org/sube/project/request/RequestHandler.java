@@ -10,14 +10,14 @@ import java.util.List;
 
 public class RequestHandler<T extends Request> {
 
-    private List<T> RequestList;
+    private List<T> requestList;
 
     public RequestHandler() {
-        this.RequestList = new ArrayList<>();
+        this.requestList = new ArrayList<>();
     }
 
     public void addRequest(T request) {
-        RequestList.add(request);
+        requestList.add(request);
     }
 
     public T changeStatus(T request) {
@@ -26,22 +26,48 @@ public class RequestHandler<T extends Request> {
     }
 
     public void takeDownRequest(T request) {
-        if (RequestList.contains(request)) {
-            RequestList.remove(request);
+        if (requestList.contains(request)) {
+            requestList.remove(request);
             request.setStatus(false);
-            RequestList.add(request);
-            RequestList.sort(Comparator.comparing(T::getId));
+            requestList.add(request);
+            requestList.sort(Comparator.comparing(T::getId));
         }
     }
 
     public void requestsToFile() {
         JSONArray jarr = JSONManager.readJSONArray(Path.REQUEST);
 
-        for (T request : RequestList) {
+        for (T request : requestList) {
             jarr.put(request.toJSON());
         }
 
         JSONManager.write(Path.REQUEST, jarr);
+    }
+
+    private void updateRequestFile() {
+        JSONArray jarr = new JSONArray();
+
+        for (T request : requestList) {
+            jarr.put(request.toJSON());
+        }
+
+        JSONManager.write(Path.REQUEST, jarr);
+    }
+
+    public void dropUserRequests(String documentNumber) {
+        requestList.clear();
+
+        for (Requestable request : Request.loadRequestsFromFile()) {
+            requestList.add((T) request);
+        }
+
+        for (Request request : requestList) {
+            if (request.getDocumentNumber().equals(documentNumber)) {
+                request.setStatus(false);
+            }
+        }
+
+        updateRequestFile();
     }
 
 }

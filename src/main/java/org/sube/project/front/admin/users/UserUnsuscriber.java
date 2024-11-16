@@ -36,6 +36,7 @@ public class UserUnsuscriber {
     private JButton inhabilitadosButton;
     private JLabel updatedTableLabel;
     private JLabel searchNotResultsLabel;
+    private JButton volverButton;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -146,6 +147,16 @@ public class UserUnsuscriber {
                 filterUserUnsuscriberOnTable();
             }
         });
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(userUnsuscriberPanel);
+
+                AdminMenu adminMenu = new AdminMenu(user);
+                adminMenu.showUI(true, user);
+            }
+        });
     }
 
     private void filterUserUnsuscriberOnTable() {
@@ -206,11 +217,11 @@ public class UserUnsuscriber {
             if (request instanceof UserTakeDownRequest && ((UserTakeDownRequest) request).getDocumentNumber().equals(documentNumber)) {
                 requestHandler.takeDownRequest((Request) request);
                 JSONManager.updateUserStatus(((UserTakeDownRequest) request).getDocumentNumber(), false, Path.USER);
+                requestHandler.dropUserRequests(documentNumber);
                 JOptionPane.showMessageDialog(null, "La solicitud ha sido aprobada.", "Solicitud Aprobada", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
         }
-        requestHandler.requestsToFile();
     }
 
     private void denyRequest(String documentNumber) {
@@ -231,7 +242,7 @@ public class UserUnsuscriber {
      * @param input
      */
     public void showUI(boolean input, User user) {
-        JFrame frame = new JFrame("Gestionar usuarios");
+        JFrame frame = new JFrame("Solicitudes de baja");
         frame.setContentPane(userUnsuscriberPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

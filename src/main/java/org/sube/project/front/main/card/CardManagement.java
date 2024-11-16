@@ -35,13 +35,18 @@ public class CardManagement {
 
     public CardManagement(User user) {
 
+        TransportSystem transportSystem = new TransportSystem();
+        transportSystem.loadFromJSON();
+
         String[] rechargeValues = {"2000", "3000", "5000"};
 
         if (registeredCard(user.getDocumentNumber())) {
             Card card = Utilities.getManualCard(user.getDocumentNumber());
-            cardNumberLabel.setText("Numero: " + card.getId());
-            balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
-            registrarTarjetaButton.setVisible(false);
+            if (card != null) {
+                cardNumberLabel.setText("Numero: " + card.getId());
+                balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
+                registrarTarjetaButton.setVisible(false);
+            }
         } else {
             balanceInfoLabel.setVisible(false);
             cardNumberLabel.setText("No hay tarjeta asociada.");
@@ -55,7 +60,6 @@ public class CardManagement {
                 if (card != null) {
                     int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
                     TransportSystem.getInstance().addUncreditedAmount(card.getId(), Double.parseDouble(rechargeValues[selectedOption]));
-                    //CardManager.addBalance(card, Double.parseDouble(rechargeValues[selectedOption]));
                     CardManager.updateCardFile(card);
                 } else JOptionPane.showMessageDialog(cardManagementPanel, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -65,9 +69,6 @@ public class CardManagement {
         acreditarTarjetaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransportSystem transportSystem = new TransportSystem();
-                transportSystem.loadFromJSON();
-
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 if (card != null) {
@@ -99,8 +100,7 @@ public class CardManagement {
 
                     if (confirm == JOptionPane.YES_OPTION) {
                         RequestHandler<Request> requestHandler = new RequestHandler<>();
-                        int requestId = (int) (Math.random() * 10000);
-                        CardTakeDownRequest request = new CardTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber(), card.getId());
+                        CardTakeDownRequest request = new CardTakeDownRequest(user.getDocumentNumber(), card.getId());
 
                         requestHandler.addRequest(request);
                         requestHandler.requestsToFile();

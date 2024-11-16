@@ -4,40 +4,42 @@
         "balance": 1000,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [],
-        "id": "6061411726436252",
+        "id": "6061867232273166",
         "status": true
     },
     {
-        "dniOwner": "46738943",
-        "balance": 8640,
+        "dniOwner": "46814665",
+        "balance": 16000,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [
             {
-                "transactionType": "recarga",
-                "dateTime": "15-11-2024, 19:34:38",
+                "transactionType": "Recarga",
+                "dateTime": "15-11-2024, 23:14:32",
                 "amount": 5000,
-                "id": "fcc35df4-f3e8-4e51-9e5c-dada3d2c4617"
+                "id": "1c913a5f-c32f-4432-bd97-1a71ab67379a"
             },
             {
-                "transactionType": "recarga",
-                "dateTime": "15-11-2024, 19:34:42",
+                "transactionType": "Recarga",
+                "dateTime": "15-11-2024, 23:14:47",
                 "amount": 5000,
-                "id": "c036a674-ea46-4e91-82f7-668f03dd77ad"
+                "id": "557c2603-2f5d-4dd8-ba99-6427dd4ea0f0"
             },
             {
-                "transactionType": "pago",
-                "dateTime": "15-11-2024, 19:39:04",
-                "amount": 1180,
-                "id": "d5fe2349-ce37-400d-8fc0-c2b7d679a06d"
-            },
-            {
-                "transactionType": "pago",
-                "dateTime": "15-11-2024, 19:39:13",
-                "amount": 1180,
-                "id": "4f009b55-df37-4040-8579-8087d650227f"
+                "transactionType": "Recarga",
+                "dateTime": "15-11-2024, 23:23:41",
+                "amount": 5000,
+                "id": "815a36ee-30b5-48c8-9e63-ecb3139c1372"
             }
         ],
-        "id": "6061522867353182",
+        "id": "6061167172268481",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061276441622624",
         "status": true
     }
 ]

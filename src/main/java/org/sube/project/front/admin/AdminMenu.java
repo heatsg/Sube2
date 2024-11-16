@@ -6,6 +6,7 @@ import org.sube.project.exceptions.UserNotFoundException;
 import org.sube.project.front.Sube;
 import org.sube.project.front.admin.cards.CardUnsuscriber;
 import org.sube.project.front.admin.cards.CardsManagement;
+import org.sube.project.front.admin.cards.benefits.BenefitsRequests;
 import org.sube.project.front.admin.users.UsersManagement;
 import org.sube.project.front.admin.users.UserUnsuscriber;
 import org.sube.project.util.Utilities;
@@ -79,7 +80,10 @@ public class AdminMenu {
         solicitudesDeBeneficiosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(adminMenuPanel);
 
+                BenefitsRequests benefitsRequests = new BenefitsRequests(user);
+                benefitsRequests.showUI(true, user);
             }
         });
 

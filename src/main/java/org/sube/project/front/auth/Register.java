@@ -31,6 +31,7 @@ public class Register {
     private JLabel logoRegisterLabel;
     private JLabel registerLabel;
     private JPanel registerTitlePanel;
+    private JButton volverButton;
 
     public Register() {
         Utilities.loadImage(logoRegisterLabel, ImagesUtil.ACCOUNT_PATH, 50, 50);
@@ -55,7 +56,7 @@ public class Register {
         registrarseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransportSystem transportSystem = TransportSystem.getInstance();
+                TransportSystem transportSystem = new TransportSystem();
 
                 String name = nameText.getText();
                 String surname = surnameText.getText();
@@ -74,6 +75,7 @@ public class Register {
                         JOptionPane.showMessageDialog(null, "Por favor, ingrese un género.", "Error", JOptionPane.INFORMATION_MESSAGE);
                         return;
                     } else {
+                        transportSystem.loadFromJSON();
                         User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), UserType.NORMAL_USER, true, password);
                         transportSystem.registerUser(newUser);
                         JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.", "Registrado", JOptionPane.INFORMATION_MESSAGE);
@@ -94,6 +96,13 @@ public class Register {
                     genderBox.setSelectedItem("<Seleccionar>");
                     clearAllFields();
                 }
+            }
+        });
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(registerPanel);
+                Sube.getInstance().showUI(true);
             }
         });
     }

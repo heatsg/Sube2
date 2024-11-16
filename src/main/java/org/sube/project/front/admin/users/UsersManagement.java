@@ -1,6 +1,7 @@
 package org.sube.project.front.admin.users;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
@@ -101,9 +102,18 @@ public class UsersManagement {
         deshabilitarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User user = Utilities.getUserTableByDocument(table1, tableModel, 3);
-                JSONManager.updateUserStatus(user.getDocumentNumber(), false, Path.USER);
-                JOptionPane.showMessageDialog(null, "Usuario dado de baja correctamente.", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                int selectedRow = table1.getSelectedRow();
+                if (selectedRow != -1) {
+                    try {
+                        User user = Utilities.getUserTableByDocument(table1, tableModel, 3);
+                        JSONManager.updateUserStatus(user.getDocumentNumber(), false, Path.USER);
+                        JOptionPane.showMessageDialog(null, "Usuario dado de baja correctamente.", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (JSONException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona un usuario", "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
                 actualizarButton.doClick();
             }

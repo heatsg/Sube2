@@ -2,13 +2,17 @@ package org.sube.project.card;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.sube.project.bus.Lines;
 import org.sube.project.card.transaction.types.TransactionPayment;
 import org.sube.project.card.transaction.types.TransactionRecharge;
 import org.sube.project.exceptions.CardNotFoundException;
 import org.sube.project.util.Path;
 import org.sube.project.util.json.JSONManager;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CardManager {
@@ -85,6 +89,32 @@ public class CardManager {
         JSONManager.write(Path.CARD, cardsArray);
     }
 
+    private static String convertTypesToEnum(String type) {
+        switch (type) {
+            case "Normal":
+                type = "NORMAL_CARD";
+                break;
+
+            case "Estudiante":
+                type = "STUDENT";
+                break;
+
+            case "Docente":
+                type = "TEACHER";
+                break;
+
+            case "Discapacitado":
+                type = "DISABLED_PERSON";
+                break;
+
+            case "Jubilado":
+                type = "RETIRED";
+                break;
+        }
+
+        return type;
+    }
+
     public static void updateCardType(String cardId, String type) {
         JSONArray cardsArray = JSONManager.readJSONArray(Path.CARD);
 
@@ -92,10 +122,23 @@ public class CardManager {
             JSONObject card = cardsArray.getJSONObject(i);
 
             if (card.getString("id").equalsIgnoreCase(cardId)) {
-                card.put("cardType", type);
+                card.put("cardType", convertTypesToEnum(type));
                 break;
             }
         }
         JSONManager.write(Path.CARD, cardsArray);
+    }
+
+
+
+    public static JComboBox<String> loadCardBenefits() {
+        List<CardType> benefitsArray = new ArrayList<>(List.of(CardType.values()));
+        JComboBox<String> benefitsBox = new JComboBox<>();
+
+        for (CardType benefits : benefitsArray) {
+            benefitsBox.addItem(benefits.toString());
+        }
+
+        return benefitsBox;
     }
 }

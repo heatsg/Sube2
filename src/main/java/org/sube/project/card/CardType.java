@@ -22,4 +22,9 @@ public enum CardType {
     public double getFinalPrice(double amount) {
         return amount * percentage;
     }
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

@@ -196,7 +196,7 @@
             </constraints>
             <properties>
               <font name="Arial Black" size="16" style="1"/>
-              <foreground color="-2894893"/>
+              <foreground color="-1"/>
               <horizontalAlignment value="10"/>
               <horizontalTextPosition value="11"/>
               <text value="GESTIONAR"/>

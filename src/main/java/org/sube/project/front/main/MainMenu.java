@@ -2,13 +2,16 @@ package org.sube.project.front.main;
 
 import org.sube.project.accounts.User;
 import org.sube.project.bus.BusManager;
-import org.sube.project.bus.Lines;
+import org.sube.project.card.Card;
+import org.sube.project.card.CardManager;
+import org.sube.project.card.CardType;
 import org.sube.project.front.Sube;
 import org.sube.project.front.main.account.Account;
 import org.sube.project.front.main.bus.Bus;
 import org.sube.project.front.main.card.CardManagement;
 import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
+import org.sube.project.request.benefits.BenefitsRequest;
 import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
@@ -37,6 +40,7 @@ public class MainMenu {
     private JButton darDeBajaButton;
     private JButton verMisDatosButton;
     private JButton servicioDeTransporteButton;
+    private JLabel cardTitleLabel;
 
     public MainMenu(User user) {
         Utilities.loadImage(menuAccountLabel, ImagesUtil.ACCOUNT_PATH, 50, 50);
@@ -60,6 +64,37 @@ public class MainMenu {
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
 
+        Card card = Utilities.getManualCard(user.getDocumentNumber());
+
+        if (card != null) {
+            switch (card.getCardType()) {
+                case NORMAL_CARD:
+                    cardTitleLabel.setText("Tarjeta");
+                    beneficiosButton.setEnabled(true);
+                    break;
+                case STUDENT:
+                    cardTitleLabel.setText("Tarjeta (Estudiantil)");
+                    beneficiosButton.setEnabled(false);
+                    break;
+
+                case TEACHER:
+                    cardTitleLabel.setText("Tarjeta (Docente)");
+                    beneficiosButton.setEnabled(false);
+                    break;
+
+                case DISABLED_PERSON:
+                    cardTitleLabel.setText("Tarjeta (Discapacitado)");
+                    beneficiosButton.setEnabled(false);
+                    break;
+
+                case RETIRED:
+                    cardTitleLabel.setText("Tarjeta (Jubilado)");
+                    beneficiosButton.setEnabled(false);
+                    break;
+            }
+        }
+
+
         gestionarCuentaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +117,27 @@ public class MainMenu {
         beneficiosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Card card = Utilities.getManualCard(user.getDocumentNumber());
 
+                if (card != null) {
+                    JComboBox<String> benefitsBox = CardManager.loadCardBenefits();
+                    int selectedOption = JOptionPane.showOptionDialog(menuPanel, benefitsBox, "Tramita un beneficio", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+                    if (selectedOption != JOptionPane.CLOSED_OPTION) {
+                        String selectedBenefit = (String) benefitsBox.getSelectedItem();
+
+                        RequestHandler<BenefitsRequest> benefits = new RequestHandler<>();
+                        BenefitsRequest benefitsRequest = new BenefitsRequest(user.getDocumentNumber(), card.getId(), selectedBenefit);
+
+                        benefits.addRequest(benefitsRequest);
+                        benefits.requestsToFile();
+
+                        JOptionPane.showMessageDialog(null, "Solicitud enviada correctamente.", "Solicitud", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -111,8 +166,7 @@ public class MainMenu {
 
                 if (confirm == JOptionPane.YES_OPTION) {
                     RequestHandler<Request> requestHandler = new RequestHandler<>();
-                    int requestId = (int) (Math.random() * 10000);
-                    UserTakeDownRequest request = new UserTakeDownRequest(String.valueOf(requestId), user.getDocumentNumber());
+                    UserTakeDownRequest request = new UserTakeDownRequest(user.getDocumentNumber());
 
                     requestHandler.addRequest(request);
                     requestHandler.requestsToFile();
@@ -159,7 +213,6 @@ public class MainMenu {
         });
 
     }
-
 
     /**
      * Método para mostrar la ventana a través de JFrame
