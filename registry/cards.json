@@ -9,7 +9,7 @@
     },
     {
         "dniOwner": "46814665",
-        "balance": 16000,
+        "balance": 29000,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [
             {
@@ -29,6 +29,30 @@
                 "dateTime": "15-11-2024, 23:23:41",
                 "amount": 5000,
                 "id": "815a36ee-30b5-48c8-9e63-ecb3139c1372"
+            },
+            {
+                "transactionType": "Recarga",
+                "dateTime": "17-11-2024, 14:41:10",
+                "amount": 2000,
+                "id": "742a2b14-38cb-47ad-84c8-15ca2bc13414"
+            },
+            {
+                "transactionType": "Recarga",
+                "dateTime": "17-11-2024, 14:42:01",
+                "amount": 7000,
+                "id": "862f9e14-8b5c-43ee-8e7e-442b07c6d25e"
+            },
+            {
+                "transactionType": "Recarga",
+                "dateTime": "17-11-2024, 14:43:54",
+                "amount": 2000,
+                "id": "b86fdb13-9ef0-4dce-87b9-835a45ffde52"
+            },
+            {
+                "transactionType": "Recarga",
+                "dateTime": "17-11-2024, 14:46:17",
+                "amount": 2000,
+                "id": "2a70eab6-3550-4f16-bfd4-fd3406b8fa07"
             }
         ],
         "id": "6061167172268481",

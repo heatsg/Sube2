@@ -59,8 +59,8 @@ public class CardManagement {
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
                 if (card != null) {
                     int selectedOption = JOptionPane.showOptionDialog(cardManagementPanel, "Elija el monto a cargar", "Cargar saldo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, rechargeValues, rechargeValues[0]);
-                    TransportSystem.getInstance().addUncreditedAmount(card.getId(), Double.parseDouble(rechargeValues[selectedOption]));
-                    CardManager.updateCardFile(card);
+                    transportSystem.addUncreditedAmount(card.getId(), Double.parseDouble(rechargeValues[selectedOption]));
+                    transportSystem.loadFromJSON();
                 } else JOptionPane.showMessageDialog(cardManagementPanel, "Tarjeta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
@@ -74,12 +74,12 @@ public class CardManagement {
                 if (card != null) {
                     String cardId = card.getId();
 
-                    System.out.println("ID de tarjeta a acreditar: " + cardId);
 
                     boolean credited = transportSystem.creditIntoCard(cardId);
                     if (credited) {
                         JOptionPane.showMessageDialog(cardManagementPanel, "Saldo acreditado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                        balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
+                        transportSystem.loadFromJSON();
+                        balanceInfoLabel.setText("Saldo actual: " + transportSystem.getCards().get(card.getId()).getBalance());
                     } else {
                         JOptionPane.showMessageDialog(cardManagementPanel, "No hay saldo pendiente para acreditar o la tarjeta no existe.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -129,6 +129,7 @@ public class CardManagement {
                     String id = JOptionPane.showInputDialog(cardManagementPanel, "Por favor, ingrese el numero de tarjeta", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, null).toString();
                     if (validateCardID(id)) {
                         CardManager.setCardDocumentNumber(id, user.getDocumentNumber());
+                        transportSystem.loadFromJSON();
                         registrarTarjetaButton.setVisible(false);
                     } else {
                         throw new CardNotFoundException("Numero de tarjeta no existente");
