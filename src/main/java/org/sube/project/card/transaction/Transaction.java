@@ -3,7 +3,6 @@ package org.sube.project.card.transaction;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sube.project.util.json.JSONCompatible;
-import org.sube.project.util.json.JSONSube;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,22 +11,26 @@ import java.util.UUID;
 
 public abstract class Transaction implements JSONCompatible {
     private String id;
+    private String dniAffiliated;
     private LocalDateTime dateTime;
     private String transactionType;
     private double amount;
 
-    public Transaction() {
+    public Transaction(String dniAffiliated) {
+        this.dniAffiliated=dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.now();
     }
 
-    public Transaction(double amount) {
+    public Transaction(String dniAffiliated,double amount) {
+        this.dniAffiliated=dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.now();
         this.amount = amount;
     }
 
-    public Transaction(double amount, String dateTime) {
+    public Transaction(String dniAffiliated,double amount, String dateTime) {
+        this.dniAffiliated=dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.parse(dateTime);
         this.amount = amount;
@@ -35,6 +38,7 @@ public abstract class Transaction implements JSONCompatible {
 
     public Transaction(JSONObject j) {
         try {
+            this.dniAffiliated = j.getString("dniAffiliated");
             this.id = j.getString("id");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss");
             this.dateTime = LocalDateTime.parse(j.getString("dateTime"), formatter);
@@ -49,6 +53,7 @@ public abstract class Transaction implements JSONCompatible {
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
         try {
+            j.put("dniAffiliated",dniAffiliated);
             j.put("id", id);
             j.put("dateTime", dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")));
             j.put("amount", amount);
@@ -57,6 +62,14 @@ public abstract class Transaction implements JSONCompatible {
             jx.printStackTrace();
         }
         return j;
+    }
+
+    public String getDniAffiliated() {
+        return dniAffiliated;
+    }
+
+    public void setDniAffiliated(String dniAffiliated) {
+        this.dniAffiliated = dniAffiliated;
     }
 
     public String getId() {

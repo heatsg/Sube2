@@ -2,32 +2,42 @@ package org.sube.project.card.transaction.types;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sube.project.bus.Bus;
 import org.sube.project.bus.Lines;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
 
-import javax.sound.sampled.Line;
-import java.time.LocalDateTime;
-
 public final class TransactionPayment extends Transaction {
 
-    public TransactionPayment() {
+    private Lines line;
+    public TransactionPayment(String dniAffiliated) {
+        super(dniAffiliated);
         setTransactionType(TransactionType.PAYMENT.toString());
     }
 
     public TransactionPayment(JSONObject j) {
         super(j);
         setTransactionType(TransactionType.PAYMENT.toString());
+        setLine(Lines.valueOf(j.getString("line")));
     }
 
-    public TransactionPayment(double amount, String dateTime) {
-        super(amount, dateTime);
+    public TransactionPayment(String dniAffiliated,double amount, String dateTime) {
+        super(dniAffiliated, amount, dateTime);
         setTransactionType(TransactionType.PAYMENT.toString());
     }
 
-    public TransactionPayment(double amount) {
-        super(amount);
+    public TransactionPayment(String dniAffiliated,double amount,Lines line) {
+        super(dniAffiliated, amount);
         setTransactionType(TransactionType.PAYMENT.toString());
+        setLine(line);
+    }
+
+    public void setLine(Lines line) {
+        this.line = line;
+    }
+
+    public Lines getLine() {
+        return line;
     }
 
     @Override
@@ -35,6 +45,7 @@ public final class TransactionPayment extends Transaction {
         JSONObject j = super.toJSON();
         try {
             j.put("transactionType", TransactionType.PAYMENT.toString());
+            j.put("line", line.toString());
         } catch (JSONException jx) {
             System.out.println(jx.getMessage());
             jx.printStackTrace();

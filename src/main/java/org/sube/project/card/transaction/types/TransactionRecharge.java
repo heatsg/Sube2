@@ -5,11 +5,11 @@ import org.json.JSONObject;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
 
-import javax.swing.*;
-
 public final class TransactionRecharge extends Transaction {
 
-    public TransactionRecharge() {
+
+    public TransactionRecharge(String dniAffiliated) {
+        super(dniAffiliated);
         setTransactionType(TransactionType.RECHARGE.toString());
     }
 
@@ -18,13 +18,13 @@ public final class TransactionRecharge extends Transaction {
         setTransactionType(TransactionType.RECHARGE.toString());
     }
 
-    public TransactionRecharge(double amount, String dateTime) {
-        super(amount, dateTime);
+    public TransactionRecharge(String dniAffiliated,double amount, String dateTime) {
+        super(dniAffiliated, amount, dateTime);
         setTransactionType(TransactionType.RECHARGE.toString());
     }
 
-    public TransactionRecharge(double amount) {
-        super(amount);
+    public TransactionRecharge(String dniAffiliated,double amount) {
+        super(dniAffiliated, amount);
         setTransactionType(TransactionType.RECHARGE.toString());
     }
 

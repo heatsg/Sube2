@@ -2,6 +2,7 @@ package org.sube.project.card;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.sube.project.bus.Bus;
 import org.sube.project.bus.Lines;
 import org.sube.project.card.transaction.types.TransactionPayment;
 import org.sube.project.card.transaction.types.TransactionRecharge;
@@ -21,14 +22,14 @@ public class CardManager {
 
     public static void addBalance(Card card, double amount) {
         card.setBalance(card.getBalance() + amount);
-        card.getTransactionHistory().add(new TransactionRecharge(amount));
+        card.getTransactionHistory().add(new TransactionRecharge(card.getDniOwner(),amount));
     }
 
-    public static boolean payTicket(Card card) {
+    public static boolean payTicket(Card card,Lines line) {
         if (card == null || card.getCardType() == null) return false;
 
         card.setBalance(card.getBalance() - card.getCardType().getFinalPrice(BASE_TICKET));
-        card.getTransactionHistory().add(new TransactionPayment(card.getCardType().getFinalPrice(BASE_TICKET)));
+        card.getTransactionHistory().add(new TransactionPayment(card.getDniOwner(),card.getCardType().getFinalPrice(BASE_TICKET),line));
         return true;
     }
 

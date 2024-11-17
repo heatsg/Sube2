@@ -57,11 +57,12 @@ public class Bus {
                 Card card = Utilities.getManualCard(user.getDocumentNumber());
 
                 if (card != null) {
+                    org.sube.project.bus.Bus bus = new org.sube.project.bus.Bus(org.sube.project.bus.Bus.StringToLine(line));
                     if(card.getBalance()<(-1180)){
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente", "Pago Rechazado", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    CardManager.payTicket(card);
+                    CardManager.payTicket(card,bus.getLine());
 
                     transportSystem.getCards().put(card.getId(), card);
                     transportSystem.updateCardsJSON();
