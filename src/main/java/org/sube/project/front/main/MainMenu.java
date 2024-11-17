@@ -70,6 +70,7 @@ public class MainMenu {
         Card card = Utilities.getManualCard(user.getDocumentNumber());
 
         if (card != null) {
+            beneficiosButton.setEnabled(true);
             switch (card.getCardType()) {
                 case NORMAL_CARD:
                     cardTitleLabel.setText("Tarjeta");
@@ -95,7 +96,7 @@ public class MainMenu {
                     beneficiosButton.setEnabled(false);
                     break;
             }
-        }
+        } else servicioDeTransporteButton.setEnabled(false);
 
 
         gestionarCuentaButton.addActionListener(new ActionListener() {
