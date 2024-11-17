@@ -7,4 +7,6 @@ public class ImagesUtil {
     public static final String ACCOUNT_MANAGEMENT_PATH = "src/images/gestioncuenta.png";
     public static final String FAVICON_PATH = "src/images/SUBEfavicon.png";
     public static final String SUBE_PATH = "src/images/SUBElogo.png";
+    public static final String LOGIN_PATH = "src/images/login.png";
+    public static final String REGISTER_PATH = "src/images/registro.png";
 }

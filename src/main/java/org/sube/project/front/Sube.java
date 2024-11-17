@@ -47,6 +47,11 @@ public class Sube {
         gbc.gridy = 2;
         subePanel.add(crearCuentaButton, gbc);
 
+        ImageIcon signInIcon = new ImageIcon(ImagesUtil.LOGIN_PATH);
+        iniciarSesionButton.setIcon(signInIcon);
+
+        ImageIcon signUpIcon = new ImageIcon(ImagesUtil.REGISTER_PATH);
+        crearCuentaButton.setIcon(signUpIcon);
 
         iniciarSesionButton.addActionListener(new ActionListener() {
             @Override

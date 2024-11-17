@@ -64,6 +64,9 @@ public class MainMenu {
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
 
+        ImageIcon accountManagementIcon = new ImageIcon(ImagesUtil.ACCOUNT_MANAGEMENT_PATH);
+        gestionarCuentaButton.setIcon(accountManagementIcon);
+
         Card card = Utilities.getManualCard(user.getDocumentNumber());
 
         if (card != null) {
