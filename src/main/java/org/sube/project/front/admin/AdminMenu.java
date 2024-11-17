@@ -7,8 +7,10 @@ import org.sube.project.front.Sube;
 import org.sube.project.front.admin.cards.CardUnsuscriber;
 import org.sube.project.front.admin.cards.CardsManagement;
 import org.sube.project.front.admin.cards.benefits.BenefitsRequests;
+import org.sube.project.front.admin.users.AddUsers;
 import org.sube.project.front.admin.users.UsersManagement;
 import org.sube.project.front.admin.users.UserUnsuscriber;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -27,12 +29,20 @@ public class AdminMenu {
     private JButton gestionarUsuariosButton;
     private JButton solicitudesDeBeneficiosButton;
     private JButton solicitudesDeBajaButton1;
+    private JButton añadirUsuariosButton;
 
 
     public AdminMenu(User user) {
 
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
+
+        Utilities.setImageIcon(ImagesUtil.LIST, gestionarUsuariosButton);
+        Utilities.setImageIcon(ImagesUtil.MAIL, solicitudesDeBajaButton);
+        Utilities.setImageIcon(ImagesUtil.CARD_MANAGEMENT_PATH, gestionarTarjetasButton);
+        Utilities.setImageIcon(ImagesUtil.MAIL, solicitudesDeBeneficiosButton);
+        Utilities.setImageIcon(ImagesUtil.MAIL, solicitudesDeBajaButton1);
+        Utilities.setImageIcon(ImagesUtil.ADD, añadirUsuariosButton);
 
         solicitudesDeBajaButton.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +109,16 @@ public class AdminMenu {
                     ex.printStackTrace();
                 }
                 cardUnsuscriber.showUI(true, user);
+            }
+        });
+
+        añadirUsuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utilities.disposeWindow(adminMenuPanel);
+
+                AddUsers addUsers = new AddUsers(user);
+                addUsers.showUI(true, user);
             }
         });
     }

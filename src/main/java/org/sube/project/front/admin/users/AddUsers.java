@@ -1,9 +1,10 @@
-package org.sube.project.front.auth;
+package org.sube.project.front.admin.users;
 
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.exceptions.UserAlreadyExistsException;
 import org.sube.project.front.Sube;
+import org.sube.project.front.admin.AdminMenu;
 import org.sube.project.system.TransportSystem;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
@@ -16,11 +17,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
 
-public class Register {
+public class AddUsers {
 
-    private JButton registrarseButton;
+    private JButton añadirButton;
     private JButton vaciarTodosLosCamposButton;
-    private JPanel registerPanel;
+    private JPanel addUsersPanel;
     private JLabel documentNumberLabel;
     private JTextField nameText;
     private JTextField surnameText;
@@ -32,8 +33,9 @@ public class Register {
     private JLabel registerLabel;
     private JPanel registerTitlePanel;
     private JButton volverButton;
+    private JComboBox<UserType> userTypeBox;
 
-    public Register() {
+    public AddUsers(User user) {
         Utilities.loadImage(logoRegisterLabel, ImagesUtil.ACCOUNT_PATH, 50, 50);
 
         registerTitlePanel.setLayout(new GridBagLayout());
@@ -52,12 +54,14 @@ public class Register {
 
         generateItemsGenderBox();
 
-        Utilities.setImageIcon(ImagesUtil.SEND, registrarseButton);
+        Utilities.setImageIcon(ImagesUtil.SEND, añadirButton);
         Utilities.setImageIcon(ImagesUtil.TRASH, vaciarTodosLosCamposButton);
         Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
 
-        // Botones //
-        registrarseButton.addActionListener(new ActionListener() {
+        userTypeBox.addItem(UserType.NORMAL_USER);
+        userTypeBox.addItem(UserType.ADMIN);
+
+        añadirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TransportSystem transportSystem = new TransportSystem();
@@ -67,6 +71,7 @@ public class Register {
                 int age = Integer.parseInt(ageText.getText());
                 String documentNumber = documentNumberText.getText();
                 String password = new String(passText.getPassword());
+                UserType userType = (UserType) userTypeBox.getSelectedItem();
 
                 try {
                     if (documentNumber.length() != 8) {
@@ -80,16 +85,13 @@ public class Register {
                         return;
                     } else {
                         transportSystem.loadFromJSON();
-                        User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), UserType.NORMAL_USER, true, password);
+                        User newUser = new User(name, surname, age, documentNumber, (String) genderBox.getSelectedItem(), userType, true, password);
                         transportSystem.registerUser(newUser);
                         JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.", "Registrado", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } catch (UserAlreadyExistsException ex) {
                     System.out.println(ex.getMessage());
                 }
-
-                Utilities.disposeWindow(registerPanel);
-                Sube.getInstance().showUI(true);
             }
         });
 
@@ -105,8 +107,9 @@ public class Register {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Utilities.disposeWindow(registerPanel);
-                Sube.getInstance().showUI(true);
+                Utilities.disposeWindow(addUsersPanel);
+                AdminMenu adminMenu = new AdminMenu(user);
+                adminMenu.showUI(true, user);
             }
         });
     }
@@ -139,9 +142,9 @@ public class Register {
      *
      * @param input
      */
-    public void showUI(boolean input) {
-        JFrame frame = new JFrame("Registrate");
-        frame.setContentPane(new Register().registerPanel);
+    public void showUI(boolean input, User user) {
+        JFrame frame = new JFrame("Añadir usuarios");
+        frame.setContentPane(new AddUsers(user).addUsersPanel);
         Utilities.getSubeFavicon(frame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
@@ -150,10 +153,10 @@ public class Register {
                 int choice = JOptionPane.showConfirmDialog(frame, "¿Seguro desea salir?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     frame.dispose();
-                    Sube sube = new Sube();
-                    sube.showUI(true);
+                    AdminMenu adminMenu = new AdminMenu(user);
+                    adminMenu.showUI(true, user);
                 } else {
-                    showUI(true);
+                    showUI(true, user);
                 }
             }
         });

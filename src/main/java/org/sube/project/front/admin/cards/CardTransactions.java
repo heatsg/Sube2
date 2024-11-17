@@ -1,10 +1,12 @@
 package org.sube.project.front.admin.cards;
 
+import jdk.jshell.execution.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.transaction.Transaction;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -13,11 +15,14 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CardTransactions {
     private JTable table1;
@@ -34,6 +39,7 @@ public class CardTransactions {
 
     public CardTransactions(User user, Card selectedCard) {
         tableModel.addColumn("ID de Transaccion");
+        tableModel.addColumn("Documento Asociado");
         tableModel.addColumn("Tipo");
         tableModel.addColumn("Fecha y hora");
         tableModel.addColumn("Monto");
@@ -42,12 +48,46 @@ public class CardTransactions {
         transactionsTitleLabel.setText("TRANSACCIONES DE " + selectedCard.getDniOwner());
         loadTransactionsOnTable(selectedCard.getId());
 
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
+
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tableModel.setRowCount(0);
                 loadTransactionsOnTable(selectedCard.getId());
                 updatedTableLabel.setText("<html><span style='color: #08FF00'> Tabla actualizada </span></html>");
+            }
+        });
+
+        verDetallesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table1.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    String transactionID = table1.getValueAt(selectedRow, 0).toString();
+                    String associatedDocument = table1.getValueAt(selectedRow, 1).toString();
+                    String transactionType = table1.getValueAt(selectedRow, 2).toString();
+                    String dateTime = table1.getValueAt(selectedRow, 3).toString();
+                    String amount = table1.getValueAt(selectedRow, 4).toString();
+
+                    JOptionPane.showMessageDialog(null,
+                            "Datos de transaccion:" +
+                                    "\n" + "\n" +
+                                    "ID: " + transactionID +
+                                    "\n" +
+                                    "DNI Asociado: " + associatedDocument +
+                                    "\n" +
+                                    "Tipo: " + transactionType +
+                                    "\n" +
+                                    "Fecha & Hora: " + dateTime +
+                                    "\n" +
+                                    "Monto: " + amount, "Detalles", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una transaccion", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -75,11 +115,12 @@ public class CardTransactions {
                     JSONObject transaction = transactionHistory.getJSONObject(j);
 
                     String transactionId = transaction.getString("id");
+                    String associatedDocument = transaction.getString("dniAffiliated");
                     String transactionType = transaction.getString("transactionType");
                     String dateTime = transaction.getString("dateTime");
                     double amount = transaction.getDouble("amount");
 
-                    tableModel.addRow(new Object[]{transactionId, transactionType, dateTime, amount});
+                    tableModel.addRow(new Object[]{transactionId, associatedDocument, transactionType, dateTime, amount});
                 }
                 return;
             }

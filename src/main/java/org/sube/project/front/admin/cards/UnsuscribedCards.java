@@ -3,6 +3,7 @@ package org.sube.project.front.admin.cards;
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -40,6 +41,11 @@ public class UnsuscribedCards {
 
         Utilities.activateTable(table1, scrollPane, tableModel);
         loadUnsuscribedCardsOnTable();
+
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.VIEW, habilitarButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
 
         actualizarButton.addActionListener(new ActionListener() {
             @Override

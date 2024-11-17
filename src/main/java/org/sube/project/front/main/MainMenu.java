@@ -1,10 +1,9 @@
 package org.sube.project.front.main;
 
 import org.sube.project.accounts.User;
-import org.sube.project.bus.BusManager;
+import org.sube.project.bus.LineManager;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
-import org.sube.project.card.CardType;
 import org.sube.project.front.Sube;
 import org.sube.project.front.main.account.Account;
 import org.sube.project.front.main.bus.Bus;
@@ -59,13 +58,18 @@ public class MainMenu {
         gbc.gridx = 1;
         menuTitlePanel.add(menuTitleLabel, gbc);
 
-        BusManager busManager = new BusManager();
+        LineManager lineManager = new LineManager();
 
         nameLabel.setText("<html>Nombre & Apellido: <span style='color: #00FFFF'>" + user.getName() + " " + user.getSurname() + "</span></html>");
         documentLabel.setText("<html>Documento: <span style='color: #00FFFF'>" + user.getDocumentNumber() + "</span></html>");
 
-        ImageIcon accountManagementIcon = new ImageIcon(ImagesUtil.ACCOUNT_MANAGEMENT_PATH);
-        gestionarCuentaButton.setIcon(accountManagementIcon);
+        Utilities.setImageIcon(ImagesUtil.ACCOUNT_MANAGEMENT_PATH, gestionarCuentaButton);
+        Utilities.setImageIcon(ImagesUtil.TAKE_DOWN, darDeBajaButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verMisDatosButton);
+        Utilities.setImageIcon(ImagesUtil.DOCUMENT_PATH, miTarjetaButton);
+        Utilities.setImageIcon(ImagesUtil.HEART, beneficiosButton);
+        Utilities.setImageIcon(ImagesUtil.BUS_PATH, servicioDeTransporteButton);
+        Utilities.setImageIcon(ImagesUtil.DELETE, cerrarSesionButton);
 
         Card card = Utilities.getManualCard(user.getDocumentNumber());
 
@@ -192,7 +196,7 @@ public class MainMenu {
         servicioDeTransporteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox<String> linesBox = busManager.loadBusLines();
+                JComboBox<String> linesBox = lineManager.loadBusLines();
 
                 int selectedOption = JOptionPane.showOptionDialog(
                         menuPanel,
@@ -209,6 +213,8 @@ public class MainMenu {
                     String selectedLine = (String) linesBox.getSelectedItem();
 
                     if (selectedLine != null) {
+                        Utilities.disposeWindow(menuPanel);
+
                         Bus bus = new Bus(user, selectedLine);
                         bus.showUI(true, user);
                     }

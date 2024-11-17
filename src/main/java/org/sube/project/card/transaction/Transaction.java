@@ -17,20 +17,20 @@ public abstract class Transaction implements JSONCompatible {
     private double amount;
 
     public Transaction(String dniAffiliated) {
-        this.dniAffiliated=dniAffiliated;
+        this.dniAffiliated = dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.now();
     }
 
-    public Transaction(String dniAffiliated,double amount) {
-        this.dniAffiliated=dniAffiliated;
+    public Transaction(String dniAffiliated, double amount) {
+        this.dniAffiliated = dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.now();
         this.amount = amount;
     }
 
-    public Transaction(String dniAffiliated,double amount, String dateTime) {
-        this.dniAffiliated=dniAffiliated;
+    public Transaction(String dniAffiliated, double amount, String dateTime) {
+        this.dniAffiliated = dniAffiliated;
         this.id = generateUniqueID();
         this.dateTime = LocalDateTime.parse(dateTime);
         this.amount = amount;
@@ -53,7 +53,7 @@ public abstract class Transaction implements JSONCompatible {
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
         try {
-            j.put("dniAffiliated",dniAffiliated);
+            j.put("dniAffiliated", dniAffiliated);
             j.put("id", id);
             j.put("dateTime", dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm:ss")));
             j.put("amount", amount);

@@ -1,19 +1,23 @@
 package org.sube.project.front.admin.cards;
 
+import jdk.jshell.execution.Util;
 import org.sube.project.accounts.User;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.front.admin.AdminMenu;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.VolatileImage;
 
 public class CardsManagement {
     private JTable table1;
@@ -44,6 +48,15 @@ public class CardsManagement {
         loadCardsOnTable();
 
         String[] cardTypes = {"NORMAL_CARD", "STUDENT", "TEACHER", "DISABLED_PERSON", "RETIRED"};
+
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.ADD, añadirTarjetasButton);
+        Utilities.setImageIcon(ImagesUtil.EDIT, modificarButton);
+        Utilities.setImageIcon(ImagesUtil.TRANSACTION, verTransaccionesButton);
+        Utilities.setImageIcon(ImagesUtil.TAKE_DOWN, deshabilitarButton);
+        Utilities.setImageIcon(ImagesUtil.NO_VIEW, inhabilitadosButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
 
         actualizarButton.addActionListener(new ActionListener() {
             @Override
@@ -160,6 +173,8 @@ public class CardsManagement {
                 if (selectedRow != -1) {
                     Card selectedCard = Utilities.getCardTableByID(table1, tableModel, 0);
                     if (!selectedCard.getTransactionHistory().isEmpty()) {
+                        Utilities.disposeWindow(cardsManagementPanel);
+
                         CardTransactions cardTransactions = new CardTransactions(user, selectedCard);
                         cardTransactions.showUI(true, user);
                     } else {
@@ -192,7 +207,7 @@ public class CardsManagement {
         añadirTarjetasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int amount  = Integer.parseInt(JOptionPane.showInputDialog(cardsManagementPanel, "Ingrese la cantidad a crear", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, null).toString());
+                int amount = Integer.parseInt(JOptionPane.showInputDialog(cardsManagementPanel, "Ingrese la cantidad a crear", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, null).toString());
 
                 if (amount != -1) {
                     CardManager.generateEmptyCards(amount);

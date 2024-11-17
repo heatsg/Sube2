@@ -6,6 +6,7 @@ import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
 import org.sube.project.front.admin.AdminMenu;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -67,6 +69,13 @@ public class UsersManagement {
 
         modifyPanel.setVisible(false);
 
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.EDIT, modificarButton);
+        Utilities.setImageIcon(ImagesUtil.TAKE_DOWN, deshabilitarButton);
+        Utilities.setImageIcon(ImagesUtil.NO_VIEW, inhabilitadosButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
+
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,6 +117,7 @@ public class UsersManagement {
                         User user = Utilities.getUserTableByDocument(table1, tableModel, 3);
                         JSONManager.updateUserStatus(user.getDocumentNumber(), false, Path.USER);
                         JOptionPane.showMessageDialog(null, "Usuario dado de baja correctamente.", "Cambio de estado", JOptionPane.INFORMATION_MESSAGE);
+                        actualizarButton.doClick();
                     } catch (JSONException ex) {
                         System.out.println(ex.getMessage());
                     }
@@ -115,7 +125,7 @@ public class UsersManagement {
                     JOptionPane.showMessageDialog(null, "Por favor, selecciona un usuario", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                actualizarButton.doClick();
+
             }
         });
 

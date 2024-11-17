@@ -1,11 +1,12 @@
 package org.sube.project.front.main.bus;
 
 import org.sube.project.accounts.User;
-import org.sube.project.bus.BusManager;
+import org.sube.project.bus.LineManager;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.front.main.MainMenu;
 import org.sube.project.system.TransportSystem;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -52,6 +53,14 @@ public class Bus {
         gbc.gridy = 4;
         busPanel.add(consultarSaldoButton, gbc);
 
+        gbc.gridy = 5;
+        busPanel.add(volverButton, gbc);
+
+        Utilities.setImageIcon(ImagesUtil.MONEY, pagarBoletoButton);
+        Utilities.setImageIcon(ImagesUtil.ACCEPT, acreditarTarjetaButton);
+        Utilities.setImageIcon(ImagesUtil.SEARCH, consultarSaldoButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+
         pagarBoletoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,11 +68,11 @@ public class Bus {
 
                 if (card != null) {
 
-                    if(card.getBalance()<(-1180)){
+                    if (card.getBalance() < (-1180)) {
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente", "Pago Rechazado", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    CardManager.payTicket(card, BusManager.StringToLine(line));
+                    CardManager.payTicket(card, LineManager.StringToLine(line));
 
                     transportSystem.getCards().put(card.getId(), card);
                     transportSystem.updateCardsJSON();

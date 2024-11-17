@@ -20,11 +20,11 @@ public class ImagesUtil {
     public static final String ADD = "src/images/agregar.png";
     public static final String LINKED_USERS = "src/iamges/AlumnosInteresadosOF.png";
     public static final String HEART = "src/images/corazon blanco 20x20.png";
-    public static final String NO_VIEW = "src/images/deshabilitadosOF";
+    public static final String NO_VIEW = "src/images/deshabilitadosOF.png";
     public static final String TAKE_DOWN = "src/images/deshabilitar.png";
     public static final String DELETE = "src/images/Eliminar.png";
     public static final String SEND = "src/images/enviaricon.png";
-    public static final String TRANSACTION = "src/images/factura.png";
+    public static final String TRANSACTION = "src/images/information.png";
     public static final String GO_BACK = "src/images/FlechaAtras.png";
     public static final String CHANGE_PASSWORD = "src/images/forgotpassword.png";
     public static final String VIEW = "src/images/habilitarOF.png";
@@ -34,4 +34,7 @@ public class ImagesUtil {
     public static final String HOME = "src/images/oficina.png";
     public static final String STOCK = "src/images/stock.png";
     public static final String TRASH = "src/images/tachodebasuraOF.png";
+    public static final String BUS_PATH = "src/images/Bus.png";
+    public static final String MONEY = "src/images/money.png";
+    public static final String CARD_MANAGEMENT_PATH = "src/images/Administrador.png";
 }

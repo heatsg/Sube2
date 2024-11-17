@@ -4,6 +4,7 @@ import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.card.Card;
 import org.sube.project.exceptions.UserNotFoundException;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -39,6 +40,11 @@ public class UnsuscribedUsers {
 
         Utilities.activateTable(table1, scrollPane, tableModel);
         loadUnsuscribedUsersOnTable();
+
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.VIEW, habilitarButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
 
         actualizarButton.addActionListener(new ActionListener() {
             @Override

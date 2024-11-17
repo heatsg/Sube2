@@ -7,6 +7,7 @@ import org.sube.project.request.Request;
 import org.sube.project.request.RequestHandler;
 import org.sube.project.request.Requestable;
 import org.sube.project.request.user.UserTakeDownRequest;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
@@ -48,6 +49,13 @@ public class UserUnsuscriber {
 
         Utilities.activateTable(table1, scrollPane, tableModel);
         loadRequestsIntoTable();
+
+        Utilities.setImageIcon(ImagesUtil.UPDATE, actualizarButton);
+        Utilities.setImageIcon(ImagesUtil.ACCEPT, aceptarButton);
+        Utilities.setImageIcon(ImagesUtil.DELETE, denegarButton);
+        Utilities.setImageIcon(ImagesUtil.NO_VIEW, inhabilitadosButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
+        Utilities.setImageIcon(ImagesUtil.CREDENTIALS, verDetallesButton);
 
         actualizarButton.addActionListener(new ActionListener() {
             @Override

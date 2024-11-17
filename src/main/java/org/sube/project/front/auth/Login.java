@@ -1,5 +1,6 @@
 package org.sube.project.front.auth;
 
+import jdk.jshell.execution.Util;
 import org.sube.project.accounts.User;
 import org.sube.project.accounts.UserType;
 import org.sube.project.accounts.authentication.UserAuthentication;
@@ -50,6 +51,9 @@ public class Login {
 
         gbc.gridx = 1;
         loginTitlePanel.add(cuentaLabel, gbc);
+
+        Utilities.setImageIcon(ImagesUtil.LOGIN_PATH, iniciarSesionButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
 
         iniciarSesionButton.addActionListener(new ActionListener() {
             @Override

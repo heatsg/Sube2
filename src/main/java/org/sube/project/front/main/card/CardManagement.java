@@ -11,11 +11,13 @@ import org.sube.project.request.RequestHandler;
 import org.sube.project.request.card.CardTakeDownRequest;
 import org.sube.project.request.user.UserTakeDownRequest;
 import org.sube.project.system.TransportSystem;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -52,6 +54,12 @@ public class CardManagement {
             cardNumberLabel.setText("No hay tarjeta asociada.");
             registrarTarjetaButton.setVisible(true);
         }
+
+        Utilities.setImageIcon(ImagesUtil.EDIT_1, registrarTarjetaButton);
+        Utilities.setImageIcon(ImagesUtil.ADD, cargarSaldoButton);
+        Utilities.setImageIcon(ImagesUtil.ACCEPT, acreditarTarjetaButton);
+        Utilities.setImageIcon(ImagesUtil.TAKE_DOWN, darDeBajaButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, volverButton);
 
         cargarSaldoButton.addActionListener(new ActionListener() {
             @Override

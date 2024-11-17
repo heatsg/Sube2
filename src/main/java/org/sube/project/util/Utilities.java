@@ -12,6 +12,7 @@ import org.sube.project.util.json.JSONManager;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.font.ImageGraphicAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,5 +161,14 @@ public class Utilities {
         return null;
     }
 
+    public static void setImageIcon(String path, JButton button) {
+        ImageIcon imageIcon = new ImageIcon(path);
+        button.setIcon(imageIcon);
+    }
+
+    public static void setImageIcon(String path, JLabel label) {
+        ImageIcon imageIcon = new ImageIcon(path);
+        label.setIcon(imageIcon);
+    }
 
 }

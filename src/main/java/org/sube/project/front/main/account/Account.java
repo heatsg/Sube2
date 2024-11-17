@@ -6,6 +6,7 @@ import org.sube.project.exceptions.PasswordNotEqualsException;
 import org.sube.project.exceptions.WrongPasswordException;
 import org.sube.project.front.main.MainMenu;
 import org.sube.project.system.TransportSystem;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -44,6 +45,12 @@ public class Account extends JFrame {
         Object[] genderOptions = {"Masculino", "Femenino", "No binario", "Prefiero no decirlo"};
 
         changePasswordPanel.setVisible(false);
+
+        Utilities.setImageIcon(ImagesUtil.EDIT, modificarNombreYApellidoButton);
+        Utilities.setImageIcon(ImagesUtil.EDIT, modificarEdadButton);
+        Utilities.setImageIcon(ImagesUtil.EDIT, modificarGeneroButton);
+        Utilities.setImageIcon(ImagesUtil.CHANGE_PASSWORD, cambiarContraseñaButton);
+        Utilities.setImageIcon(ImagesUtil.GO_BACK, backButton);
 
         modificarNombreYApellidoButton.addActionListener(new ActionListener() {
             @Override

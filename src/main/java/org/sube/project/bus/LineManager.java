@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusManager {
+public class LineManager {
 
     public JComboBox<String> loadBusLines() {
         List<Lines> linesArray = new ArrayList<>(List.of(Lines.values()));

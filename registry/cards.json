@@ -9,23 +9,46 @@
     },
     {
         "dniOwner": "46814665",
-        "balance": 29820,
+        "balance": 33460,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [
             {
                 "transactionType": "Recarga",
-                "dateTime": "17-11-2024, 18:32:58",
-                "amount": 2000,
+                "dateTime": "17-11-2024, 18:47:06",
+                "amount": 5000,
                 "dniAffiliated": "46814665",
-                "id": "2f5ee6ef-efe2-4cab-864d-eacfa253bfc5"
+                "id": "7de2a9fd-bf5b-4140-ae36-cf1e12ab2105"
+            },
+            {
+                "transactionType": "Recarga",
+                "dateTime": "17-11-2024, 18:47:13",
+                "amount": 3000,
+                "dniAffiliated": "46814665",
+                "id": "eeec25d0-1bed-430a-a57f-a1b3d6e79723"
             },
             {
                 "transactionType": "Pago",
-                "dateTime": "17-11-2024, 18:33:25",
+                "dateTime": "17-11-2024, 18:47:26",
+                "amount": 1180,
+                "line": "LINE_522",
+                "dniAffiliated": "46814665",
+                "id": "32444a29-ca3a-47b8-951b-9a587380e61d"
+            },
+            {
+                "transactionType": "Pago",
+                "dateTime": "17-11-2024, 18:47:44",
                 "amount": 1180,
                 "line": "LINE_501",
                 "dniAffiliated": "46814665",
-                "id": "81b0fe7d-92b8-4a4d-8e03-49e88d870ecd"
+                "id": "bce89673-54af-4650-8a11-7923bdcd8b2d"
+            },
+            {
+                "transactionType": "Pago",
+                "dateTime": "17-11-2024, 18:49:47",
+                "amount": 1180,
+                "line": "LINE_512",
+                "dniAffiliated": "46814665",
+                "id": "f68b000c-d20d-4b24-b24e-e48789649e0b"
             }
         ],
         "id": "6061167172268481",
