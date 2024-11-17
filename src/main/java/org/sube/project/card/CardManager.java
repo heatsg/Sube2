@@ -130,7 +130,6 @@ public class CardManager {
     }
 
 
-
     public static JComboBox<String> loadCardBenefits() {
         List<CardType> benefitsArray = new ArrayList<>(List.of(CardType.values()));
         JComboBox<String> benefitsBox = new JComboBox<>();
@@ -140,5 +139,15 @@ public class CardManager {
         }
 
         return benefitsBox;
+    }
+
+    public static void generateEmptyCards(int amount) {
+        JSONArray jarr = JSONManager.readJSONArray(Path.CARD);
+        for (int i = 0; i < amount; i++) {
+            Card card = new Card();
+            jarr.put(card.toJSON());
+        }
+
+        JSONManager.write(Path.CARD, jarr);
     }
 }

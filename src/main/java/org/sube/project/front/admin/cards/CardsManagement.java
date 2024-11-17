@@ -29,6 +29,7 @@ public class CardsManagement {
     private JLabel updatedTableLabel;
     private JButton verTransaccionesButton;
     private JLabel searchNotResultsLabel;
+    private JButton añadirTarjetasButton;
 
     DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -173,6 +174,21 @@ public class CardsManagement {
             @Override
             public void changedUpdate(DocumentEvent e) {
                 filterCardsOnTable();
+            }
+        });
+
+
+        añadirTarjetasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int amount  = Integer.parseInt(JOptionPane.showInputDialog(cardsManagementPanel, "Ingrese la cantidad a crear", "Tarjeta", JOptionPane.PLAIN_MESSAGE, null, null, null).toString());
+
+                if (amount != -1) {
+                    CardManager.generateEmptyCards(amount);
+                    actualizarButton.doClick();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese una cantidad.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }

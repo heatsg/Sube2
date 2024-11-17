@@ -23,8 +23,7 @@ public class Utilities {
      * @param frame
      */
     public static void getSubeFavicon(JFrame frame) {
-        String faviconPath = "images/SUBEfavicon.png";
-        ImageIcon icon = new ImageIcon(faviconPath);
+        ImageIcon icon = new ImageIcon(ImagesUtil.FAVICON_PATH);
         frame.setIconImage(icon.getImage());
     }
 

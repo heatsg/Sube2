@@ -2,6 +2,7 @@ package org.sube.project.front;
 
 import org.sube.project.front.auth.Login;
 import org.sube.project.front.auth.Register;
+import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Utilities;
 
 import javax.swing.*;
@@ -23,8 +24,7 @@ public class Sube {
     private JButton crearCuentaButton;
 
     public Sube() {
-        String imagePath = "images/SUBElogo.png";
-        ImageIcon imageIcon = new ImageIcon(imagePath);
+        ImageIcon imageIcon = new ImageIcon(ImagesUtil.SUBE_PATH);
 
         if (imageIcon.getIconWidth() == -1) {
             System.err.println("No se pudo cargar la imagen. Verifica la ruta del archivo.");
