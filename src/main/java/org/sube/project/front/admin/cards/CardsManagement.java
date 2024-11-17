@@ -106,14 +106,25 @@ public class CardsManagement {
 
                 if (selectedRow != -1) {
                     Card card = Utilities.getCardTableByID(table1, tableModel, 0);
-                    JOptionPane.showMessageDialog(null,
+                    if(!card.getDniOwner().isEmpty())
+                        JOptionPane.showMessageDialog(null,
+                                "Datos:" +
+                                        "\n" + "\n" +
+                                        "Numero: " + card.getId() +
+                                        "\n" +
+                                        "Tipo de Tarjeta: " + card.getCardType().toString() +
+                                        "\n" +
+                                        "Documento Asociado: " + card.getDniOwner() +
+                                        "\n" +
+                                        "Balance actual: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
+                    else JOptionPane.showMessageDialog(null,
                             "Datos:" +
                                     "\n" + "\n" +
                                     "Numero: " + card.getId() +
                                     "\n" +
                                     "Tipo de Tarjeta: " + card.getCardType().toString() +
                                     "\n" +
-                                    "Documento Asociado: " + card.getDniOwner() +
+                                    "Documento Asociado: No tiene" +
                                     "\n" +
                                     "Balance actual: " + card.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -148,11 +159,11 @@ public class CardsManagement {
 
                 if (selectedRow != -1) {
                     Card selectedCard = Utilities.getCardTableByID(table1, tableModel, 0);
-                    if (selectedCard != null) {
+                    if (!selectedCard.getTransactionHistory().isEmpty()) {
                         CardTransactions cardTransactions = new CardTransactions(user, selectedCard);
                         cardTransactions.showUI(true, user);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Seleccione una tarjeta para ver sus transacciones.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La tarjeta seleccionada no tiene transacciones asociadas.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
