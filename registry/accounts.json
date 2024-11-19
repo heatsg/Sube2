@@ -2,6 +2,16 @@
     {
         "password": "password",
         "gender": "Masculino",
+        "surname": "Messi",
+        "documentNumber": "10101010",
+        "name": "Lionel Andres",
+        "userType": "NORMAL_USER",
+        "age": 37,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
         "surname": "qqqq",
         "documentNumber": "33333333",
         "name": "asdas",
@@ -27,6 +37,226 @@
         "name": "Juan Pablo",
         "userType": "NORMAL_USER",
         "age": 19,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Huth",
+        "documentNumber": "45923459",
+        "name": "Ian ",
+        "userType": "NORMAL_USER",
+        "age": 20,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Tucker",
+        "documentNumber": "46738943",
+        "name": "Santiago",
+        "userType": "NORMAL_USER",
+        "age": 19,
+        "status": true
+    },
+    {
+    "password": "password",
+    "gender": "Masculino",
+    "surname": "González",
+    "documentNumber": "58392010",
+    "name": "Carlos Alberto",
+    "userType": "NORMAL_USER",
+    "age": 45,
+    "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Martínez",
+        "documentNumber": "70123894",
+        "name": "Juan Pablo",
+        "userType": "NORMAL_USER",
+        "age": 23,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "López",
+        "documentNumber": "36482917",
+        "name": "Fernando Luis",
+        "userType": "NORMAL_USER",
+        "age": 37,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Rodríguez",
+        "documentNumber": "48732901",
+        "name": "Javier Ernesto",
+        "userType": "NORMAL_USER",
+        "age": 28,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Pérez",
+        "documentNumber": "50123984",
+        "name": "Luis Alberto",
+        "userType": "NORMAL_USER",
+        "age": 42,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Ramírez",
+        "documentNumber": "87231945",
+        "name": "Matías Nicolás",
+        "userType": "NORMAL_USER",
+        "age": 19,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Fernández",
+        "documentNumber": "94837210",
+        "name": "Santiago Tomás",
+        "userType": "NORMAL_USER",
+        "age": 33,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Gómez",
+        "documentNumber": "20394857",
+        "name": "Federico Martín",
+        "userType": "NORMAL_USER",
+        "age": 47,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Silva",
+        "documentNumber": "75928104",
+        "name": "Agustín Gabriel",
+        "userType": "NORMAL_USER",
+        "age": 20,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Torres",
+        "documentNumber": "30948275",
+        "name": "Nicolás Emanuel",
+        "userType": "NORMAL_USER",
+        "age": 39,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Ruiz",
+        "documentNumber": "48129375",
+        "name": "Diego Hernán",
+        "userType": "NORMAL_USER",
+        "age": 50,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Acosta",
+        "documentNumber": "91827364",
+        "name": "Lucas Javier",
+        "userType": "NORMAL_USER",
+        "age": 25,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Méndez",
+        "documentNumber": "38291047",
+        "name": "Gonzalo Iván",
+        "userType": "NORMAL_USER",
+        "age": 31,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Cabrera",
+        "documentNumber": "56748932",
+        "name": "Mariano Andrés",
+        "userType": "NORMAL_USER",
+        "age": 18,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Morales",
+        "documentNumber": "63489102",
+        "name": "Adrián Hugo",
+        "userType": "NORMAL_USER",
+        "age": 44,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Castro",
+        "documentNumber": "82739104",
+        "name": "Tomás Alejandro",
+        "userType": "NORMAL_USER",
+        "age": 52,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Navarro",
+        "documentNumber": "48930276",
+        "name": "Joaquín Emiliano",
+        "userType": "NORMAL_USER",
+        "age": 16,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Rojas",
+        "documentNumber": "39481025",
+        "name": "Sebastián Francisco",
+        "userType": "NORMAL_USER",
+        "age": 29,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Iglesias",
+        "documentNumber": "73291840",
+        "name": "Martín Ricardo",
+        "userType": "NORMAL_USER",
+        "age": 38,
+        "status": true
+    },
+    {
+        "password": "password",
+        "gender": "Masculino",
+        "surname": "Sánchez",
+        "documentNumber": "48102736",
+        "name": "Leandro Esteban",
+        "userType": "NORMAL_USER",
+        "age": 54,
         "status": true
     }
 ]

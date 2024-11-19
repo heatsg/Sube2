@@ -10,7 +10,7 @@
     {
         "dniOwner": "46814665",
         "balance": 33460,
-        "cardType": "NORMAL_CARD",
+        "cardType": "STUDENT",
         "transactionHistory": [
             {
                 "transactionType": "Recarga",
@@ -55,11 +55,171 @@
         "status": true
     },
     {
-        "dniOwner": "",
+        "dniOwner": "63489102",
         "balance": 1000,
         "cardType": "NORMAL_CARD",
         "transactionHistory": [],
         "id": "6061276441622624",
+        "status": true
+    },
+    {
+        "dniOwner": "46738943",
+        "balance": 1000,
+        "cardType": "STUDENT",
+        "transactionHistory": [],
+        "id": "6061365643371127",
+        "status": true
+    },
+    {
+        "dniOwner": "56748932",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061873363866722",
+        "status": true
+    },
+    {
+        "dniOwner": "45923459",
+        "balance": 1000,
+        "cardType": "STUDENT",
+        "transactionHistory": [],
+        "id": "6061874123413847",
+        "status": true
+    },
+    {
+        "dniOwner": "91827364",
+        "balance": 1000,
+        "cardType": "DISABLED_PERSON",
+        "transactionHistory": [],
+        "id": "6061632135837612",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "TEACHER",
+        "transactionHistory": [],
+        "id": "6061667414341773",
+        "status": true
+    },
+    {
+        "dniOwner": "30948275",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061655687622534",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061426283616871",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061623464256248",
+        "status": true
+    },
+    {
+        "dniOwner": "94837210",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061165777261122",
+        "status": true
+    },
+    {
+        "dniOwner": "50123984",
+        "balance": 1000,
+        "cardType": "TEACHER",
+        "transactionHistory": [],
+        "id": "6061887723768813",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061327353481842",
+        "status": true
+    },
+    {
+        "dniOwner": "82739104",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061682266477687",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061134344613261",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061625773434385",
+        "status": true
+    },
+    {
+        "dniOwner": "75928104",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061876638222717",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061351635537175",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061121123145467",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061274488231674",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061316586426574",
+        "status": true
+    },
+    {
+        "dniOwner": "",
+        "balance": 1000,
+        "cardType": "NORMAL_CARD",
+        "transactionHistory": [],
+        "id": "6061431855423237",
         "status": true
     }
 ]
