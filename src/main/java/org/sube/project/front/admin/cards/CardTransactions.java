@@ -4,6 +4,7 @@ import jdk.jshell.execution.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sube.project.accounts.User;
+import org.sube.project.bus.Lines;
 import org.sube.project.card.Card;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.util.ImagesUtil;
@@ -43,6 +44,7 @@ public class CardTransactions {
         tableModel.addColumn("Tipo");
         tableModel.addColumn("Fecha y hora");
         tableModel.addColumn("Monto");
+        tableModel.addColumn("Linea");
 
         Utilities.activateTable(table1, scrollPane, tableModel);
         transactionsTitleLabel.setText("TRANSACCIONES DE " + selectedCard.getDniOwner());
@@ -73,18 +75,38 @@ public class CardTransactions {
                     String dateTime = table1.getValueAt(selectedRow, 3).toString();
                     String amount = table1.getValueAt(selectedRow, 4).toString();
 
-                    JOptionPane.showMessageDialog(null,
-                            "Datos de transaccion:" +
-                                    "\n" + "\n" +
-                                    "ID: " + transactionID +
-                                    "\n" +
-                                    "DNI Asociado: " + associatedDocument +
-                                    "\n" +
-                                    "Tipo: " + transactionType +
-                                    "\n" +
-                                    "Fecha & Hora: " + dateTime +
-                                    "\n" +
-                                    "Monto: " + amount, "Detalles", JOptionPane.INFORMATION_MESSAGE);
+                    if(table1.getValueAt(selectedRow,5).toString().isEmpty()){
+
+                        JOptionPane.showMessageDialog(null,
+                                "Datos de transaccion:" +
+                                        "\n" + "\n" +
+                                        "ID: " + transactionID +
+                                        "\n" +
+                                        "DNI Asociado: " + associatedDocument +
+                                        "\n" +
+                                        "Tipo: " + transactionType +
+                                        "\n" +
+                                        "Fecha & Hora: " + dateTime +
+                                        "\n" +
+                                        "Monto: " + amount, "Detalles", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        String line = table1.getValueAt(selectedRow,5).toString();
+                        JOptionPane.showMessageDialog(null,
+                                "Datos de transaccion:" +
+                                        "\n" + "\n" +
+                                        "ID: " + transactionID +
+                                        "\n" +
+                                        "DNI Asociado: " + associatedDocument +
+                                        "\n" +
+                                        "Tipo: " + transactionType +
+                                        "\n" +
+                                        "Fecha & Hora: " + dateTime +
+                                        "\n" +
+                                        "Monto: " + amount +
+                                        "\n" +
+                                        "Linea: " + line, "Detalles", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor, seleccione una transaccion", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -111,16 +133,22 @@ public class CardTransactions {
             if (card.getString("id").equals(cardId)) {
                 JSONArray transactionHistory = card.getJSONArray("transactionHistory");
 
+
                 for (int j = 0; j < transactionHistory.length(); j++) {
                     JSONObject transaction = transactionHistory.getJSONObject(j);
-
                     String transactionId = transaction.getString("id");
                     String associatedDocument = transaction.getString("dniAffiliated");
                     String transactionType = transaction.getString("transactionType");
                     String dateTime = transaction.getString("dateTime");
                     double amount = transaction.getDouble("amount");
+                    String line;
+                    if (transaction.getString("transactionType").equals("Recarga")){
+                        line = "";
+                    }else {
+                        line = Lines.valueOf(transaction.getString("line")).toString();
+                    }
 
-                    tableModel.addRow(new Object[]{transactionId, associatedDocument, transactionType, dateTime, amount});
+                    tableModel.addRow(new Object[]{transactionId, associatedDocument, transactionType, dateTime, amount, line});
                 }
                 return;
             }
