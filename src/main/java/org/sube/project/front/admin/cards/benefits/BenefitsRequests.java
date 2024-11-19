@@ -96,8 +96,16 @@ public class BenefitsRequests {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if (selectedRow != -1) {
-
-                }
+                    JOptionPane.showMessageDialog(null,
+                            "Datos:"
+                                    + "\n" + "\n"+
+                                    "ID: " + table1.getValueAt(selectedRow,0).toString() +
+                                    "DNI: " + table1.getValueAt(selectedRow,1).toString() +
+                                    "Numero de Tarjeta: " + table1.getValueAt(selectedRow,2).toString() +
+                                    "Fecha: " + table1.getValueAt(selectedRow,3).toString() +
+                                    "Tipo: " + table1.getValueAt(selectedRow,4).toString(),"Informacion de la Solicitud",JOptionPane.INFORMATION_MESSAGE);
+                } else
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una solicitud", "Error", JOptionPane.WARNING_MESSAGE);
             }
         });
 

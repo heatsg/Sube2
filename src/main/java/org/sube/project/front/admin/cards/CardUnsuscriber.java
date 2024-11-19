@@ -140,7 +140,7 @@ public class CardUnsuscriber {
                                     "\n" +
                                     "Balance: " + tableCard.getBalance(), "Informacion de tarjeta", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una tarjeta", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una solicitud", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

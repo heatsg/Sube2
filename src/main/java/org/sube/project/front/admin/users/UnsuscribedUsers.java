@@ -87,23 +87,28 @@ public class UnsuscribedUsers {
         verDetallesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User tableUser = Utilities.getUserTableByDocument(table1, tableModel, 2);
-                JOptionPane.showMessageDialog(null,
-                        "Datos:" +
-                                "\n" + "\n" +
-                                "Nombre: " + tableUser.getName() +
-                                "\n" +
-                                "Apellido: " + tableUser.getSurname() +
-                                "\n" +
-                                "Edad: " + tableUser.getAge() +
-                                "\n" +
-                                "DNI: " + tableUser.getDocumentNumber() +
-                                "\n" +
-                                "Genero: " + tableUser.getGender() +
-                                "\n" +
-                                "Tipo de Usuario: " + tableUser.getUserType() +
-                                "\n" +
-                                "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+                int selectedRow = table1.getSelectedRow();
+                if(selectedRow != -1){
+                    User tableUser = Utilities.getUserTableByDocument(table1, tableModel, 2);
+                    JOptionPane.showMessageDialog(null,
+                            "Datos:" +
+                                    "\n" + "\n" +
+                                    "Nombre: " + tableUser.getName() +
+                                    "\n" +
+                                    "Apellido: " + tableUser.getSurname() +
+                                    "\n" +
+                                    "Edad: " + tableUser.getAge() +
+                                    "\n" +
+                                    "DNI: " + tableUser.getDocumentNumber() +
+                                    "\n" +
+                                    "Genero: " + tableUser.getGender() +
+                                    "\n" +
+                                    "Tipo de Usuario: " + tableUser.getUserType() +
+                                    "\n" +
+                                    "Estado: " + tableUser.getStatus(), "Informacion personal", JOptionPane.INFORMATION_MESSAGE);
+                } else
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona un usuario", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         });
 
