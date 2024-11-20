@@ -2,7 +2,7 @@ package org.sube.project.card.transaction.types;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.sube.project.bus.Lines;
+import org.sube.project.busLines.Lines;
 import org.sube.project.card.transaction.Transaction;
 import org.sube.project.card.transaction.TransactionType;
 

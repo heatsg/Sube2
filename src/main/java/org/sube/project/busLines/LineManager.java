@@ -1,4 +1,4 @@
-package org.sube.project.bus;
+package org.sube.project.busLines;
 
 import javax.swing.*;
 import java.util.ArrayList;

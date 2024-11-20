@@ -1,7 +1,7 @@
 package org.sube.project.front.main;
 
 import org.sube.project.accounts.User;
-import org.sube.project.bus.LineManager;
+import org.sube.project.busLines.LineManager;
 import org.sube.project.card.Card;
 import org.sube.project.card.CardManager;
 import org.sube.project.front.Sube;

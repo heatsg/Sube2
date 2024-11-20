@@ -1,4 +1,4 @@
-package org.sube.project.bus;
+package org.sube.project.busLines;
 
 public enum Lines {
     LINE_501("501"),

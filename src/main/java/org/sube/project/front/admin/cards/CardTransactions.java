@@ -1,29 +1,21 @@
 package org.sube.project.front.admin.cards;
 
-import jdk.jshell.execution.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sube.project.accounts.User;
-import org.sube.project.bus.Lines;
+import org.sube.project.busLines.Lines;
 import org.sube.project.card.Card;
-import org.sube.project.card.transaction.Transaction;
 import org.sube.project.util.ImagesUtil;
 import org.sube.project.util.Path;
 import org.sube.project.util.Utilities;
 import org.sube.project.util.json.JSONManager;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class CardTransactions {
     private JTable table1;

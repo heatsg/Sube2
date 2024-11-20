@@ -2,7 +2,7 @@ package org.sube.project.card;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.sube.project.bus.Lines;
+import org.sube.project.busLines.Lines;
 import org.sube.project.card.transaction.types.TransactionPayment;
 import org.sube.project.card.transaction.types.TransactionRecharge;
 import org.sube.project.exceptions.CardNotFoundException;

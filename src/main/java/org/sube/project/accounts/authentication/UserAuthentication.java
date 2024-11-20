@@ -75,14 +75,6 @@ public class UserAuthentication {
         throw new UserNotFoundException("Usuario no encontrado.");
     }
 
-    public static User getLoggedUser() {
-        return loggedUser;
-    }
-
-    public static void logout() {
-        loggedUser = null;
-    }
-
 }
 
 
