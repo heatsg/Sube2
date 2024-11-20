@@ -69,7 +69,10 @@ public class Register {
                 String password = new String(passText.getPassword());
 
                 try {
-                    if (documentNumber.length() != 8) {
+                    if(!documentNumber.matches("\\d+")){
+                        JOptionPane.showMessageDialog(null, "El documento no es valido.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else if (documentNumber.length() != 8) {
                         JOptionPane.showMessageDialog(null, "El documento debe tener 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     } else if (password.length() < 8) {

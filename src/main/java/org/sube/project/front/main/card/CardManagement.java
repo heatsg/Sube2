@@ -48,11 +48,17 @@ public class CardManagement {
                 cardNumberLabel.setText("Numero: " + card.getId());
                 balanceInfoLabel.setText("Saldo actual: " + card.getBalance());
                 registrarTarjetaButton.setVisible(false);
+                cargarSaldoButton.setEnabled(true);
+                acreditarTarjetaButton.setEnabled(true);
+                darDeBajaButton.setEnabled(true);
             }
         } else {
             balanceInfoLabel.setVisible(false);
             cardNumberLabel.setText("No hay tarjeta asociada.");
             registrarTarjetaButton.setVisible(true);
+            cargarSaldoButton.setEnabled(false);
+            acreditarTarjetaButton.setEnabled(false);
+            darDeBajaButton.setEnabled(false);
         }
 
         Utilities.setImageIcon(ImagesUtil.EDIT_1, registrarTarjetaButton);
@@ -138,6 +144,9 @@ public class CardManagement {
                     if (validateCardID(id)) {
                         CardManager.setCardDocumentNumber(id, user.getDocumentNumber());
                         transportSystem.loadFromJSON();
+                        cargarSaldoButton.setEnabled(true);
+                        acreditarTarjetaButton.setEnabled(true);
+                        darDeBajaButton.setEnabled(true);
                         registrarTarjetaButton.setVisible(false);
                     } else {
                         throw new CardNotFoundException("Numero de tarjeta no existente");
